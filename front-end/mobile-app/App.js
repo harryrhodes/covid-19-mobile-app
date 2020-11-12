@@ -1,33 +1,50 @@
 import React from "react";
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View,
-  SafeAreaView,
-} from "react-native";
-import { Provider as PaperProvider } from "react-native-paper";
-import { name as appName } from "./app.json";
+import { AppRegistry } from "react-native";
+import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import HomeScreen from "./Screens/Home";
+import LoginScreen from "./Screens/Login";
+import RegisterScreen1 from "./Screens/Register-1";
+import RegisterScreen2 from "./Screens/Register-2";
+
+const Drawer = createDrawerNavigator();
 
 export default function App() {
   return (
-    <SafeAreaView style={styles.container}>
-      <PaperProvider>
-        <View style={styles.container}>
-          <Text>Open up App.js to start working on your app!</Text>
-        </View>
-      </PaperProvider>
-    </SafeAreaView>
+    <PaperProvider theme={theme}>
+      <NavigationContainer>
+        <Drawer.Navigator
+          initialRouteName="Home"
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Drawer.Screen name="Home" component={LoginScreen} />
+          <Drawer.Screen name="Login Screen" component={LoginScreen} />
+          <Drawer.Screen name="Register-1" component={RegisterScreen1} />
+          <Drawer.Screen name="Register-2" component={RegisterScreen2} />
+        </Drawer.Navigator>
+      </NavigationContainer>
+    </PaperProvider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+const theme = {
+  ...DefaultTheme,
+  roundness: 2,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: "#1976d2",
+    accent: "#4791db",
+    background: "#ffffff",
+    surface: "#ffffff",
+    text: "#1976d2",
+    disabled: "#4791db",
+    placeholder: "#4791db",
+    backdrop: "#ffffff",
   },
-});
+};
 
-AppRegistry.registerComponent(appName, () => App);
+AppRegistry.registerComponent("Mobile-App", () => App);
