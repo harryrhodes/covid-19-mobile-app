@@ -1,6 +1,10 @@
 import React from "react";
 import { AppRegistry } from "react-native";
-import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
+import {
+  DefaultTheme,
+  Button,
+  Provider as PaperProvider,
+} from "react-native-paper";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
@@ -15,16 +19,37 @@ export default function App() {
   return (
     <PaperProvider theme={theme}>
       <NavigationContainer>
-        <Drawer.Navigator
-          initialRouteName="Home"
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          <Drawer.Screen name="Home" component={LoginScreen} />
-          <Drawer.Screen name="Login Screen" component={LoginScreen} />
-          <Drawer.Screen name="Register-1" component={RegisterScreen1} />
-          <Drawer.Screen name="Register-2" component={RegisterScreen2} />
+        <Drawer.Navigator initialRouteName="Home">
+          <Drawer.Screen
+            name="Home"
+            component={HomeScreen}
+            options={{
+              headerRight: () => (
+                <Button icon="account-circle-outline"></Button>
+              ),
+            }}
+          />
+          <Drawer.Screen
+            name="Login Screen"
+            component={LoginScreen}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Drawer.Screen
+            name="Register-1"
+            component={RegisterScreen1}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Drawer.Screen
+            name="Register-2"
+            component={RegisterScreen2}
+            options={{
+              headerShown: false,
+            }}
+          />
         </Drawer.Navigator>
       </NavigationContainer>
     </PaperProvider>
