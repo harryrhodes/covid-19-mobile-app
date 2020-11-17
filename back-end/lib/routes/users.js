@@ -54,11 +54,17 @@ module.exports.getUserLogin = async (request) => {
 
         let query = {};
 
-        if (request.params.username) query.username = request.params.username.toLowerCase();
+        if (request.params.username) {
+            if (request.params.username.includes('@')) {
+                query.email = request.params.username;
+            } else {
+                query.username = request.params.username.toLowerCase();
+            }
+        }
 
         let user = await User.find(query).lean();
 
-        if (!user[0]) return { status: 'Invalid Username', user: {} };
+        if (!user[0]) return { status: 'Invalid Username/Email', user: {} };
 
         let match = false;
         if (request.query.password) {
@@ -95,6 +101,7 @@ module.exports.createNewUser = async (request) => {
         // Must provide all required parameters
         if (!request.payload.username) return Boom.badRequest('No username specified');
         if (!request.payload.password) return Boom.badRequest('No password specified');
+        if (!request.payload.email) return Boom.badRequest('No email specified');
         if (!request.payload.firstName) return Boom.badRequest('No firstName specified');
         if (!request.payload.lastName) return Boom.badRequest('No lastName specified');
         if (!request.payload.accountType) return Boom.badRequest('No accountType specified');
@@ -105,6 +112,7 @@ module.exports.createNewUser = async (request) => {
         let newUser = await new User({
             username: request.payload.username,
             password: password,
+            email: request.payload.email,
             firstName: request.payload.firstName,
             lastName: request.payload.lastName,
             accountType: request.payload.accountType,
@@ -200,10 +208,10 @@ module.exports.push(
             log: { collect: true, },
             auth: 'simple',
             description: 'Get user and check password',
-            notes: 'Get user by username and compare passwords match to authenticate',
+            notes: 'Get user by username or email and compare passwords match to authenticate',
             validate: {
                 params: {
-                    username: Joi.string().required().description('Username of a user').example('name.surname'),
+                    username: Joi.string().required().description('Username of a user (this can also be an email)').example('name.surname'),
                 },
                 query: {
                     password: Joi.string().required().description('Users password').example('PaSsWoRd123'),
@@ -229,6 +237,7 @@ module.exports.push(
                 payload: {
                     username: Joi.string().required().description('Account username').example('name.lastname'),
                     password: Joi.string().required().description('Account password').example('password'),
+                    email: Joi.string().required().description('Account email').example('password'),
                     firstName: Joi.string().required().description('Users first name').example('Name'),
                     lastName: Joi.string().required().description('Users last name').example('Lastname'),
                     accountType: Joi.string().required().valid('admin', 'practitioner', 'patient').description('Type of the account').example('patient'),
