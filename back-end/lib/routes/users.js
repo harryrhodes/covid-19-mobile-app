@@ -46,7 +46,31 @@ module.exports.getUsers = async (request) => {
  * @param {import('@hapi/hapi/lib/handler')} handler
  * @returns {import('@hapi/hapi/lib/response')} HAPI response
  */
-module.exports.getUserLogin = async (request) => {
+module.exports.getUsersUsernameEmail = async (request) => {
+    try {
+        request.log(['received']);
+
+        await db.connect();
+
+        let users = await User.find({}).lean();
+
+        return {
+            usernames: users.map((user) => user.username),
+            emails: users.map((user) => user.email)
+        }
+    } catch (error) {
+        request.log(['error'], { message: error, caller: __filename });
+        throw error;
+    }
+};
+
+/**
+ * Handles GET requests
+ * @param {import('@hapi/hapi/lib/request')} request
+ * @param {import('@hapi/hapi/lib/handler')} handler
+ * @returns {import('@hapi/hapi/lib/response')} HAPI response
+ */
+module.exports.loginUser = async (request) => {
     try {
         request.log(['received']);
 
@@ -201,8 +225,26 @@ module.exports.push(
     },
     {
         method: 'GET',
+        path: '/users/validate',
+        handler: module.exports.getUsersUsernameEmail,
+        options: {
+            tags: ['api'],
+            log: { collect: true, },
+            auth: 'simple',
+            description: 'Get all users usernames and emails',
+            notes: 'Get all users usernames and emails to be used in register page',
+            validate: {
+            },
+            cache: {
+                expiresIn: config.httpCacheExpiresIn,
+                privacy: 'private'
+            },
+        },
+    },
+    {
+        method: 'GET',
         path: '/users/login/{username?}',
-        handler: module.exports.getUserLogin,
+        handler: module.exports.loginUser,
         options: {
             tags: ['api'],
             log: { collect: true, },
