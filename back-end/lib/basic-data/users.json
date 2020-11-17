@@ -1,0 +1,62 @@
+[
+    {
+        "username": "robert.kopec",
+        "password": "$2b$10$pjflJv0mHOiq2iVuxQA50Oj2DV4uFhDrie1Mwy8f2V11a9v0UWnMC",
+        "firstName": "Robert",
+        "lastName": "Kopec",
+        "accountType": "admin",
+        "role": {},
+        "patientDetails": {},
+        "symptoms": []
+    },
+    {
+        "username": "harry.rhodes",
+        "password": "$2b$10$IPppQxpdjzUjKx1dZj.KHOAxFsff46F5ZXwL8l7H3plui65vqZuz.",
+        "firstName": "Harry",
+        "lastName": "Rhodes",
+        "accountType": "admin",
+        "role": {},
+        "patientDetails": {},
+        "symptoms": []
+    },
+    {
+        "username": "philip.hughes",
+        "password": "$2b$10$Q3wE3Qg6IuWs.zfS1HxWx.A.xmyyJQAB1mKakYDIiwgaX341Vo75G",
+        "firstName": "Philip",
+        "lastName": "Hughes",
+        "accountType": "admin",
+        "role": {},
+        "patientDetails": {},
+        "symptoms": []
+    },
+    {
+        "username": "jade.jellicoe",
+        "password": "$2b$10$Eg.LP2a06nBrXeCsHFms2.oEpl2V2xvdmBio9zy3w3F9ty4xjqD8m",
+        "firstName": "Jade",
+        "lastName": "Jellicoe",
+        "accountType": "admin",
+        "role": {},
+        "patientDetails": {},
+        "symptoms": []
+    },
+    {
+        "username": "jenny.jones",
+        "password": "$2b$10$m.9K3WDM.kjLH/Ry.as9GOjexjOrRtuxxcnQ0.mSVNG/Xl4tVQOFO",
+        "firstName": "Jenny",
+        "lastName": "Jones",
+        "accountType": "practitioner",
+        "role": {},
+        "patientDetails": {},
+        "symptoms": []
+    },
+    {
+        "username": "adam.jones",
+        "password": "$2b$10$qnatFRH73/DYrKyD45tS1ehJvF1FoUW1XvkYCnsN58VEeMJxJg0zG",
+        "firstName": "Adam",
+        "lastName": "Jones",
+        "accountType": "patient",
+        "role": {},
+        "patientDetails": {},
+        "symptoms": []
+    }
+]

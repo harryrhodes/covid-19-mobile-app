@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const userSchema = mongoose.Schema({
     accountId: Number,
     username: String,
+    password: String,
     firstName: String,
     lastName: String,
     accountType: String,
@@ -11,17 +12,19 @@ const userSchema = mongoose.Schema({
         // department: {}
     },
     patientDetails: {
-        niNo: String,
-        nhsNo: String,
-        mobileNo: String,
-        emailAddress: String,
-        address: {}
+        // niNo: String,
+        // nhsNo: String,
+        // mobileNo: String,
+        // emailAddress: String,
+        // address: {}
     },
-    symptoms: {
-        date: Date,
-        symptoms: {}
-    }
-}, { collection: 'users' });
+    symptoms: [
+        // {
+        //     date: Date,
+        //     description: []
+        // }
+    ]
+}, { collection: 'users', minimize: false });
 
 /** @type {import('mongoose').Schema} */
 module.exports.schema = userSchema;

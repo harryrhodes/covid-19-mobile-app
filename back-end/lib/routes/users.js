@@ -2,7 +2,7 @@ const Boom = require('@hapi/boom');
 const Joi = require('@hapi/joi');
 const _ = require('lodash');
 const moment = require('moment');
-
+const bcrypt = require('bcrypt');
 const db = require('../core/db');
 const utils = require('../core/utils');
 const config = require('../core/config');
@@ -16,18 +16,68 @@ module.exports = [];
  * @param {import('@hapi/hapi/lib/handler')} handler
  * @returns {import('@hapi/hapi/lib/response')} HAPI response
  */
-module.exports.getUser = async (request) => {
+module.exports.getUsers = async (request) => {
     try {
         request.log(['received']);
 
-        // await db.connect();
+        await db.connect();
 
-        return 'hello';
+        let query = {};
+
+        // if username or account type provided filter by that
+        if (request.params.username) query.username = request.params.username;
+        if (request.query.accountType) query.accountType = request.query.accountType;
+
+        let users = await User.find(query).lean();
+
+        return {
+            count: users.length,
+            data: users
+        }
     } catch (error) {
         request.log(['error'], { message: error, caller: __filename });
         throw error;
     }
 };
+
+/**
+ * Handles GET requests
+ * @param {import('@hapi/hapi/lib/request')} request
+ * @param {import('@hapi/hapi/lib/handler')} handler
+ * @returns {import('@hapi/hapi/lib/response')} HAPI response
+ */
+module.exports.getUserLogin = async (request) => {
+    try {
+        request.log(['received']);
+
+        await db.connect();
+
+        let query = {};
+
+        if (request.params.username) query.username = request.params.username.toLowerCase();
+
+        let user = await User.find(query).lean();
+
+        if (!user[0]) return { status: 'Invalid Username', user: {} };
+
+        let match = false;
+        if (request.query.password) {
+            // bcrypt.hash('adam', 10, function (err, hash) {
+            //     console.log(hash)
+            // });
+            match = await bcrypt.compare(request.query.password, user[0].password);
+        }
+
+        return {
+            status: match ? 'Success: Password Correct' : 'Error: Password Incorrect',
+            user: match ? user[0] : {}
+        }
+    } catch (error) {
+        request.log(['error'], { message: error, caller: __filename });
+        throw error;
+    }
+};
+
 
 /**
  * Handles POST requests
@@ -40,9 +90,34 @@ module.exports.createNewUser = async (request) => {
         request.log(['received']);
 
         // set up
-        // await db.connect();
+        await db.connect();
 
-        return '';
+        // Must provide all required parameters
+        if (!request.payload.username) return Boom.badRequest('No username specified');
+        if (!request.payload.password) return Boom.badRequest('No password specified');
+        if (!request.payload.firstName) return Boom.badRequest('No firstName specified');
+        if (!request.payload.lastName) return Boom.badRequest('No lastName specified');
+        if (!request.payload.accountType) return Boom.badRequest('No accountType specified');
+
+        //hash and salt password
+        let password = bcrypt.hashSync(request.payload.password, 10)
+
+        let newUser = await new User({
+            username: request.payload.username,
+            password: password,
+            firstName: request.payload.firstName,
+            lastName: request.payload.lastName,
+            accountType: request.payload.accountType,
+            role: request.payload.role ? request.payload.role : {},
+            patientDetails: request.payload.patientDetails ? request.payload.patientDetails : {},
+            symptoms: request.payload.symptoms ? request.payload.symptoms : [],
+        })
+
+        await User.insertMany(newUser);
+
+        let user = await User.find({ username: request.payload.username }).lean();
+
+        return user[0];
     } catch (error) {
         request.log(['error'], { message: error, caller: __filename });
         throw error;
@@ -70,7 +145,6 @@ module.exports.updateUser = async (request) => {
     }
 };
 
-
 /**
  * Handles DELETE requests
  * @param {import('@hapi/hapi/lib/request')} request
@@ -95,21 +169,44 @@ module.exports.deleteUser = async (request) => {
 module.exports.push(
     {
         method: 'GET',
-        path: '/user/{username?}',
-        handler: module.exports.getUser,
+        path: '/users/{username?}',
+        handler: module.exports.getUsers,
         options: {
             tags: ['api'],
             log: { collect: true, },
             auth: 'simple',
-            description: 'Get user and login',
-            notes: 'Get user by username and compare passwords match to authenticate',
+            description: 'Get users, you can provide username to return one user',
+            notes: 'Get user by username',
             validate: {
                 params: {
-                    // id: Joi.number().integer().optional().description('User ID').example(516732),
                     username: Joi.string().optional().description('Username of a user').example('name.surname123'),
                 },
                 query: {
-                    password: Joi.string().description('Encrypted users password').example('PaSsWoRd123'),
+                    accountType: Joi.string().valid('admin', 'practitioner', 'patient').optional().lowercase().description('What type of users to return').example('admin'),
+                }
+            },
+            cache: {
+                expiresIn: config.httpCacheExpiresIn,
+                privacy: 'private'
+            },
+        },
+    },
+    {
+        method: 'GET',
+        path: '/users/login/{username?}',
+        handler: module.exports.getUserLogin,
+        options: {
+            tags: ['api'],
+            log: { collect: true, },
+            auth: 'simple',
+            description: 'Get user and check password',
+            notes: 'Get user by username and compare passwords match to authenticate',
+            validate: {
+                params: {
+                    username: Joi.string().required().description('Username of a user').example('name.surname'),
+                },
+                query: {
+                    password: Joi.string().required().description('Users password').example('PaSsWoRd123'),
                 },
             },
             cache: {
@@ -120,7 +217,7 @@ module.exports.push(
     },
     {
         method: 'POST',
-        path: '/user',
+        path: '/users',
         handler: module.exports.createNewUser,
         options: {
             tags: ['api'],
@@ -130,22 +227,19 @@ module.exports.push(
             notes: 'Create a new user',
             validate: {
                 payload: {
-                    username: Joi.string().required().description('Account username').example('name.lastname123'),
-                    firstName: Joi.string().required().description('Account username').example('name.lastname123'),
-                    lastName: Joi.string().required().description('Account username').example('name.lastname123'),
+                    username: Joi.string().required().description('Account username').example('name.lastname'),
+                    password: Joi.string().required().description('Account password').example('password'),
+                    firstName: Joi.string().required().description('Users first name').example('Name'),
+                    lastName: Joi.string().required().description('Users last name').example('Lastname'),
                     accountType: Joi.string().required().valid('admin', 'practitioner', 'patient').description('Type of the account').example('patient'),
-                    role: Joi.object().optional().description('Account username'),
-                    patientDetails: Joi.object().optional().description('Account username'),
-                    symptoms: Joi.object().optional().description('Account username'),
+                    role: Joi.object().optional().description('Role object of a practitioner'),
+                    patientDetails: Joi.object().optional().description('Details of patient if a patient'),
+                    symptoms: Joi.array().optional().description('Symptoms array if a patient'),
                 },
             },
             response: {
                 schema: Joi.object().description('New user object')
             },
-            // cache: {
-            //   expiresIn: config.httpCacheExpiresIn,
-            //   privacy: 'private'
-            // },
         },
     },
     // {
