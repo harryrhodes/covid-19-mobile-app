@@ -2,18 +2,21 @@ import { StyleSheet } from "react-native";
 
 const Styles = StyleSheet.create({
   fullWidthView: {
-    flex: 1,
+    display: "flex",
     flexDirection: "row",
-    justifyContent: "space-between",
-    width: "90%",
+    justifyContent: "center",
+    width: "100%",
   },
   card: {
     position: "relative",
-    width: "100%",
-    margin: 20,
+    width: "90%",
+    marginTop: "1rem",
+    marginBottom: "1rem",
+    boxShadow: "5px 5px 20px #888888",
+    borderRadius: "15px",
   },
   cardContent: {
-    margin: 15,
+    margin: "1rem",
   },
 });
 
