@@ -99,7 +99,7 @@ module.exports.loginUser = async (request) => {
         }
 
         return {
-            status: match ? 'Success: Password Correct' : 'Error: Password Incorrect',
+            status: match ? 'Success' : 'Incorrect Password',
             user: match ? user[0] : {}
         }
     } catch (error) {
