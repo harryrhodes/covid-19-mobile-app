@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useMemo } from "react";
 import { AppRegistry } from "react-native";
 import {
   DefaultTheme,
@@ -12,30 +12,38 @@ import HomeScreen from "./Screens/Home";
 import LoginScreen from "./Screens/Login";
 import RegisterScreen1 from "./Screens/Register-1";
 import RegisterScreen2 from "./Screens/Register-2";
+import {UserContext as UserContext} from "./Hooks/UserContext";
 
 const Drawer = createDrawerNavigator();
 
 export default function App() {
+  const [user, setUser] = useState(null);
+
+  const value = useMemo(() => ({ user, setUser }), [user, setUser]);
   return (
+    <UserContext.Provider value={value}>
     <PaperProvider theme={theme}>
       <NavigationContainer>
         <Drawer.Navigator initialRouteName="Home">
-          <Drawer.Screen
-            name="Home"
-            component={HomeScreen}
-            options={{
-              headerRight: () => (
-                <Button icon="account-circle-outline"></Button>
-              ),
-            }}
-          />
-          <Drawer.Screen
-            name="Login Screen"
-            component={LoginScreen}
-            options={{
-              headerShown: false,
-            }}
-          />
+            {user ? (
+              <Drawer.Screen
+              name="Home"
+              component={HomeScreen}
+              options={{
+                headerRight: () => (
+                  <Button icon="account-circle-outline"></Button>
+                ),
+              }}
+            />
+            ) : (
+            <Drawer.Screen
+              name="Login"
+              component={LoginScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
+            )}
           <Drawer.Screen
             name="Register-1"
             component={RegisterScreen1}
@@ -53,6 +61,7 @@ export default function App() {
         </Drawer.Navigator>
       </NavigationContainer>
     </PaperProvider>
+    </UserContext.Provider>
   );
 }
 
