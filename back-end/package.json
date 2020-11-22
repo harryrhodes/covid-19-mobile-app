@@ -1,0 +1,39 @@
+{
+  "name": "valhalla.software.api",
+  "version": "0.0.1",
+  "description": "TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project.",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon lib/index.js",
+    "serve": "pm2-runtime lib/index.js",
+    "test": "jest tests/ --runInBand --coverage --verbose",
+    "testci": "jest tests/ --runInBand --ci --verbose --reporters=default --reporters=jest-junit"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/basic": "^5.1.1",
+    "@hapi/boom": "^8.0.1",
+    "@hapi/hapi": "^18.4.0",
+    "@hapi/inert": "^5.2.2",
+    "@hapi/joi": "^15.1.1",
+    "@hapi/vision": "^5.5.4",
+    "bcrypt": "^5.0.0",
+    "dotenv": "^8.2.0",
+    "hapi-swagger": "^10.3.0",
+    "lodash": "^4.17.15",
+    "moment": "^2.24.0",
+    "mongoose": "^5.9.2",
+    "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {
+    "@shelf/jest-mongodb": "^1.1.3",
+    "jest": "^24.9.0",
+    "jest-junit": "^9.0.0",
+    "nodemon": "^2.0.6"
+  }
+}
