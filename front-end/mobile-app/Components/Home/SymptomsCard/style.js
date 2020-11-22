@@ -20,6 +20,7 @@ const Styles = StyleSheet.create({
       },
       cardContent: {
         margin: "1rem",
+        display: "flex",
         flexDirection: "row",
         justifyContent: "center",
       },
