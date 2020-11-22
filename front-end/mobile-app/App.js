@@ -13,7 +13,7 @@ import SymptomLog from "./Screens/SymptomLog";
 import LoginScreen from "./Screens/Login";
 import RegisterScreen1 from "./Screens/Register-1";
 import RegisterScreen2 from "./Screens/Register-2";
-import {UserContext as UserContext} from "./Hooks/UserContext";
+import { UserContext } from "./Hooks/UserContext";
 
 const Drawer = createDrawerNavigator();
 
@@ -23,11 +23,11 @@ export default function App() {
   const value = useMemo(() => ({ user, setUser }), [user, setUser]);
   return (
     <UserContext.Provider value={value}>
-    <PaperProvider theme={theme}>
-      <NavigationContainer>
-        <Drawer.Navigator initialRouteName="Home">
-            {user ? (
-              <Drawer.Screen
+      <PaperProvider theme={theme}>
+        <NavigationContainer>
+          <Drawer.Navigator initialRouteName="Home">
+            {/* {user ? ( */}
+            <Drawer.Screen
               name="Home"
               component={HomeScreen}
               options={{
@@ -36,7 +36,7 @@ export default function App() {
                 ),
               }}
             />
-            ) : (
+            {/* ) : ( */}
             <Drawer.Screen
               name="Login"
               component={LoginScreen}
@@ -44,31 +44,31 @@ export default function App() {
                 headerShown: false,
               }}
             />
-            )}
-          <Drawer.Screen
-            name="Register-1"
-            component={RegisterScreen1}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Drawer.Screen
-            name="Register-2"
-            component={RegisterScreen2}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Drawer.Screen
-            name="SymptomLog"
-            component={SymptomLog}
-            options={{
-              headerShown: true,
-            }}
-          />
-        </Drawer.Navigator>
-      </NavigationContainer>
-    </PaperProvider>
+            {/* )} */}
+            <Drawer.Screen
+              name="Register-1"
+              component={RegisterScreen1}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Drawer.Screen
+              name="Register-2"
+              component={RegisterScreen2}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Drawer.Screen
+              name="SymptomLog"
+              component={SymptomLog}
+              options={{
+                headerShown: true,
+              }}
+            />
+          </Drawer.Navigator>
+        </NavigationContainer>
+      </PaperProvider>
     </UserContext.Provider>
   );
 }
