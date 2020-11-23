@@ -13,7 +13,7 @@ const Styles = StyleSheet.create({
         justifyContent: "center",
         alignContent: "center",
         flexWrap: "nowrap",
-        padding: "1rem",
+        marginTop: 20
       },
 })
 
