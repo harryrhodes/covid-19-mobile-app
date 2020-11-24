@@ -13,6 +13,8 @@ import SymptomLog from "./Screens/SymptomLog";
 import LoginScreen from "./Screens/Login";
 import RegisterScreen1 from "./Screens/Register-1";
 import RegisterScreen2 from "./Screens/Register-2";
+import Settings from "./Screens/Settings";
+import Profile from "./Screens/Profile";
 import { UserContext } from "./Hooks/UserContext";
 
 const Drawer = createDrawerNavigator();
@@ -62,6 +64,20 @@ export default function App() {
             <Drawer.Screen
               name="SymptomLog"
               component={SymptomLog}
+              options={{
+                headerShown: true,
+              }}
+            />
+            <Drawer.Screen
+              name="Profile"
+              component={Profile}
+              options={{
+                headerShown: true,
+              }}
+            />
+            <Drawer.Screen
+              name="Settings"
+              component={Settings}
               options={{
                 headerShown: true,
               }}
