@@ -12,9 +12,10 @@ import HomeScreen from "./Screens/Home";
 import LoginScreen from "./Screens/Login";
 import RegisterScreen1 from "./Screens/Register-1";
 import RegisterScreen2 from "./Screens/Register-2";
+import RegisterScreen3 from "./Screens/Register-3";
 import {UserContext as UserContext} from "./Hooks/UserContext";
 
-const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -24,9 +25,9 @@ export default function App() {
     <UserContext.Provider value={value}>
     <PaperProvider theme={theme}>
       <NavigationContainer>
-        <Drawer.Navigator initialRouteName="Home">
+        <Stack.Navigator initialRouteName="Home">
             {user ? (
-              <Drawer.Screen
+              <Stack.Screen
               name="Home"
               component={HomeScreen}
               options={{
@@ -36,7 +37,7 @@ export default function App() {
               }}
             />
             ) : (
-            <Drawer.Screen
+            <Stack.Screen
               name="Login"
               component={LoginScreen}
               options={{
@@ -44,21 +45,28 @@ export default function App() {
               }}
             />
             )}
-          <Drawer.Screen
+          <Stack.Screen
             name="Register-1"
             component={RegisterScreen1}
             options={{
               headerShown: false,
             }}
           />
-          <Drawer.Screen
+          <Stack.Screen
             name="Register-2"
             component={RegisterScreen2}
             options={{
               headerShown: false,
             }}
           />
-        </Drawer.Navigator>
+          <Stack.Screen
+            name="Register-3"
+            component={RegisterScreen3}
+            options={{
+              headerShown: false,
+            }}
+          />
+        </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>
     </UserContext.Provider>

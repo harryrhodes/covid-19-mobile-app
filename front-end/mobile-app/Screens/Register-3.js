@@ -8,122 +8,118 @@ import {
   ProgressBar,
   ActivityIndicator,
 } from "react-native-paper";
+import { UserContext } from "../Hooks/UserContext";
+import UserService from "../Services/UserService";
 
 export default function Register({ navigation, route }) {
-  // const { user, setUser } = useContext(UserContext);
-  const [email, setEmail] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [nhsNo, setNhsNo] = useState("");
-  const [niNo, setNiNo] = useState("");
-  const [mobileNo, setMobileNo] = useState("");
-  // const [usernameError, setUsernameError] = useState(false);
+  const { user, setUser } = useContext(UserContext);
+  const [address1, setAddress1] = useState("");
+  const [address2, setAddress2] = useState("");
+  const [address3, setAddress3] = useState("");
+  const [city, setCity] = useState("");
+  const [county, setCounty] = useState("");
+  const [postcode, setPostcode] = useState("");
+  const [country, setCountry] = useState("");
+  // const [county, setUsernameError] = useState(false);
   // const [passwordError, setPasswordError] = useState(false);
   // const [animate, setAnimate] = useState(false);
-
   const validateInputs = async (
-    email,
-    firstName,
-    lastName,
-    nhsNo,
-    niNo,
-    mobileNo,
-    existingObj
+    address1,
+    address2,
+    address3,
+    city,
+    county,
+    postcode,
+    country,
+    userObj
   ) => {
-    let userObj = {
-      ...existingObj,
-      email: email,
-      firstName: firstName,
-      lastName: lastName,
-      role: "patient",
-      patientDetails: {
-        nhsNo: nhsNo,
-        niNo: niNo,
-        mobileNo: mobileNo,
-      },
+    userObj.patientDetails.address = {
+      address1: address1,
+      address2: address2,
+      address3: address3,
+      city: city,
+      county: county,
+      postcode: postcode,
+      country: country,
     };
-    navigation.navigate("Register-3", {
-      userObj,
-    });
+    let res = await UserService.register(userObj);
+    console.log(res);
   };
   return (
     <SafeAreaView style={styles.container}>
       <View>
         <Title style={styles.appTitle}>Register</Title>
-        <ProgressBar style={styles.progressBar} progress={0.5} />
+        <ProgressBar style={styles.progressBar} progress={0.8} />
       </View>
       <Card style={styles.card}>
         <Card.Content style={styles.cardContent}>
           <TextInput
-            label="Email Address"
+            label="Address 1"
             mode="outlined"
             style={styles.input}
-            autoCapitalize="none"
-            autoCorrect={false}
-            value={email}
-            error={false}
-            onChangeText={(email) => setEmail(email)}
+            value={address1}
+            onChangeText={(address1) => setAddress1(address1)}
           />
           <TextInput
-            label="First Name"
+            label="Address 2"
             mode="outlined"
             style={styles.input}
-            autoCapitalize="characters"
-            autoCorrect={false}
-            value={firstName}
-            error={false}
-            onChangeText={(firstName) => setFirstName(firstName)}
+            value={address2}
+            onChangeText={(address2) => setAddress2(address2)}
           />
           <TextInput
-            label="Last Name"
+            label="Address 3"
             mode="outlined"
             style={styles.input}
-            autoCapitalize="characters"
-            autoCorrect={false}
-            value={lastName}
-            error={false}
-            onChangeText={(lastName) => setLastName(lastName)}
+            value={address3}
+            onChangeText={(address3) => setAddress3(address3)}
           />
           <TextInput
-            label="NHS Number (Optional)"
+            label="City"
             mode="outlined"
             style={styles.input}
-            value={nhsNo}
-            error={false}
-            onChangeText={(nhsNo) => setNhsNo(nhsNo)}
+            value={county}
+            onChangeText={(county) => setCounty(county)}
           />
           <TextInput
-            label="NI Number"
+            label="County"
             mode="outlined"
             style={styles.input}
-            value={niNo}
-            error={false}
-            onChangeText={(niNo) => setNiNo(niNo)}
+            value={city}
+            onChangeText={(city) => setCity(city)}
           />
           <TextInput
-            label="Mobile Number"
+            label="Postcode"
             mode="outlined"
             style={styles.input}
-            value={mobileNo}
-            error={false}
-            onChangeText={(mobileNo) => setMobileNo(mobileNo)}
+            value={postcode}
+            onChangeText={(postcode) => setPostcode(postcode)}
           />
+          <TextInput
+            label="Country"
+            mode="outlined"
+            style={styles.input}
+            value={country}
+            onChangeText={(country) => setCountry(country)}
+          />
+
           <Button
+            style={styles.registerButton}
             mode="contained"
-            style={styles.continueButton}
             onPress={() =>
               validateInputs(
-                email,
-                firstName,
-                lastName,
-                nhsNo,
-                niNo,
-                mobileNo,
+                address1,
+                address2,
+                address3,
+                city,
+                county,
+                postcode,
+                country,
                 route.params.userObj
               )
             }
           >
-            Continue
+            Register
           </Button>
           <ActivityIndicator
             animating={false}
