@@ -1,10 +1,8 @@
 const Boom = require('@hapi/boom');
 const Joi = require('@hapi/joi');
-const _ = require('lodash');
 const moment = require('moment');
 const bcrypt = require('bcrypt');
 const db = require('../core/db');
-const utils = require('../core/utils');
 const config = require('../core/config');
 const User = require('../models/user').model;
 
@@ -108,7 +106,6 @@ module.exports.loginUser = async (request) => {
     }
 };
 
-
 /**
  * Handles POST requests
  * @param {import('@hapi/hapi/lib/request')} request
@@ -162,14 +159,75 @@ module.exports.createNewUser = async (request) => {
  * @param {import('@hapi/hapi/lib/handler')} handler
  * @returns {import('@hapi/hapi/lib/response')} HAPI response
  */
-module.exports.updateUser = async (request) => {
+module.exports.updatePatientSymptoms = async (request) => {
     try {
         request.log(['received']);
 
         // set up
-        // await db.connect();
+        await db.connect();
 
-        return '';
+        let user = await User.find({ username: request.params.username }).lean();
+
+        if (!user[0]) return Boom.notFound('No user found by this username');
+        if (user[0].accountType !== 'patient') return Boom.notAcceptable('User needs to be a patient');
+
+        let updatedUser = await new User(user[0]);
+
+        updatedUser.symptoms.push({
+            date: moment.utc().toISOString(),
+            details: request.payload.symptoms
+        })
+
+        await User.updateOne({ username: updatedUser.username }, updatedUser, { upsert: false, setDefaultsOnInsert: true });
+
+        return updatedUser;
+
+    } catch (error) {
+        request.log(['error'], { message: error, caller: __filename });
+        throw error;
+    }
+};
+
+
+/**
+ * Handles PUT requests
+ * @param {import('@hapi/hapi/lib/request')} request
+ * @param {import('@hapi/hapi/lib/handler')} handler
+ * @returns {import('@hapi/hapi/lib/response')} HAPI response
+ */
+module.exports.updateUserDetails = async (request) => {
+    try {
+        request.log(['received']);
+
+        // set up
+        await db.connect();
+
+        let user = await User.find({ username: request.params.username }).lean();
+
+        if (!user[0]) return Boom.notFound('No user found by this username');
+
+        let newPassword;
+        if (request.payload.password) {
+            //hash and salt password
+            newPassword = bcrypt.hashSync(request.payload.password, 10)
+        }
+
+        let updatedUser = await new User({
+            _id: user[0]._id,
+            username: user[0].username,
+            password: request.payload.password ? newPassword : user[0].password,
+            email: request.payload.email ? request.payload.email : user[0].email,
+            firstName: request.payload.firstName ? request.payload.firstName : user[0].firstName,
+            lastName: request.payload.lastName ? request.payload.lastName : user[0].lastName,
+            accountType: user[0].accountType,
+            role: request.payload.role ? request.payload.role : user[0].role,
+            patientDetails: request.payload.patientDetails ? request.payload.patientDetails : user[0].patientDetails,
+            symptoms: user[0].symptoms,
+        });
+
+        await User.updateOne({ username: updatedUser.username }, updatedUser, { upsert: false, setDefaultsOnInsert: true });
+
+        return updatedUser;
 
     } catch (error) {
         request.log(['error'], { message: error, caller: __filename });
@@ -188,13 +246,19 @@ module.exports.deleteUser = async (request) => {
         request.log(['received']);
 
         // set up
-        // await db.connect();
+        await db.connect();
 
-        return '';
+        let user = await User.find({ username: request.params.username }).lean();
+        if (!user[0]) return Boom.notFound('No user found by this username');
+        if (user[0].accountType === 'admin') return Boom.notAcceptable('Cannot delete an admin user');
+
+        await User.deleteOne({ username: request.params.username });
+
+        return 'Deleted a user: ' + request.params.username;
 
     } catch (error) {
-        request.log(['error'], { message: `Unable to fully deprecate DOR Template ${error}`, caller: __filename });
-        throw new Error(`ERROR: Unable to fully deprecate DOR Template ${error}`);
+        request.log(['error'], { message: `Unable to delete a User ${error}`, caller: __filename });
+        throw new Error(`ERROR: Unable to delete a User ${error}`);
     }
 };
 
@@ -293,55 +357,77 @@ module.exports.push(
             },
         },
     },
-    // {
-    //     method: 'PUT',
-    //     path: '/dor-templates/{id}',
-    //     handler: module.exports.publishDorTemplate,
-    //     options: {
-    //         tags: ['api'],
-    //         log: { collect: true, },
-    //         auth: 'simple',
-    //         description: 'Publish an draft DOR template',
-    //         notes: 'Publish an draft DOR template',
-    //         validate: {
-    //             params: {
-    //                 id: Joi.number().integer().required().description('Work item ID').example(516732),
-    //             },
-    //             payload: {
-    //                 createDashboard: Joi.boolean().default(false).description('Whether to create a dashboard in Azure DevOps').example(true),
-    //             },
-    //         },
-    //         response: {
-    //             schema: Joi.object({
-    //                 id: Joi.number().description('DOR Template work item ID').example(123456),
-    //                 dashboardId: Joi.string().allow('').description('Dashboard GUID.  Blank if no dashboard created').example('799a6519-95c1-45c6-aa19-c03d432fdfe8'),
-    //                 data: Joi.object().description('DOR Template work item'),
-    //             })
-    //         },
-    //     },
-    // },
-    // {
-    //     method: 'DELETE',
-    //     path: '/dor-templates/{id}',
-    //     handler: module.exports.deprecateDorTemplate,
-    //     options: {
-    //         tags: ['api'],
-    //         log: { collect: true, },
-    //         auth: 'simple',
-    //         description: 'Deprecate a DOR Template',
-    //         notes: 'Deprecate a DOR Template and set all of its assigned DORs to inactive',
-    //         validate: {
-    //             params: {
-    //                 id: Joi.number().integer().required().description('Work item ID to be deprecated').example(618974),
-    //             },
-    //             payload: {
-    //                 comment: Joi.string().required().description('Reason to deprecate a DOR Template').example('The DOR Template is outdated and is no longer useful to teams.'),
-    //                 user: Joi.string().allow('').description('Email of a user that is deprecating the DOR Template').example('name.surname@ivanti.com'),
-    //             },
-    //         },
-    //         response: {
-    //             schema: Joi.object().description('Deprecated Work Item object'),
-    //         },
-    //     },
-    // },
+    {
+        method: 'PUT',
+        path: '/users/symptoms/{username}',
+        handler: module.exports.updatePatientSymptoms,
+        options: {
+            tags: ['api'],
+            log: { collect: true, },
+            auth: 'simple',
+            description: 'Update patients symptoms',
+            notes: 'Update patients symptoms by adding it into the symptoms array',
+            validate: {
+                params: {
+                    username: Joi.string().required().description('Username of a user').example('name.surname'),
+                },
+                payload: {
+                    symptoms: Joi.array().items(Joi.object({
+                        name: Joi.string().required().description('Name of the symptom').example('Dry Cough'),
+                        comment: Joi.string().optional().allow('').description('Any comments').example('Severe dry cough'),
+                    })).required().description('Array of symptoms'),
+                },
+            },
+            cache: {
+                expiresIn: config.httpCacheExpiresIn,
+                privacy: 'private'
+            },
+        },
+    },
+    {
+        method: 'PUT',
+        path: '/users/{username}',
+        handler: module.exports.updateUserDetails,
+        options: {
+            tags: ['api'],
+            log: { collect: true, },
+            auth: 'simple',
+            description: 'Update user details',
+            notes: 'Update user details',
+            validate: {
+                params: {
+                    username: Joi.string().required().description('Username of a user').example('name.surname'),
+                },
+                payload: {
+                    password: Joi.string().optional().allow('').description('Account password').example('password'),
+                    email: Joi.string().optional().allow('').description('Account email').example('password'),
+                    firstName: Joi.string().optional().allow('').description('Users first name').example('Name'),
+                    lastName: Joi.string().optional().allow('').description('Users last name').example('Lastname'),
+                    role: Joi.object().optional().allow({}).description('Role object of a practitioner'),
+                    patientDetails: Joi.object().optional().allow({}).description('Details of patient if a patient'),
+                },
+            },
+            cache: {
+                expiresIn: config.httpCacheExpiresIn,
+                privacy: 'private'
+            },
+        },
+    },
+    {
+        method: 'DELETE',
+        path: '/users/{username}',
+        handler: module.exports.deleteUser,
+        options: {
+            tags: ['api'],
+            log: { collect: true, },
+            auth: 'simple',
+            description: 'Delete a user',
+            notes: 'Delete a user, cant delete an admin',
+            validate: {
+                params: {
+                    username: Joi.string().required().description('Username of a user').example('name.surname'),
+                },
+            },
+        },
+    },
 );

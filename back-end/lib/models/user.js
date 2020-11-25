@@ -8,21 +8,15 @@ const userSchema = mongoose.Schema({
     firstName: String,
     lastName: String,
     accountType: String,
-    role: {
-        // roleName: String,
-        // department: {}
-    },
-    patientDetails: {
-        // niNo: String,
-        // nhsNo: String,
-        // mobileNo: String,
-        // emailAddress: String,
-        // address: {}
-    },
+    role: {},
+    patientDetails: {},
     symptoms: [
         // {
         //     date: Date,
-        //     description: []
+        //     details: [{
+        //         name: String,
+        //         comment: String
+        //     }]
         // }
     ]
 }, { collection: 'users', minimize: false });
