@@ -9,6 +9,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import HomeScreen from "./Screens/Home";
+import SettingsScreen from "./Screens/Settings";
+import EditProfileScreen from "./Screens/EditProfile";
+import AccountSettingsScreen from "./Screens/AccountSettings";
 import LoginScreen from "./Screens/Login";
 import RegisterScreen1 from "./Screens/Register-1";
 import RegisterScreen2 from "./Screens/Register-2";
@@ -58,6 +61,7 @@ export default function App() {
             </Stack.Navigator>
           ) : (
             <Stack.Navigator>
+              <Stack.Screen name="Settings" component={SettingsScreen} />
               <Stack.Screen
                 name="Home"
                 component={HomeScreen}
@@ -66,6 +70,11 @@ export default function App() {
                     <Button icon="account-circle-outline"></Button>
                   ),
                 }}
+              />
+              <Stack.Screen name="EditProfile" component={EditProfileScreen} />
+              <Stack.Screen
+                name="AccountSettings"
+                component={AccountSettingsScreen}
               />
             </Stack.Navigator>
           )}
