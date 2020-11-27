@@ -72,6 +72,7 @@ export default function Register({ navigation }) {
               style={styles.input}
               autoCapitalize="none"
               autoCorrect={false}
+              secureTextEntry={true}
               value={password}
               onChangeText={(password) => setPassword(password)}
             />
@@ -82,6 +83,7 @@ export default function Register({ navigation }) {
               style={styles.input}
               autoCapitalize="none"
               autoCorrect={false}
+              secureTextEntry={true}
               value={confirmPassword}
               error={passwordError}
               onChangeText={(confirmPassword) =>

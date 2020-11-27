@@ -13,8 +13,9 @@ export default {
         let res = await axios.get("http://localhost:4000"+"/users/login/"+username,{params: {password: password},auth});
         return res.data || [];
     },
-    register: async (payload) =>{
-        let res = await axios.post("http://localhost:4000"+"/users",{payload}, {auth})
+    register: async (user) =>{
+        let res = await axios.post("http://localhost:4000"+"/users",user, {auth})
         return res.data || [];
     }              
 }
+

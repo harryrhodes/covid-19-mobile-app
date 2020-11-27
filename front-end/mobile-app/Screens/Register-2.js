@@ -35,12 +35,14 @@ export default function Register({ navigation, route }) {
       email: email,
       firstName: firstName,
       lastName: lastName,
-      role: "patient",
+      accountType: "patient",
+      role: {},
       patientDetails: {
         nhsNo: nhsNo,
         niNo: niNo,
         mobileNo: mobileNo,
       },
+      symptoms: [],
     };
     navigation.navigate("Register-3", {
       userObj,
@@ -88,6 +90,7 @@ export default function Register({ navigation, route }) {
             label="NHS Number (Optional)"
             mode="outlined"
             style={styles.input}
+            keyboardType="numeric"
             value={nhsNo}
             error={false}
             onChangeText={(nhsNo) => setNhsNo(nhsNo)}
@@ -96,6 +99,7 @@ export default function Register({ navigation, route }) {
             label="NI Number"
             mode="outlined"
             style={styles.input}
+            keyboardType="numeric"
             value={niNo}
             error={false}
             onChangeText={(niNo) => setNiNo(niNo)}
@@ -104,6 +108,7 @@ export default function Register({ navigation, route }) {
             label="Mobile Number"
             mode="outlined"
             style={styles.input}
+            keyboardType="numeric"
             value={mobileNo}
             error={false}
             onChangeText={(mobileNo) => setMobileNo(mobileNo)}

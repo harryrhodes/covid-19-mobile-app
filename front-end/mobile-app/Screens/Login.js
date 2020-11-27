@@ -63,6 +63,7 @@ export default function Login({ navigation }) {
               style={styles.input}
               autoCapitalize="none"
               autoCorrect={false}
+              secureTextEntry={true}
               value={password}
               error={passwordError}
               onChangeText={(password) => setPassword(password)}

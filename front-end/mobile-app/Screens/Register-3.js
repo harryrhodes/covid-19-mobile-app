@@ -43,7 +43,7 @@ export default function Register({ navigation, route }) {
       country: country,
     };
     let res = await UserService.register(userObj);
-    console.log(res);
+    setUser(res);
   };
   return (
     <SafeAreaView style={styles.container}>
