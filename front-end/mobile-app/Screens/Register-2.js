@@ -232,7 +232,7 @@ export default function Register({ navigation, route }) {
             Continue
           </Button>
           <ActivityIndicator
-            animating={false}
+            animating={animate}
             style={styles.activityIndicator}
           />
         </Card.Content>
