@@ -18,10 +18,42 @@ export default function AccountSettings({ navigation }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [errorText, setErrorText] = useState("");
+  const [feedbackText, setFeedbackText] = useState("");
   const [usernameError, setUsernameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [animate, setAnimate] = useState(false);
+
+  const validateInputs = async (
+    username,
+    password,
+    confirmPassword,
+    updateUsername,
+    updatePassword
+  ) => {
+    setAnimate(true);
+    if (!username) {
+      console.log("password");
+    } else if (!password) {
+      console.log("username");
+    }
+    let res = await UserService.getSingle(username);
+    if (res.count != 0) {
+      setFeedbackText("Sorry This Username Is Already Taken");
+      setUsernameError(true);
+      setAnimate(false);
+    } else {
+      setUsernameError(false);
+      if (password != confirmPassword) {
+        setFeedbackText("Your Passwords Do Not Match!");
+        setPasswordError(true);
+        setAnimate(false);
+      } else {
+        setPasswordError(false);
+        setAnimate(false);
+      }
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView keyboardShouldPersistTaps="handled">
@@ -42,7 +74,19 @@ export default function AccountSettings({ navigation }) {
               onChangeText={(username) => setUsername(username)}
             />
             <HelperText type="error" visible={usernameError}>
-              {errorText}
+              {feedbackText}
+            </HelperText>
+            <Button
+              mode="contained"
+              style={styles.continueButton}
+              onPress={() =>
+                validateInputs(username, password, confirmPassword)
+              }
+            >
+              Change Username
+            </Button>
+            <HelperText type="info" visible={true}>
+              {feedbackText} Username Updated!
             </HelperText>
             <Subheading>Change Password</Subheading>
             <TextInput
@@ -71,21 +115,31 @@ export default function AccountSettings({ navigation }) {
               }
             />
             <HelperText type="error" visible={passwordError}>
-              {errorText}
+              {feedbackText}
             </HelperText>
-            <Button
-              mode="contained"
-              style={styles.continueButton}
-              onPress={() =>
-                validateInputs(username, password, confirmPassword)
-              }
-            >
-              Continue
-            </Button>
             <ActivityIndicator
               animating={animate}
               style={styles.activityIndicator}
             />
+
+            <Button
+              mode="contained"
+              style={styles.continueButton}
+              onPress={() =>
+                validateInputs(
+                  username,
+                  password,
+                  confirmPassword,
+                  (updateUsername = false),
+                  (updatePassword = true)
+                )
+              }
+            >
+              Change Password
+            </Button>
+            <HelperText type="info" visible={true}>
+              {feedbackText} Password Updated!
+            </HelperText>
             <Subheading>Danger Zone</Subheading>
             <Button onPress={() => navigation.navigate("Register-1")}>
               Remove Account
