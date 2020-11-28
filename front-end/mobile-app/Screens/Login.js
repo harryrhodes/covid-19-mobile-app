@@ -28,10 +28,13 @@ export default function Login({ navigation }) {
     } else if (res.status == "Invalid Username/Email") {
       setUsernameError(true);
       setErrorText(res.status);
+      console.log("un error: " + res.status)
       setAnimate(false);
     } else if (res.status == "Incorrect Password") {
       setPasswordError(true);
+      setUsernameError(false)
       setErrorText(res.status);
+      console.log("pw error: " + res.status)
       setAnimate(false);
     } else {
     }

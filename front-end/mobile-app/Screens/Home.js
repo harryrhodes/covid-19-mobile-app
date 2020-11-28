@@ -16,8 +16,8 @@ export default function Home({ navigation }) {
   }
   return (
     <SafeAreaView style={Styles.container}>
-      <Welcome/>
-      <SymptomsCard />
+      <Welcome name={user.firstName}/>
+      <SymptomsCard symptoms={user.symptoms}/>
       <BookTestCard />
       <LogSymptomsCard />
       <Button onPress={() => logOut(user)} >Log Out</Button>
