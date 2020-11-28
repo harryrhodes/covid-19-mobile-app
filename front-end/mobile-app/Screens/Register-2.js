@@ -7,19 +7,25 @@ import {
   Title,
   ProgressBar,
   ActivityIndicator,
+  HelperText,
 } from "react-native-paper";
+import UserService from "../Services/UserService";
 
 export default function Register({ navigation, route }) {
-  // const { user, setUser } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [nhsNo, setNhsNo] = useState("");
   const [niNo, setNiNo] = useState("");
   const [mobileNo, setMobileNo] = useState("");
-  // const [usernameError, setUsernameError] = useState(false);
-  // const [passwordError, setPasswordError] = useState(false);
-  // const [animate, setAnimate] = useState(false);
+  const [errorText, setErrorText] = useState("");
+  const [emailError, setEmailError] = useState(false);
+  const [firstNameError, setFirstNameError] = useState(false);
+  const [lastNameError, setLastNameError] = useState(false);
+  const [animate, setAnimate] = useState(false);
+  const [nhsError, setNhsError] = useState(false);
+  const [niError, setNiError] = useState(false);
+  const [mobileError, setMobileError] = useState(false);
 
   const validateInputs = async (
     email,
@@ -30,6 +36,13 @@ export default function Register({ navigation, route }) {
     mobileNo,
     existingObj
   ) => {
+    setAnimate(true);
+    // let emailRes = await UserService.getSingle(email);
+    // let NHSRes = await UserService.getSingle(nhsNo);
+    // let niRes = await UserService.getSingle(niNo);
+    // let mobileRes = await UserService.getSingle(mobileNo);
+    const emailRe = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const niRe = /^(?!BG|GB|NK|KN|TN|NT|ZZ)[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\s*\d{2}\s*\d{2}\s*\d{2}\s*[A-D]$/;
     let userObj = {
       ...existingObj,
       email: email,
@@ -44,9 +57,79 @@ export default function Register({ navigation, route }) {
       },
       symptoms: [],
     };
-    navigation.navigate("Register-3", {
-      userObj,
-    });
+    // if (emailRes.count != 0){
+    //   setErrorText("This email is already in use")
+    //   setEmailError(true)
+    //   setAnimate(false)
+    // }
+    if (!emailRe.test(email)) {
+      setErrorText("Please enter a valid email");
+      setEmailError(true);
+      setAnimate(false);
+    } else {
+      setEmailError(false);
+      if (firstName.length <= 2) {
+        setErrorText("Names cannot be shorter than 2 letters");
+        setFirstNameError(true);
+        setAnimate(false);
+      } else if (!/^[a-zA-Z]+$/.test(firstName)) {
+        setErrorText("Your first name must only contain letters");
+        setFirstNameError(true);
+        setAnimate(false);
+      } else {
+        setFirstNameError(false);
+        if (lastName.length <= 2) {
+          setErrorText("Names cannot be shorter than 2 letters");
+          setLastNameError(true);
+          setAnimate(false);
+        } else if (!/^[a-zA-Z]+$/.test(lastName)) {
+          setErrorText("Your first name must only contain letters");
+          setLastNameError(true);
+          setAnimate(false);
+        } else {
+          setLastNameError(false);
+          //ln is valid, checks NHS number
+          if (!/^\d+$/.test(nhsNo)) {
+            setErrorText("Your NHS number can only contain digits");
+            setNhsError(true);
+            setAnimate(false);
+          } else if (!/^\d{10}$/.test(nhsNo)) {
+            setErrorText("Your NHS must be 10 digits exactly");
+            setNhsError(true);
+            setAnimate(false);
+          } else {
+            setNhsError(false);
+            if (!niRe.test(niNo)) {
+              setErrorText("This is not a valid NI number");
+              setNiError(true);
+              setAnimate(false);
+            } else {
+              setNiError(false)
+              if (!/^\d+$/.test(mobileNo)) {
+                setErrorText("Your mobile number can only contain digits");
+                setMobileError(true);
+                setAnimate(false);
+              }
+              // if(mobileRes.count !=0) {
+              //   setErrorText("This mobile number is already in use")
+              //   setMobileError(true)
+              //   setAnimate(false)
+              // }
+              else if (!/^\d{11}$/.test(mobileNo)) {
+                setErrorText("Your mobile number must be 11 digits exactly");
+                setMobileError(true);
+                setAnimate(false);
+              } else {
+                setMobileError(false);
+                navigation.navigate("Register-3", {
+                  userObj,
+                });
+              }
+            }
+          }
+        }
+      }
+    }
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -63,9 +146,12 @@ export default function Register({ navigation, route }) {
             autoCapitalize="none"
             autoCorrect={false}
             value={email}
-            error={false}
+            error={emailError}
             onChangeText={(email) => setEmail(email)}
           />
+          <HelperText type="error" visible={emailError}>
+            {errorText}
+          </HelperText>
           <TextInput
             label="First Name"
             mode="outlined"
@@ -73,9 +159,12 @@ export default function Register({ navigation, route }) {
             autoCapitalize="characters"
             autoCorrect={false}
             value={firstName}
-            error={false}
+            error={firstNameError}
             onChangeText={(firstName) => setFirstName(firstName)}
           />
+          <HelperText type="error" visible={firstNameError}>
+            {errorText}
+          </HelperText>
           <TextInput
             label="Last Name"
             mode="outlined"
@@ -83,36 +172,48 @@ export default function Register({ navigation, route }) {
             autoCapitalize="characters"
             autoCorrect={false}
             value={lastName}
-            error={false}
+            error={lastNameError}
             onChangeText={(lastName) => setLastName(lastName)}
           />
+          <HelperText type="error" visible={lastNameError}>
+            {errorText}
+          </HelperText>
           <TextInput
             label="NHS Number (Optional)"
             mode="outlined"
             style={styles.input}
             keyboardType="numeric"
             value={nhsNo}
-            error={false}
+            error={nhsError}
             onChangeText={(nhsNo) => setNhsNo(nhsNo)}
           />
+          <HelperText type="error" visible={nhsError}>
+            {errorText}
+          </HelperText>
           <TextInput
             label="NI Number"
             mode="outlined"
             style={styles.input}
             keyboardType="numeric"
             value={niNo}
-            error={false}
+            error={niError}
             onChangeText={(niNo) => setNiNo(niNo)}
           />
+          <HelperText type="error" visible={niError}>
+            {errorText}
+          </HelperText>
           <TextInput
             label="Mobile Number"
             mode="outlined"
             style={styles.input}
             keyboardType="numeric"
             value={mobileNo}
-            error={false}
+            error={mobileError}
             onChangeText={(mobileNo) => setMobileNo(mobileNo)}
           />
+          <HelperText type="error" visible={mobileError}>
+            {errorText}
+          </HelperText>
           <Button
             mode="contained"
             style={styles.continueButton}
