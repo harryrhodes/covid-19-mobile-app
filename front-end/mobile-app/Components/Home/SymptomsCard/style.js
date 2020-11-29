@@ -13,11 +13,7 @@ const Styles = StyleSheet.create({
         marginTop: "1rem",
         marginBottom: "1rem",
         //boxShadow: "5px 5px 20px #888888",
-<<<<<<< HEAD:front-end/mobile-app/Components/Home/SymptomsCard/style.js
         //borderRadius: "15px",
-=======
-        borderRadius: 15,
->>>>>>> 6dcf4dc1bdebae4785ee4124353669815c6c6441:front-end/mobile-app/Components/SymptomsCard/style.js
         display: "flex",
         flexDirection: "row",
         alignContent: "center",

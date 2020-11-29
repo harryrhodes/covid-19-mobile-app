@@ -9,7 +9,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import HomeScreen from "./Screens/Home";
-import SymptomLog from "./Screens/SymptomLog";
+import SymptomScreen from "./Screens/SymptomLog";
 import LoginScreen from "./Screens/Login";
 import RegisterScreen1 from "./Screens/Register-1";
 import RegisterScreen2 from "./Screens/Register-2";
@@ -27,7 +27,7 @@ export default function App() {
       <PaperProvider theme={theme}>
         <NavigationContainer>
           {user == null ? (
-            <Stack.Navigator>
+            <Stack.Navigator initialRouteName="SymptomLog">
               <Stack.Screen
                 name="Login"
                 component={LoginScreen}
@@ -67,6 +67,10 @@ export default function App() {
                     <Button icon="account-circle-outline"></Button>
                   ),
                 }}
+              />
+              <Stack.Screen
+                name="SymptomLog"
+                component={SymptomScreen}
               />
             </Stack.Navigator>
           )}
