@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { View } from "react-native";
 import { ActivityIndicator, Card, RadioButton } from "react-native-paper";
+import { onChange } from "react-native-reanimated";
 import { Styles } from "./style";
 
 export default function SymptomForm(props) {
   const [value, setValue] = useState(false);
 
-  function updateSelectedStateValue(value) {
-    props.onChange(value);
-    setValue(value);
+  function updateValue(value) {
+    props.onChange(props.name, value)
+    setValue(value)
   }
 
   return (
@@ -17,10 +18,10 @@ export default function SymptomForm(props) {
         <Card.Title title={props.text} titleNumberOfLines={3} />
         <Card.Content style={Styles.cardContent}>
           <RadioButton.Group
-            onValueChange={(newVal) => updateSelectedStateValue(newVal)}
+            onValueChange={updateValue}
             value={value}
           >
-            <RadioButton.Item label="Yes" value={true} />
+            <RadioButton.Item label="Yes" value={true} onPress={updateValue}/>
             <RadioButton.Item label="No" value={false} />
           </RadioButton.Group>
           <ActivityIndicator

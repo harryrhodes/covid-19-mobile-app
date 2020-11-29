@@ -40,6 +40,7 @@ export default function SymptomLog() {
   // };
 
   const handleInput = (symptomName, value) => {
+    console.log(symptomName)
     console.log(values);
     console.log(value);
     setValue(value);
@@ -58,7 +59,8 @@ export default function SymptomLog() {
           key={symptoms[i]._id}
           text={"Have you experienced: "+symptoms[i].name}
           value={value}
-          onChange={handleInput(symptoms[i].name, value)}
+          name={symptoms[i].name}
+          onChange={handleInput}
         />
       )
     } 
