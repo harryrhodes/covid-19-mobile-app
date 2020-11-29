@@ -343,7 +343,7 @@ module.exports.push(
                 payload: {
                     username: Joi.string().required().description('Account username').example('name.lastname'),
                     password: Joi.string().required().description('Account password').example('password'),
-                    email: Joi.string().required().description('Account email').example('password'),
+                    email: Joi.string().required().description('Account email').example('name.lastname@valhalla.com'),
                     firstName: Joi.string().required().description('Users first name').example('Name'),
                     lastName: Joi.string().required().description('Users last name').example('Lastname'),
                     accountType: Joi.string().required().valid('admin', 'practitioner', 'patient').description('Type of the account').example('patient'),
