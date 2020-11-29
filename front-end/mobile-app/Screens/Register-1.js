@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
   ProgressBar,
   HelperText,
+  Text,
 } from "react-native-paper";
 import UserService from "../Services/UserService";
 
@@ -18,10 +19,17 @@ export default function Register({ navigation }) {
   const [errorText, setErrorText] = useState("");
   const [usernameError, setUsernameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [password2Error, setPassword2Error] = useState(false);
   const [animate, setAnimate] = useState(false);
 
   const validateInputs = async (username, password, confirmPassword) => {
     setAnimate(true);
+    const pwRe = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+    if (username == "") {
+      setErrorText("This field is required");
+      setUsernameError(true);
+      setAnimate(false);
+    }
     let res = await UserService.getSingle(username);
     if (res.count != 0) {
       setErrorText("Sorry This Username Is Already Taken");
@@ -29,15 +37,30 @@ export default function Register({ navigation }) {
       setAnimate(false);
     } else {
       setUsernameError(false);
-      if (password != confirmPassword) {
-        setErrorText("Your passwords Do Not Match!");
+      if (password == "") {
+        setErrorText("This field is required");
+        setPasswordError(true);
+        setAnimate(false);
+      } else if (!pwRe.test(password)) {
+        setErrorText("Your password is not strong enough");
         setPasswordError(true);
         setAnimate(false);
       } else {
         setPasswordError(false);
-        navigation.navigate("Register-2", {
-          userObj: { username: username, password: password },
-        });
+        if (confirmPassword == "") {
+          setErrorText("This field is required");
+          setPassword2Error(true);
+          setAnimate(false);
+        } else if (password != confirmPassword) {
+          setErrorText("Passwords do not match");
+          setPassword2Error(true);
+          setAnimate(false);
+        } else {
+          setPassword2Error(false);
+          navigation.navigate("Register-2", {
+            userObj: { username: username, password: password },
+          });
+        }
       }
     }
   };
@@ -52,7 +75,7 @@ export default function Register({ navigation }) {
         <Card style={styles.card}>
           <Card.Content style={styles.cardContent}>
             <TextInput
-              label="Username"
+              label="Username (Required)"
               mode="outlined"
               selectionColor="#ffffff"
               style={styles.input}
@@ -65,8 +88,12 @@ export default function Register({ navigation }) {
             <HelperText type="error" visible={usernameError}>
               {errorText}
             </HelperText>
+            <Text style={styles.Text}>Password requirements:</Text>
+            <Text style={styles.Text}>- 8 characters minimum</Text>
+            <Text style={styles.Text}>- 1 uppercase, lowercase and letter</Text>
+            <Text style={styles.Text}>- no symbols</Text>
             <TextInput
-              label="Password"
+              label="Password (Required)"
               mode="outlined"
               selectionColor="#ffffff"
               style={styles.input}
@@ -74,10 +101,14 @@ export default function Register({ navigation }) {
               autoCorrect={false}
               secureTextEntry={true}
               value={password}
+              error={passwordError}
               onChangeText={(password) => setPassword(password)}
             />
+            <HelperText type="error" visible={passwordError}>
+              {errorText}
+            </HelperText>
             <TextInput
-              label="Confirm Password"
+              label="Confirm Password (Required)"
               mode="outlined"
               selectionColor="#ffffff"
               style={styles.input}
@@ -85,12 +116,12 @@ export default function Register({ navigation }) {
               autoCorrect={false}
               secureTextEntry={true}
               value={confirmPassword}
-              error={passwordError}
+              error={password2Error}
               onChangeText={(confirmPassword) =>
                 setConfirmPassword(confirmPassword)
               }
             />
-            <HelperText type="error" visible={passwordError}>
+            <HelperText type="error" visible={password2Error}>
               {errorText}
             </HelperText>
             <Button
@@ -143,5 +174,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginLeft: 20,
     marginRight: 20,
+  },
+  Text: {
+    textAlign: "center",
   },
 });

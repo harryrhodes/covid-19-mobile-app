@@ -1,5 +1,5 @@
-import React, { useState, useContext } from "react";
-import { StyleSheet, Text, SafeAreaView, View } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, SafeAreaView, View } from "react-native";
 import {
   TextInput,
   Button,
@@ -9,7 +9,6 @@ import {
   ActivityIndicator,
   HelperText,
 } from "react-native-paper";
-import UserService from "../Services/UserService";
 
 export default function Register({ navigation, route }) {
   const [email, setEmail] = useState("");
@@ -37,12 +36,27 @@ export default function Register({ navigation, route }) {
     existingObj
   ) => {
     setAnimate(true);
-    // let emailRes = await UserService.getSingle(email);
-    // let NHSRes = await UserService.getSingle(nhsNo);
-    // let niRes = await UserService.getSingle(niNo);
-    // let mobileRes = await UserService.getSingle(mobileNo);
     const emailRe = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const niRe = /^(?!BG|GB|NK|KN|TN|NT|ZZ)[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\s*\d{2}\s*\d{2}\s*\d{2}\s*[A-D]$/;
+
+    const validateNhsNumber = (nhsNo) => {
+      if (!nhsNo == "") {
+        if (!/^\d+$/.test(nhsNo)) {
+          setErrorText("Your NHS number can only contain digits");
+          setNhsError(true);
+          setAnimate(false);
+        } else if (!/^\d{10}$/.test(nhsNo)) {
+          setErrorText("Your NHS must be 10 digits exactly");
+          setNhsError(true);
+          setAnimate(false);
+        } else {
+          setNhsError(false);
+        }
+      } else {
+        setNhsError(false)
+      }
+    };
+
     let userObj = {
       ...existingObj,
       email: email,
@@ -57,11 +71,6 @@ export default function Register({ navigation, route }) {
       },
       symptoms: [],
     };
-    // if (emailRes.count != 0){
-    //   setErrorText("This email is already in use")
-    //   setEmailError(true)
-    //   setAnimate(false)
-    // }
     if (!emailRe.test(email)) {
       setErrorText("Please enter a valid email");
       setEmailError(true);
@@ -88,43 +97,27 @@ export default function Register({ navigation, route }) {
           setAnimate(false);
         } else {
           setLastNameError(false);
-          //ln is valid, checks NHS number
-          if (!/^\d+$/.test(nhsNo)) {
-            setErrorText("Your NHS number can only contain digits");
-            setNhsError(true);
-            setAnimate(false);
-          } else if (!/^\d{10}$/.test(nhsNo)) {
-            setErrorText("Your NHS must be 10 digits exactly");
-            setNhsError(true);
+          validateNhsNumber(nhsNo);
+          if (!niRe.test(niNo)) {
+            setErrorText("This is not a valid NI number");
+            setNiError(true);
             setAnimate(false);
           } else {
-            setNhsError(false);
-            if (!niRe.test(niNo)) {
-              setErrorText("This is not a valid NI number");
-              setNiError(true);
+            setNiError(false);
+            if (!/^\d+$/.test(mobileNo)) {
+              setErrorText("Your mobile number can only contain digits");
+              setMobileError(true);
+              setAnimate(false);
+            }
+            else if (!/^\d{11}$/.test(mobileNo)) {
+              setErrorText("Your mobile number must be 11 digits exactly");
+              setMobileError(true);
               setAnimate(false);
             } else {
-              setNiError(false)
-              if (!/^\d+$/.test(mobileNo)) {
-                setErrorText("Your mobile number can only contain digits");
-                setMobileError(true);
-                setAnimate(false);
-              }
-              // if(mobileRes.count !=0) {
-              //   setErrorText("This mobile number is already in use")
-              //   setMobileError(true)
-              //   setAnimate(false)
-              // }
-              else if (!/^\d{11}$/.test(mobileNo)) {
-                setErrorText("Your mobile number must be 11 digits exactly");
-                setMobileError(true);
-                setAnimate(false);
-              } else {
-                setMobileError(false);
-                navigation.navigate("Register-3", {
-                  userObj,
-                });
-              }
+              setMobileError(false);
+              navigation.navigate("Register-3", {
+                userObj,
+              });
             }
           }
         }
@@ -140,7 +133,7 @@ export default function Register({ navigation, route }) {
       <Card style={styles.card}>
         <Card.Content style={styles.cardContent}>
           <TextInput
-            label="Email Address"
+            label="Email Address (Required)"
             mode="outlined"
             style={styles.input}
             autoCapitalize="none"
@@ -153,7 +146,7 @@ export default function Register({ navigation, route }) {
             {errorText}
           </HelperText>
           <TextInput
-            label="First Name"
+            label="First Name (Required)"
             mode="outlined"
             style={styles.input}
             autoCapitalize="characters"
@@ -166,7 +159,7 @@ export default function Register({ navigation, route }) {
             {errorText}
           </HelperText>
           <TextInput
-            label="Last Name"
+            label="Last Name (Required)"
             mode="outlined"
             style={styles.input}
             autoCapitalize="characters"
@@ -191,7 +184,7 @@ export default function Register({ navigation, route }) {
             {errorText}
           </HelperText>
           <TextInput
-            label="NI Number"
+            label="NI Number (Required)"
             mode="outlined"
             style={styles.input}
             keyboardType="numeric"
@@ -203,7 +196,7 @@ export default function Register({ navigation, route }) {
             {errorText}
           </HelperText>
           <TextInput
-            label="Mobile Number"
+            label="Mobile Number (Required)"
             mode="outlined"
             style={styles.input}
             keyboardType="numeric"

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { StyleSheet, Text, SafeAreaView, View } from "react-native";
+import { StyleSheet, SafeAreaView, View } from "react-native";
 import {
   TextInput,
   Button,
@@ -27,7 +27,7 @@ export default function Register({ navigation, route }) {
   const [cityError, setCityError] = useState(false);
   const [postcodeError, setPostcodeError] = useState(false);
   const [countryError, setCountryError] = useState(false);
-  const [errorText, setErrorText] = useState("")
+  const [errorText, setErrorText] = useState("");
 
   const [animate, setAnimate] = useState(false);
   const validateInputs = async (
