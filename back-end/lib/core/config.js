@@ -12,5 +12,4 @@ module.exports = {
 
     // HTTP
     httpCacheExpiresIn: process.env['HTTP_CACHE_EXPIRESIN'] || 10 * 1000,
-
 };

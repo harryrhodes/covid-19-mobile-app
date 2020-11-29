@@ -1,0 +1,53 @@
+[
+    {
+        "name": "Fever"
+    },
+    {
+        "name": "Cough"
+    },
+    {
+        "name": "Tiredness"
+    },
+    {
+        "name": "Aches"
+    },
+    {
+        "name": "Sore Throat"
+    },
+    {
+        "name": "Diarrhoea"
+    },
+    {
+        "name": "Conjunctivitis"
+    },
+    {
+        "name": "Headache"
+    },
+    {
+        "name": "Loss of Taste"
+    },
+    {
+        "name": "Loss of Smell"
+    },
+    {
+        "name": "Skin Rash"
+    },
+    {
+        "name": "Discolouration of Fingers or Toes"
+    },
+    {
+        "name": "Difficulty Breathing"
+    },
+    {
+        "name": "Shortness of Breath"
+    },
+    {
+        "name": "Chest Pain/Pressure"
+    },
+    {
+        "name": "Loss of Speach"
+    },
+    {
+        "name": "Loss of Movement"
+    }
+]

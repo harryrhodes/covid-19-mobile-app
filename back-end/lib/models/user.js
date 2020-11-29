@@ -1,27 +1,25 @@
 const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema({
-    accountId: Number,
+    _id: Number,
     username: String,
+    password: String,
+    email: String,
     firstName: String,
     lastName: String,
     accountType: String,
-    role: {
-        // roleName: String,
-        // department: {}
-    },
-    patientDetails: {
-        niNo: String,
-        nhsNo: String,
-        mobileNo: String,
-        emailAddress: String,
-        address: {}
-    },
-    symptoms: {
-        date: Date,
-        symptoms: {}
-    }
-}, { collection: 'users' });
+    role: {},
+    patientDetails: {},
+    symptoms: [
+        // {
+        //     date: Date,
+        //     details: [{
+        //         name: String,
+        //         comment: String
+        //     }]
+        // }
+    ]
+}, { collection: 'users', minimize: false });
 
 /** @type {import('mongoose').Schema} */
 module.exports.schema = userSchema;

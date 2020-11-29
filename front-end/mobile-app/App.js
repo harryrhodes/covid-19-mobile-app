@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useState, useMemo } from "react";
 import { AppRegistry } from "react-native";
-import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
+import {
+  DefaultTheme,
+  Button,
+  Provider as PaperProvider,
+} from "react-native-paper";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
@@ -8,26 +12,66 @@ import HomeScreen from "./Screens/Home";
 import LoginScreen from "./Screens/Login";
 import RegisterScreen1 from "./Screens/Register-1";
 import RegisterScreen2 from "./Screens/Register-2";
+import RegisterScreen3 from "./Screens/Register-3";
+import { UserContext as UserContext } from "./Hooks/UserContext";
 
-const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
 
 export default function App() {
+  const [user, setUser] = useState(null);
+
+  const value = useMemo(() => ({ user, setUser }), [user, setUser]);
   return (
-    <PaperProvider theme={theme}>
-      <NavigationContainer>
-        <Drawer.Navigator
-          initialRouteName="Home"
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          <Drawer.Screen name="Home" component={LoginScreen} />
-          <Drawer.Screen name="Login Screen" component={LoginScreen} />
-          <Drawer.Screen name="Register-1" component={RegisterScreen1} />
-          <Drawer.Screen name="Register-2" component={RegisterScreen2} />
-        </Drawer.Navigator>
-      </NavigationContainer>
-    </PaperProvider>
+    <UserContext.Provider value={value}>
+      <PaperProvider theme={theme}>
+        <NavigationContainer>
+          {user == null ? (
+            <Stack.Navigator>
+              <Stack.Screen
+                name="Login"
+                component={LoginScreen}
+                options={{
+                  headerShown: false,
+                }}
+              />
+              <Stack.Screen
+                name="Register-1"
+                component={RegisterScreen1}
+                options={{
+                  headerShown: false,
+                }}
+              />
+              <Stack.Screen
+                name="Register-2"
+                component={RegisterScreen2}
+                options={{
+                  headerShown: false,
+                }}
+              />
+              <Stack.Screen
+                name="Register-3"
+                component={RegisterScreen3}
+                options={{
+                  headerShown: false,
+                }}
+              />
+            </Stack.Navigator>
+          ) : (
+            <Stack.Navigator>
+              <Stack.Screen
+                name="Home"
+                component={HomeScreen}
+                options={{
+                  headerRight: () => (
+                    <Button icon="account-circle-outline"></Button>
+                  ),
+                }}
+              />
+            </Stack.Navigator>
+          )}
+        </NavigationContainer>
+      </PaperProvider>
+    </UserContext.Provider>
   );
 }
 
