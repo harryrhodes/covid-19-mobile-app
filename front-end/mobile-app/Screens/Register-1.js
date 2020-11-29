@@ -29,37 +29,38 @@ export default function Register({ navigation }) {
       setErrorText("This field is required");
       setUsernameError(true);
       setAnimate(false);
-    }
-    let res = await UserService.getSingle(username);
-    if (res.count != 0) {
-      setErrorText("Sorry This Username Is Already Taken");
-      setUsernameError(true);
-      setAnimate(false);
     } else {
-      setUsernameError(false);
-      if (password == "") {
-        setErrorText("This field is required");
-        setPasswordError(true);
-        setAnimate(false);
-      } else if (!pwRe.test(password)) {
-        setErrorText("Your password is not strong enough");
-        setPasswordError(true);
+      let res = await UserService.getSingle(username);
+      if (res.count != 0) {
+        setErrorText("Sorry This Username Is Already Taken");
+        setUsernameError(true);
         setAnimate(false);
       } else {
-        setPasswordError(false);
-        if (confirmPassword == "") {
+        setUsernameError(false);
+        if (password == "") {
           setErrorText("This field is required");
-          setPassword2Error(true);
+          setPasswordError(true);
           setAnimate(false);
-        } else if (password != confirmPassword) {
-          setErrorText("Passwords do not match");
-          setPassword2Error(true);
+        } else if (!pwRe.test(password)) {
+          setErrorText("Your password is not strong enough");
+          setPasswordError(true);
           setAnimate(false);
         } else {
-          setPassword2Error(false);
-          navigation.navigate("Register-2", {
-            userObj: { username: username, password: password },
-          });
+          setPasswordError(false);
+          if (confirmPassword == "") {
+            setErrorText("This field is required");
+            setPassword2Error(true);
+            setAnimate(false);
+          } else if (password != confirmPassword) {
+            setErrorText("Passwords do not match");
+            setPassword2Error(true);
+            setAnimate(false);
+          } else {
+            setPassword2Error(false);
+            navigation.navigate("Register-2", {
+              userObj: { username: username, password: password },
+            });
+          }
         }
       }
     }

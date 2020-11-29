@@ -22,21 +22,28 @@ export default function Login({ navigation }) {
 
   const login = async (username, password) => {
     setAnimate(true);
-    let res = await UserService.login(username, password);
-    if (res.status == "Success") {
-      setUser(res.user);
-    } else if (res.status == "Invalid Username/Email") {
+    if (username == "") {
+      setErrorText("This field is required");
       setUsernameError(true);
-      setErrorText(res.status);
-      console.log("un error: " + res.status)
       setAnimate(false);
-    } else if (res.status == "Incorrect Password") {
+    } else if (password == "") {
+      setErrorText("This field is required");
       setPasswordError(true);
-      setUsernameError(false)
-      setErrorText(res.status);
-      console.log("pw error: " + res.status)
       setAnimate(false);
     } else {
+      let res = await UserService.login(username, password);
+      if (res.status == "Success") {
+        setUser(res.user);
+      } else if (res.status == "Invalid Username/Email") {
+        setUsernameError(true);
+        setErrorText(res.status);
+        setAnimate(false);
+      } else if (res.status == "Incorrect Password") {
+        setPasswordError(true);
+        setUsernameError(false);
+        setErrorText(res.status);
+        setAnimate(false);
+      }
     }
   };
   return (
