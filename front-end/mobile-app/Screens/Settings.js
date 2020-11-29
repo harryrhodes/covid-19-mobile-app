@@ -6,11 +6,12 @@ import UserService from "../Services/UserService";
 
 export default function Settings({ navigation }) {
   const { user, setUser } = useContext(UserContext);
+  const labelTag = user.firstName.substring(0,1) + user.lastName.substring(0,1)
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView keyboardShouldPersistTaps="handled">
-        <Avatar.Text style={styles.avatar} size={72} label="HR" />
+        <Avatar.Text style={styles.avatar} size={72} label={labelTag} />
         <Title style={styles.title}>
           {user.firstName + " " + user.lastName}
         </Title>

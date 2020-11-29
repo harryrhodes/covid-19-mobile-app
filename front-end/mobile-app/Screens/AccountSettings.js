@@ -21,35 +21,80 @@ export default function AccountSettings({ navigation }) {
   const [feedbackText, setFeedbackText] = useState("");
   const [usernameError, setUsernameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [password2Error, setPassword2Error] = useState(false);
+  const [usernameConfirmText, setUsernameConfirmText] = useState("");
+  const [passwordConfirmText, setPasswordConfirmText] = useState("");
   const [animate, setAnimate] = useState(false);
 
-  const validateInputs = async (
-    username,
-    password,
-    confirmPassword,
-    updateUsername,
-    updatePassword
-  ) => {
+  const labelTag =
+    user.firstName.substring(0, 1) + user.lastName.substring(0, 1);
+  const pwRe = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+
+  const validateUsername = async (username) => {
+    let body = {
+      "password": user.password,
+      "email": user.email,
+      "firstName": user.firstName,
+      "lastName": user.lastName,
+      "role": {},
+      "patientDetails": {}
+  }
     setAnimate(true);
-    if (!username) {
-      console.log("password");
-    } else if (!password) {
-      console.log("username");
-    }
-    let res = await UserService.getSingle(username);
-    if (res.count != 0) {
-      setFeedbackText("Sorry This Username Is Already Taken");
+    if (username == "") {
+      setFeedbackText(
+        "To update your username, you need to input a new username"
+      );
       setUsernameError(true);
       setAnimate(false);
     } else {
-      setUsernameError(false);
-      if (password != confirmPassword) {
-        setFeedbackText("Your Passwords Do Not Match!");
-        setPasswordError(true);
+      let res = await UserService.getSingle(username);
+      if (res.count != 0) {
+        setFeedbackText("Sorry This Username Is Already Taken");
+        setUsernameError(true);
         setAnimate(false);
       } else {
-        setPasswordError(false);
+        setUsernameError(false);
+        setUsernameConfirmText("Username successfully updated");
+        let pwRes = await UserService.update(user.username, body.username);
+        setUser(pwRes);
+      }
+    }
+  };
+
+  const validatePassword = async (password, confirmPassword) => {
+    let body = {
+      "password": password,
+      "email": user.email,
+      "firstName": user.firstName,
+      "lastName": user.lastName,
+      "role": {},
+      "patientDetails": {}
+  }
+    setAnimate(true);
+    if (password == "") {
+      setFeedbackText("To update your password, please enter a password");
+      setPasswordError(true);
+      setAnimate(false);
+    } else if (!pwRe.test(password)) {
+      setFeedbackText("Your password is not strong enough");
+      setPasswordError(true);
+      setAnimate(false);
+    } else {
+      setPasswordError(false);
+      if (confirmPassword == "") {
+        setFeedbackText("This field is required");
+        setPassword2Error(true);
         setAnimate(false);
+      } else if (password != confirmPassword) {
+        setFeedbackText("Passwords do not match");
+        setPassword2Error(true);
+        setAnimate(false);
+      } else {
+        setPassword2Error(false);
+        setPasswordConfirmText("Password successfully updated");
+        console.log(user.username, body)
+        let unRes = await UserService.update(user.username, body);
+        setUser(unRes);
       }
     }
   };
@@ -57,7 +102,7 @@ export default function AccountSettings({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView keyboardShouldPersistTaps="handled">
-        <Avatar.Text style={styles.avatar} size={72} label="HR" />
+        <Avatar.Text style={styles.avatar} size={72} label={labelTag} />
         <Title style={styles.title}>Account Settings</Title>
         <Card style={styles.card}>
           <Card.Content style={styles.cardContent}>
@@ -79,14 +124,12 @@ export default function AccountSettings({ navigation }) {
             <Button
               mode="contained"
               style={styles.continueButton}
-              onPress={() =>
-                validateInputs(username, password, confirmPassword)
-              }
+              onPress={() => validateUsername(username)}
             >
               Change Username
             </Button>
             <HelperText type="info" visible={true}>
-              {feedbackText} Username Updated!
+              {usernameConfirmText}
             </HelperText>
             <Subheading>Change Password</Subheading>
             <TextInput
@@ -98,8 +141,12 @@ export default function AccountSettings({ navigation }) {
               autoCorrect={false}
               secureTextEntry={true}
               value={password}
+              error={passwordError}
               onChangeText={(password) => setPassword(password)}
             />
+            <HelperText type="error" visible={passwordError}>
+              {feedbackText}
+            </HelperText>
             <TextInput
               label="Confirm Password"
               mode="outlined"
@@ -109,12 +156,12 @@ export default function AccountSettings({ navigation }) {
               autoCorrect={false}
               secureTextEntry={true}
               value={confirmPassword}
-              error={passwordError}
+              error={password2Error}
               onChangeText={(confirmPassword) =>
                 setConfirmPassword(confirmPassword)
               }
             />
-            <HelperText type="error" visible={passwordError}>
+            <HelperText type="error" visible={password2Error}>
               {feedbackText}
             </HelperText>
             <ActivityIndicator
@@ -125,20 +172,12 @@ export default function AccountSettings({ navigation }) {
             <Button
               mode="contained"
               style={styles.continueButton}
-              onPress={() =>
-                validateInputs(
-                  username,
-                  password,
-                  confirmPassword,
-                  (updateUsername = false),
-                  (updatePassword = true)
-                )
-              }
+              onPress={() => validatePassword(password, confirmPassword)}
             >
               Change Password
             </Button>
             <HelperText type="info" visible={true}>
-              {feedbackText} Password Updated!
+              {passwordConfirmText}
             </HelperText>
             <Subheading>Danger Zone</Subheading>
             <Button onPress={() => navigation.navigate("Register-1")}>

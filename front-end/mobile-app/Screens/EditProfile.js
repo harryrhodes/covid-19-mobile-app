@@ -29,6 +29,8 @@ export default function EditProfile({ navigation }) {
   const [postcode, setPostcode] = useState("");
   const [country, setCountry] = useState("");
 
+  const labelTag = user.firstName.substring(0,1) + user.lastName.substring(0,1)
+
   const validateInputs = async (
     address1,
     address2,
@@ -55,7 +57,7 @@ export default function EditProfile({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView keyboardShouldPersistTaps="handled">
-        <Avatar.Text style={styles.avatar} size={72} label="HR" />
+        <Avatar.Text style={styles.avatar} size={72} label={labelTag} />
         <Title style={styles.title}>Edit Profile</Title>
         <Card style={styles.card}>
           <Card.Content style={styles.cardContent}>
