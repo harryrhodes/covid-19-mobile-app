@@ -11,7 +11,7 @@ import {
 import { UserContext } from "../Hooks/UserContext";
 import UserService from "../Services/UserService";
 
-export default function Login() {
+export default function Login({ navigation }) {
   const { user, setUser } = useContext(UserContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -22,9 +22,7 @@ export default function Login() {
 
   const login = async (username, password) => {
     setAnimate(true);
-    console.log(username, password);
     let res = await UserService.login(username, password);
-    console.log(res);
     if (res.status == "Success") {
       setUser(res.user);
     } else if (res.status == "Invalid Username/Email") {
@@ -65,6 +63,7 @@ export default function Login() {
               style={styles.input}
               autoCapitalize="none"
               autoCorrect={false}
+              secureTextEntry={true}
               value={password}
               error={passwordError}
               onChangeText={(password) => setPassword(password)}
@@ -86,7 +85,9 @@ export default function Login() {
           </Card.Content>
         </Card>
       </ScrollView>
-      <Button>No Account? Register Here</Button>
+      <Button onPress={() => navigation.navigate("Register-1")}>
+        No Account? Register Here
+      </Button>
     </SafeAreaView>
   );
 }
