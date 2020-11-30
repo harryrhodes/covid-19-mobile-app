@@ -30,7 +30,7 @@ export default function App({navigation}) {
       <PaperProvider theme={theme}>
         <NavigationContainer ref={navigationRef}>
           {user == null ? (
-            <Stack.Navigator>
+            <Stack.Navigator initialRouteName="SymptomLog">
               <Stack.Screen
                 name="Login"
                 component={LoginScreen}

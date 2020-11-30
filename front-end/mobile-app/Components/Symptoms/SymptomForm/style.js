@@ -10,10 +10,10 @@ const Styles = StyleSheet.create({
   card: {
     position: "relative",
     width: "90%",
-    marginTop: "1rem",
-    marginBottom: "1rem",
+    marginTop: 20,
+    marginBottom: 20,
     //boxShadow: "5px 5px 20px #888888",
-    //borderRadius: "15px",
+    borderRadius: 15,
   },
   cardContent: {
     margin: "1rem",
