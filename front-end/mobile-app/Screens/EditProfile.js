@@ -8,6 +8,7 @@ import {
   Subheading,
   ActivityIndicator,
   Avatar,
+  HelperText
 } from "react-native-paper";
 import { UserContext } from "../Hooks/UserContext";
 import UserService from "../Services/UserService";
@@ -20,6 +21,13 @@ export default function EditProfile({ navigation }) {
   const [nhsNo, setNhsNo] = useState("");
   const [niNo, setNiNo] = useState("");
   const [mobileNo, setMobileNo] = useState("");
+  const [errorText, setErrorText] = useState("");
+  const [emailError, setEmailError] = useState(false);
+  const [firstNameError, setFirstNameError] = useState(false);
+  const [lastNameError, setLastNameError] = useState(false);
+  const [nhsError, setNhsError] = useState(false);
+  const [niError, setNiError] = useState(false);
+  const [mobileError, setMobileError] = useState(false);
 
   const [address1, setAddress1] = useState("");
   const [address2, setAddress2] = useState("");
@@ -34,20 +42,138 @@ export default function EditProfile({ navigation }) {
   const labelTag =
     user.firstName.substring(0, 1) + user.lastName.substring(0, 1);
 
-  const validateProfile = async (nhsNo, niNo, mobileNo) => {
+  const validateProfile = async (
+    newEmail,
+    newFirstName,
+    newLastName,
+    newNhsNo,
+    newNiNo,
+    newMobileNo
+  ) => {
+    const emailRe = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const niRe = /^(?!BG|GB|NK|KN|TN|NT|ZZ)[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\s*\d{2}\s*\d{2}\s*\d{2}\s*[A-D]$/;
+
+    let secondEmail = ""
+    let secondFirstName = ""
+    let secondLastName = ""
+    let secondNhsNo = ""
+    let secondNiNo = ""
+    let secondMobileNo = ""
+
+    if (!email == "") {
+      if (!emailRe.test(email)) {
+        setErrorText("Please enter a valid email");
+        setEmailError(true);
+        setAnimate(false);
+      } else {
+        setEmailError(false);
+        secondEmail = newEmail;
+      }
+    } else {
+      setEmailError(false);
+      secondEmail = user.email;
+    }
+
+    if (!firstName == "") {
+      if (firstName.length <= 2) {
+        setErrorText("Names cannot be shorter than 2 letters");
+        setFirstNameError(true);
+        setAnimate(false);
+      } else if (!/^[a-zA-Z]+$/.test(firstName)) {
+        setErrorText("Your first name must only contain letters");
+        setFirstNameError(true);
+        setAnimate(false);
+      } else {
+        setFirstNameError(false);
+        secondFirstName = newFirstName;
+      }
+    } else {
+      setFirstNameError(false);
+      secondFirstName = user.firstName;
+    }
+
+    if (!lastName == "") {
+      if (lastName.length <= 2) {
+        setErrorText("Names cannot be shorter than 2 letters");
+        setLastNameError(true);
+        setAnimate(false);
+      } else if (!/^[a-zA-Z]+$/.test(lastName)) {
+        setErrorText("Your first name must only contain letters");
+        setLastNameError(true);
+        setAnimate(false);
+      } else {
+        setLastNameError(false);
+        secondLastName = newLastName;
+      }
+    } else {
+      setLastNameError(false);
+      secondLastName = user.lastName;
+    }
+
+    if (!nhsNo == "") {
+      if (!/^\d+$/.test(nhsNo)) {
+        setErrorText("Your NHS number can only contain digits");
+        setNhsError(true);
+        setAnimate(false);
+      } else if (!/^\d{10}$/.test(nhsNo)) {
+        setErrorText("Your NHS must be 10 digits exactly");
+        setNhsError(true);
+        setAnimate(false);
+      } else {
+        setNhsError(false);
+        secondNhsNo = newNhsNo
+      }
+    } else {
+      setNhsError(false);
+      secondNhsNo = user.nhsNo
+    }
+
+    if (!niNo == "") {
+      if (!niRe.test(niNo)) {
+        setErrorText("This is not a valid NI number");
+        setNiError(true);
+        setAnimate(false);
+      } else {
+        setNiError(false);
+        secondNiNo = newNiNo;
+      }
+    } else {
+      setNiError(false);
+      secondNiNo = user.niNo;
+    }
+
+    if (!mobileNo == "") {
+      if (!/^\d+$/.test(mobileNo)) {
+        setErrorText("Your mobile number can only contain digits");
+        setMobileError(true);
+        setAnimate(false);
+      } else if (!/^\d{11}$/.test(mobileNo)) {
+        setErrorText("Your mobile number must be 11 digits exactly");
+        setMobileError(true);
+        setAnimate(false);
+      } else {
+        setMobileError(false);
+        secondMobileNo = newMobileNo;
+      }
+    } else {
+      setMobileError(false);
+      secondMobileNo = user.mobileNo;
+    }
+
     let body = {
-      password: user.password,
-      email: user.email,
-      firstName: user.firstName,
-      lastName: user.lastName,
+      password: "",
+      email: secondEmail,
+      firstName: secondFirstName,
+      lastName: secondLastName,
       role: {},
       patientDetails: {
-        nhsNo: nhsNo,
-        niNo: niNo,
-        mobileNo: mobileNo,
+        nhsNo: secondNhsNo,
+        niNo: secondNiNo,
+        mobileNo: secondMobileNo,
       },
     };
-    setAnimate(true);
+    let profRes = await UserService.update(user.username, body);
+    setUser(profRes);
   };
 
   const validateInputs = async (
@@ -60,15 +186,15 @@ export default function EditProfile({ navigation }) {
     country,
     userObj
   ) => {
-    userObj.patientDetails.address = {
-      address1: address1,
-      address2: address2,
-      address3: address3,
-      city: city,
-      county: county,
-      postcode: postcode,
-      country: country,
-    };
+    // userObj.patientDetails.address = {
+    //   address1: address1,
+    //   address2: address2,
+    //   address3: address3,
+    //   city: city,
+    //   county: county,
+    //   postcode: postcode,
+    //   country: country,
+    // };
     let res = await UserService.update(userObj);
     setUser(res);
   };
@@ -89,9 +215,12 @@ export default function EditProfile({ navigation }) {
               autoCapitalize="none"
               autoCorrect={false}
               value={email}
-              error={false}
+              error={emailError}
               onChangeText={(email) => setEmail(email)}
             />
+            <HelperText type="error" visible={emailError}>
+              {errorText}
+            </HelperText>
             <TextInput
               label="First Name"
               placeholder={user.firstName}
@@ -100,9 +229,12 @@ export default function EditProfile({ navigation }) {
               autoCapitalize="characters"
               autoCorrect={false}
               value={firstName}
-              error={false}
+              error={firstNameError}
               onChangeText={(firstName) => setFirstName(firstName)}
             />
+            <HelperText type="error" visible={firstNameError}>
+              {errorText}
+            </HelperText>
             <TextInput
               label="Last Name"
               placeholder={user.lastName}
@@ -111,19 +243,25 @@ export default function EditProfile({ navigation }) {
               autoCapitalize="characters"
               autoCorrect={false}
               value={lastName}
-              error={false}
+              error={lastNameError}
               onChangeText={(lastName) => setLastName(lastName)}
             />
+            <HelperText type="error" visible={lastNameError}>
+              {errorText}
+            </HelperText>
             <TextInput
-              label="NHS Number (Optional)"
+              label="NHS Number"
               placeholder={user.nhsNo}
               mode="outlined"
               style={styles.input}
               keyboardType="numeric"
               value={nhsNo}
-              error={false}
+              error={nhsError}
               onChangeText={(nhsNo) => setNhsNo(nhsNo)}
             />
+            <HelperText type="error" visible={nhsError}>
+              {errorText}
+            </HelperText>
             <TextInput
               label="NI Number"
               placeholder={user.niNo}
@@ -131,9 +269,12 @@ export default function EditProfile({ navigation }) {
               style={styles.input}
               keyboardType="numeric"
               value={niNo}
-              error={false}
+              error={niError}
               onChangeText={(niNo) => setNiNo(niNo)}
             />
+            <HelperText type="error" visible={niError}>
+              {errorText}
+            </HelperText>
             <TextInput
               label="Mobile Number"
               placeholder={user.mobileNo}
@@ -141,21 +282,23 @@ export default function EditProfile({ navigation }) {
               style={styles.input}
               keyboardType="numeric"
               value={mobileNo}
-              error={false}
+              error={mobileError}
               onChangeText={(mobileNo) => setMobileNo(mobileNo)}
             />
+            <HelperText type="error" visible={mobileError}>
+              {errorText}
+            </HelperText>
             <Button
               mode="contained"
               style={styles.continueButton}
               onPress={() =>
-                validateInputs(
+                validateProfile(
                   email,
                   firstName,
                   lastName,
                   nhsNo,
                   niNo,
                   mobileNo,
-                  route.params.userObj
                 )
               }
             >
