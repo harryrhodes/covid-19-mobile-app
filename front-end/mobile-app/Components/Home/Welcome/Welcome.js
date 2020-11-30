@@ -1,13 +1,13 @@
 import React from "react";
 import { View } from "react-native";
-import { Headline } from "react-native-paper";
+import { Headline, Subheading } from "react-native-paper";
 import { Styles } from "./style";
 
-export default function Welcome() {
+export default function Welcome({ firstName }) {
   return (
     <View style={Styles.fullWidthView}>
       <View style={Styles.welcome}>
-        <Headline>Welcome, Harry</Headline>
+        <Headline>Welcome, {firstName}</Headline>
       </View>
     </View>
   );
