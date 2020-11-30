@@ -16,7 +16,7 @@ export default function Home({ navigation }) {
   }
   return (
     <SafeAreaView style={Styles.container}>
-      <Welcome text={'Welcome, Harry'}/>
+      <Welcome firstName={user.firstName}/>
       <SymptomsCard />
       <BookTestCard />
       <LogSymptomsCard />

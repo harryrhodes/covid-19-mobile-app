@@ -214,7 +214,7 @@ module.exports.updateUserDetails = async (request) => {
 
         let updatedUser = await new User({
             _id: user[0]._id,
-            username: user[0].username,
+            username: request.payload.username ? request.payload.username : user[0].username,
             password: request.payload.password ? newPassword : user[0].password,
             email: request.payload.email ? request.payload.email : user[0].email,
             firstName: request.payload.firstName ? request.payload.firstName : user[0].firstName,
@@ -225,7 +225,7 @@ module.exports.updateUserDetails = async (request) => {
             symptoms: user[0].symptoms,
         });
 
-        await User.updateOne({ username: updatedUser.username }, updatedUser, { upsert: false, setDefaultsOnInsert: true });
+        await User.updateOne({ username: request.params.username }, updatedUser, { upsert: false, setDefaultsOnInsert: true });
 
         return updatedUser;
 
@@ -249,6 +249,7 @@ module.exports.deleteUser = async (request) => {
         await db.connect();
 
         let user = await User.find({ username: request.params.username }).lean();
+
         if (!user[0]) return Boom.notFound('No user found by this username');
         if (user[0].accountType === 'admin') return Boom.notAcceptable('Cannot delete an admin user');
 
@@ -343,7 +344,7 @@ module.exports.push(
                 payload: {
                     username: Joi.string().required().description('Account username').example('name.lastname'),
                     password: Joi.string().required().description('Account password').example('password'),
-                    email: Joi.string().required().description('Account email').example('password'),
+                    email: Joi.string().required().description('Account email').example('name.lastname@valhalla.com'),
                     firstName: Joi.string().required().description('Users first name').example('Name'),
                     lastName: Joi.string().required().description('Users last name').example('Lastname'),
                     accountType: Joi.string().required().valid('admin', 'practitioner', 'patient').description('Type of the account').example('patient'),
@@ -399,6 +400,7 @@ module.exports.push(
                     username: Joi.string().required().description('Username of a user').example('name.surname'),
                 },
                 payload: {
+                    username: Joi.string().optional().allow('').description('Username of a user').example('name.surname'),
                     password: Joi.string().optional().allow('').description('Account password').example('password'),
                     email: Joi.string().optional().allow('').description('Account email').example('password'),
                     firstName: Joi.string().optional().allow('').description('Users first name').example('Name'),
