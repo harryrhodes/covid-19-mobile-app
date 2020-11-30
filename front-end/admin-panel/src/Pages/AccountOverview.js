@@ -21,8 +21,8 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 //import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from '../Components/ListItems';
 import Chart from '../Components/Chart';
-import Deposits from '../Components/Deposits';
-import Orders from '../Components/Orders';
+
+import Orders from '../Components/PaitentsTable';
 import Button from '@material-ui/core/Button';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import HomeIcon from '@material-ui/icons/Home';
