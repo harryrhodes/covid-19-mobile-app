@@ -61,7 +61,6 @@ export default function App() {
             </Stack.Navigator>
           ) : (
             <Stack.Navigator>
-              <Stack.Screen name="Settings" component={SettingsScreen} />
               <Stack.Screen
                 name="Home"
                 component={HomeScreen}
@@ -71,6 +70,7 @@ export default function App() {
                   ),
                 }}
               />
+              <Stack.Screen name="Settings" component={SettingsScreen} />
               <Stack.Screen name="EditProfile" component={EditProfileScreen} />
               <Stack.Screen
                 name="AccountSettings"
