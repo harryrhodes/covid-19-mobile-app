@@ -29,7 +29,26 @@ export default function EditProfile({ navigation }) {
   const [postcode, setPostcode] = useState("");
   const [country, setCountry] = useState("");
 
-  const labelTag = user.firstName.substring(0,1) + user.lastName.substring(0,1)
+  const [animate, setAnimate] = useState(false);
+
+  const labelTag =
+    user.firstName.substring(0, 1) + user.lastName.substring(0, 1);
+
+  const validateProfile = async (nhsNo, niNo, mobileNo) => {
+    let body = {
+      password: user.password,
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      role: {},
+      patientDetails: {
+        nhsNo: nhsNo,
+        niNo: niNo,
+        mobileNo: mobileNo,
+      },
+    };
+    setAnimate(true);
+  };
 
   const validateInputs = async (
     address1,

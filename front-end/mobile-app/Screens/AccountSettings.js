@@ -32,13 +32,13 @@ export default function AccountSettings({ navigation }) {
 
   const validateUsername = async (username) => {
     let body = {
-      "password": user.password,
-      "email": user.email,
-      "firstName": user.firstName,
-      "lastName": user.lastName,
-      "role": {},
-      "patientDetails": {}
-  }
+      password: user.password,
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      role: {},
+      patientDetails: {},
+    };
     setAnimate(true);
     if (username == "") {
       setFeedbackText(
@@ -63,13 +63,13 @@ export default function AccountSettings({ navigation }) {
 
   const validatePassword = async (password, confirmPassword) => {
     let body = {
-      "password": password,
-      "email": user.email,
-      "firstName": user.firstName,
-      "lastName": user.lastName,
-      "role": {},
-      "patientDetails": {}
-  }
+      password: password,
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      role: {},
+      patientDetails: {},
+    };
     setAnimate(true);
     if (password == "") {
       setFeedbackText("To update your password, please enter a password");
@@ -92,7 +92,7 @@ export default function AccountSettings({ navigation }) {
       } else {
         setPassword2Error(false);
         setPasswordConfirmText("Password successfully updated");
-        console.log(user.username, body)
+        console.log(user.username, body);
         let unRes = await UserService.update(user.username, body);
         setUser(unRes);
       }
