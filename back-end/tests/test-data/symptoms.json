@@ -1,53 +1,70 @@
 [
     {
+        "_id": "5fbe53388309cb5f78b99f37",
         "name": "Fever"
     },
     {
+        "_id": "5fbe53388309cb5f78b99f38",
         "name": "Cough"
     },
     {
+        "_id": "5fbe53388309cb5f78b99f39",
         "name": "Tiredness"
     },
     {
+        "_id": "5fbe53388309cb5f78b99f3a",
         "name": "Aches"
     },
     {
+        "_id": "5fbe53388309cb5f78b99f3b",
         "name": "Sore Throat"
     },
     {
+        "_id": "5fbe53388309cb5f78b99f3c",
         "name": "Diarrhoea"
     },
     {
+        "_id": "5fbe53388309cb5f78b99f3d",
         "name": "Conjunctivitis"
     },
     {
+        "_id": "5fbe53388309cb5f78b99f3e",
         "name": "Headache"
     },
     {
+        "_id": "5fbe53388309cb5f78b99f3f",
         "name": "Loss of Taste"
     },
     {
+        "_id": "5fbe53388309cb5f78b99f40",
         "name": "Loss of Smell"
     },
     {
+        "_id": "5fbe53388309cb5f78b99f41",
         "name": "Skin Rash"
     },
     {
+        "_id": "5fbe53388309cb5f78b99f42",
         "name": "Discolouration of Fingers or Toes"
     },
     {
+        "_id": "5fbe53388309cb5f78b99f43",
         "name": "Difficulty Breathing"
     },
     {
+        "_id": "5fbe53388309cb5f78b99f44",
         "name": "Shortness of Breath"
     },
     {
+        "_id": "5fbe53388309cb5f78b99f45",
         "name": "Chest Pain/Pressure"
     },
     {
+        "_id": "5fbe53388309cb5f78b99f46",
         "name": "Loss of Speach"
     },
     {
+        "_id": "5fbe53388309cb5f78b99f47",
         "name": "Loss of Movement"
     }
 ]

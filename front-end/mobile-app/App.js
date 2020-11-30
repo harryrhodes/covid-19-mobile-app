@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, createRef } from "react";
 import { AppRegistry } from "react-native";
 import {
   DefaultTheme,
@@ -9,6 +9,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import HomeScreen from "./Screens/Home";
+import SettingsScreen from "./Screens/Settings";
+import EditProfileScreen from "./Screens/EditProfile";
+import AccountSettingsScreen from "./Screens/AccountSettings";
 import LoginScreen from "./Screens/Login";
 import RegisterScreen1 from "./Screens/Register-1";
 import RegisterScreen2 from "./Screens/Register-2";
@@ -17,14 +20,15 @@ import { UserContext as UserContext } from "./Hooks/UserContext";
 
 const Stack = createStackNavigator();
 
-export default function App() {
+export default function App({navigation}) {
+  const navigationRef = createRef()
   const [user, setUser] = useState(null);
 
   const value = useMemo(() => ({ user, setUser }), [user, setUser]);
   return (
     <UserContext.Provider value={value}>
       <PaperProvider theme={theme}>
-        <NavigationContainer>
+        <NavigationContainer ref={navigationRef}>
           {user == null ? (
             <Stack.Navigator>
               <Stack.Screen
@@ -63,9 +67,15 @@ export default function App() {
                 component={HomeScreen}
                 options={{
                   headerRight: () => (
-                    <Button icon="account-circle-outline"></Button>
+                    <Button icon="account-circle-outline" onPress={() => navigationRef.current?.navigate("Settings")}></Button>
                   ),
                 }}
+              />
+              <Stack.Screen name="Settings" component={SettingsScreen} />
+              <Stack.Screen name="EditProfile" component={EditProfileScreen} />
+              <Stack.Screen
+                name="AccountSettings"
+                component={AccountSettingsScreen}
               />
             </Stack.Navigator>
           )}
