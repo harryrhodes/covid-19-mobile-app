@@ -4,8 +4,9 @@ import Dashboard from "./Pages/Dashboard";
 import SignIn from "./Pages/SignIn";
 import Users from "./Pages/Users";
 import Patients from "./Pages/Patients";
-import AccountOverview from "./Pages/AccountOverview";
+import Patient from "./Pages/Patient";
 
+import AccountOverview from "./Pages/AccountOverview";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -18,7 +19,6 @@ import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import { mainListItems, secondaryListItems } from "./Components/ListItems";
@@ -182,6 +182,7 @@ function App() {
               <Route path="/signin" exact component={SignIn} />
               <Route path="/users" exact component={Users} />
               <Route path="/patients" exact component={Patients} />
+              <Route path="/patient" exact component={Patient} />
               <Route
                 path="/accountoverview"
                 exact

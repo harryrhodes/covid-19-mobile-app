@@ -1,10 +1,14 @@
 import axios from "axios";
 
 const auth = {
-    username: "mobile-app",
+    username: "admin-panel",
     password: "6c5ff9595cb769effc5f5a7e9d2e2305",
 }
 export default {
+    getAll: async () =>{
+        let res = await axios.get("http://localhost:4000"+"/users/",{auth});
+        return res.data || [];
+    },
     getSingle: async (username) =>{
         let res = await axios.get("http://localhost:4000"+"/users/"+username,{auth});
         return res.data || [];
