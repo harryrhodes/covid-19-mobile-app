@@ -160,9 +160,57 @@ export default function EditProfile({ navigation }) {
       }
     } else {
       setMobileError(false);
-      console.log('hi')
-      console.log(user.patientDetails.mobileNo)
       secondMobileNo = user.patientDetails.mobileNo;
+    }
+
+    let secondAddress1 = "";
+    let secondAddress2 = "";
+    let secondAddress3 = "";
+    let secondCity = "";
+    let secondCounty = "";
+    let secondPostcode = "";
+    let secondCountry = "";
+
+    if ( user?.patientDetails?.address?.address1 === undefined) {
+      secondAddress1 = ""
+    } else {
+      secondAddress1 = user.patientDetails.address.address1;
+    }
+
+    if ( user?.patientDetails?.address?.address2 === undefined) {
+      secondAddress2 = ""
+    } else {
+      secondAddress2 = user.patientDetails.address.address2;
+    }
+
+    if ( user?.patientDetails?.address?.address3 === undefined) {
+      secondAddress3 = ""
+    } else {
+      secondAddress3 = user.patientDetails.address.address3;
+    }
+
+    if ( user?.patientDetails?.address?.city === undefined) {
+      secondCity = ""
+    } else {
+      secondCity = user.patientDetails.address.city;
+    }
+
+    if ( user?.patientDetails?.address?.county === undefined) {
+      secondCounty = ""
+    } else {
+      secondCounty = user.patientDetails.address.county;
+    }
+
+    if ( user?.patientDetails?.address?.postcode === undefined) {
+      secondPostcode = ""
+    } else {
+      secondPostcode = user.patientDetails.address.postcode;
+    }
+
+    if ( user?.patientDetails?.address?.country === undefined) {
+      secondCountry = ""
+    } else {
+      secondCountry = user.patientDetails.address.country;
     }
 
     let body = {
@@ -177,18 +225,17 @@ export default function EditProfile({ navigation }) {
         niNo: secondNiNo,
         mobileNo: secondMobileNo,
         address: {
-          address1: user.patientDetails.address.address1,
-          address2: user.patientDetails.address.address2,
-          address3: user.patientDetails.address.address3,
-          city: user.patientDetails.address.city,
-          county: user.patientDetails.address.county,
-          postcode: user.patientDetails.address.postcode,
-          country: user.patientDetails.address.country,
+          address1: secondAddress1,
+          address2: secondAddress2,
+          address3: secondAddress3,
+          city: secondCity,
+          county: secondCounty,
+          postcode: secondPostcode,
+          country: secondCountry,
         },
       },
     };
       setProfileConfirmText("Profile successfully updated");
-      console.log(body)
       let profRes = await UserService.update(user.username, body);
       setUser(profRes);
   };
@@ -291,7 +338,6 @@ export default function EditProfile({ navigation }) {
     setAddressConfirmText("Address successfully updated");
     let addressRes = await UserService.update(user.username, body);
     setUser(addressRes);
-    console.log(body)
   };
 
   return (
