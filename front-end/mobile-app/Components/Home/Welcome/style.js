@@ -9,10 +9,11 @@ const Styles = StyleSheet.create({
       },
       welcome: {
         display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-around",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignContent: "center",
         flexWrap: "nowrap",
-        padding: "1rem",
+        marginTop: 20
       },
 })
 

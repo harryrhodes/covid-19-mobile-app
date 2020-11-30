@@ -29,7 +29,7 @@ export default function App() {
       <PaperProvider theme={theme}>
         <NavigationContainer>
           {user == null ? (
-            <Stack.Navigator>
+            <Stack.Navigator initialRouteName="SymptomLog">
               <Stack.Screen
                 name="Login"
                 component={LoginScreen}
