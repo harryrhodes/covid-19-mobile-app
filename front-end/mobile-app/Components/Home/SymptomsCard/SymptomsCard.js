@@ -5,7 +5,6 @@ import { Styles } from "./style";
 
 export default function Symptoms(props) {
   const setSymptoms = (props) => {
-    console.log(props)
     if (!props.length) {
       return(<Headline>No current Symptoms!</Headline>)
     } else {

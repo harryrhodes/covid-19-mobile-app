@@ -7,11 +7,11 @@ import {
 } from "react-native-paper";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { createDrawerNavigator } from "@react-navigation/drawer";
 import HomeScreen from "./Screens/Home";
 import SettingsScreen from "./Screens/Settings";
 import EditProfileScreen from "./Screens/EditProfile";
 import AccountSettingsScreen from "./Screens/AccountSettings";
+import SymptomLog from "./Screens/SymptomLog";
 import LoginScreen from "./Screens/Login";
 import RegisterScreen1 from "./Screens/Register-1";
 import RegisterScreen2 from "./Screens/Register-2";
@@ -20,7 +20,7 @@ import { UserContext as UserContext } from "./Hooks/UserContext";
 
 const Stack = createStackNavigator();
 
-export default function App({navigation}) {
+export default function App() {
   const navigationRef = createRef()
   const [user, setUser] = useState(null);
 
@@ -72,6 +72,7 @@ export default function App({navigation}) {
                 }}
               />
               <Stack.Screen name="Settings" component={SettingsScreen} />
+              <Stack.Screen name="Symptoms" component={SymptomLog} />
               <Stack.Screen name="EditProfile" component={EditProfileScreen} />
               <Stack.Screen
                 name="AccountSettings"
