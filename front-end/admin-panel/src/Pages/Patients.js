@@ -5,7 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Link from "@material-ui/core/Link";
 import Title from "../Components/Title";
-import PaitentsTable from "../Components/PaitentsTable";
+import PatientsTable from "../Components/PatientsTable";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -26,8 +26,8 @@ export default function Users() {
     <Grid container spacing={3}>
       <Grid item xs={12}>
         <Paper className={classes.paper}>
-          <Title>Paitents</Title>
-          <PaitentsTable />
+          <Title>Patients</Title>
+          <PatientsTable />
         </Paper>
       </Grid>
     </Grid>

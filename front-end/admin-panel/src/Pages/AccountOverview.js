@@ -22,7 +22,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { mainListItems, secondaryListItems } from '../Components/ListItems';
 import Chart from '../Components/Chart';
 
-import Orders from '../Components/PaitentsTable';
+import Orders from '../Components/PatientsTable';
 import Button from '@material-ui/core/Button';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import HomeIcon from '@material-ui/icons/Home';
