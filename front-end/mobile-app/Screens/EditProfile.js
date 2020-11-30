@@ -128,7 +128,7 @@ export default function EditProfile({ navigation }) {
       }
     } else {
       setNhsError(false);
-      secondNhsNo = user.nhsNo;
+      secondNhsNo = user.patientDetails.nhsNo;
     }
 
     if (!niNo == "") {
@@ -142,7 +142,7 @@ export default function EditProfile({ navigation }) {
       }
     } else {
       setNiError(false);
-      secondNiNo = user.niNo;
+      secondNiNo = user.patientDetails.niNo;
     }
 
     if (!mobileNo == "") {
@@ -160,10 +160,13 @@ export default function EditProfile({ navigation }) {
       }
     } else {
       setMobileError(false);
-      secondMobileNo = user.mobileNo;
+      console.log('hi')
+      console.log(user.patientDetails.mobileNo)
+      secondMobileNo = user.patientDetails.mobileNo;
     }
 
     let body = {
+      username: "",
       password: "",
       email: secondEmail,
       firstName: secondFirstName,
@@ -173,11 +176,21 @@ export default function EditProfile({ navigation }) {
         nhsNo: secondNhsNo,
         niNo: secondNiNo,
         mobileNo: secondMobileNo,
+        address: {
+          address1: user.patientDetails.address.address1,
+          address2: user.patientDetails.address.address2,
+          address3: user.patientDetails.address.address3,
+          city: user.patientDetails.address.city,
+          county: user.patientDetails.address.county,
+          postcode: user.patientDetails.address.postcode,
+          country: user.patientDetails.address.country,
+        },
       },
     };
-    setProfileConfirmText("Profile successfully updated");
-    let profRes = await UserService.update(user.username, body);
-    setUser(profRes);
+      setProfileConfirmText("Profile successfully updated");
+      console.log(body)
+      let profRes = await UserService.update(user.username, body);
+      setUser(profRes);
   };
 
   const validateAddress = async (
@@ -199,53 +212,71 @@ export default function EditProfile({ navigation }) {
 
     if (!address1 == "") {
       secondAddress1 = newAddress1;
+    } else if ( user?.patientDetails?.address?.address1 === undefined) {
+      secondAddress1 = ""
     } else {
       secondAddress1 = user.patientDetails.address.address1;
     }
 
     if (!address2 == "") {
       secondAddress2 = newAddress2;
+    } else if ( user?.patientDetails?.address?.address2 === undefined) {
+      secondAddress2 = ""
     } else {
       secondAddress2 = user.patientDetails.address.address2;
     }
 
     if (!address3 == "") {
       secondAddress3 = newAddress3;
+    } else if ( user?.patientDetails?.address?.address3 === undefined) {
+      secondAddress3 = ""
     } else {
       secondAddress3 = user.patientDetails.address.address3;
     }
 
     if (!city == "") {
       secondCity = newCity;
+    } else if ( user?.patientDetails?.address?.city === undefined) {
+      secondCity = ""
     } else {
       secondCity = user.patientDetails.address.city;
     }
 
     if (!county == "") {
       secondCounty = newCounty;
+    } else if ( user?.patientDetails?.address?.county === undefined) {
+      secondCounty = ""
     } else {
       secondCounty = user.patientDetails.address.county;
     }
 
     if (!postcode == "") {
       secondPostcode = newPostcode;
+    } else if( user?.patientDetails?.address?.postcode === undefined) {
+      secondPostcode = ""
     } else {
       secondPostcode = user.patientDetails.address.postcode;
     }
 
     if (!country == "") {
       secondCountry = newCountry;
+    } else if ( user?.patientDetails?.address?.country === undefined) {
+      secondCountry = ""
     } else {
       secondCountry = user.patientDetails.address.country;
     }
 
     let body = {
+      username: "",
       password: "",
       email: "",
       firstName: "",
       lastName: "",
       role: {},
       patientDetails: {
+        nhsNo: user.patientDetails.nhsNo,
+        niNo: user.patientDetails.niNo,
+        mobileNo: user.patientDetails.mobileNo,
         address: {
           address1: secondAddress1,
           address2: secondAddress2,
@@ -260,6 +291,7 @@ export default function EditProfile({ navigation }) {
     setAddressConfirmText("Address successfully updated");
     let addressRes = await UserService.update(user.username, body);
     setUser(addressRes);
+    console.log(body)
   };
 
   return (

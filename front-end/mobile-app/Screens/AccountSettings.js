@@ -32,12 +32,26 @@ export default function AccountSettings({ navigation }) {
 
   const validateUsername = async (username) => {
     let body = {
+      username: username,
       password: user.password,
       email: user.email,
       firstName: user.firstName,
       lastName: user.lastName,
       role: {},
-      patientDetails: {},
+      patientDetails: {
+        nhsNo: user.patientDetails.nhsNo,
+        niNo: user.patientDetails.niNo,
+        mobileNo: user.patientDetails.mobileNo,
+        address: {
+          address1: user.patientDetails.address.address1,
+          address2: user.patientDetails.address.address2,
+          address3: user.patientDetails.address.address3,
+          city: user.patientDetails.address.city,
+          county: user.patientDetails.address.county,
+          postcode: user.patientDetails.address.postcode,
+          country: user.patientDetails.address.country,
+        },
+      },
     };
     setAnimate(true);
     if (username == "") {
@@ -55,7 +69,7 @@ export default function AccountSettings({ navigation }) {
       } else {
         setUsernameError(false);
         setUsernameConfirmText("Username successfully updated");
-        let pwRes = await UserService.update(user.username, body.username);
+        let pwRes = await UserService.update(user.username, body);
         setUser(pwRes);
       }
     }
@@ -63,12 +77,26 @@ export default function AccountSettings({ navigation }) {
 
   const validatePassword = async (password, confirmPassword) => {
     let body = {
+      username: user.username,
       password: password,
       email: user.email,
       firstName: user.firstName,
       lastName: user.lastName,
       role: {},
-      patientDetails: {},
+      patientDetails: {
+        nhsNo: user.patientDetails.nhsNo,
+        niNo: user.patientDetails.niNo,
+        mobileNo: user.patientDetails.mobileNo,
+        address: {
+          address1: user.patientDetails.address.address1,
+          address2: user.patientDetails.address.address2,
+          address3: user.patientDetails.address.address3,
+          city: user.patientDetails.address.city,
+          county: user.patientDetails.address.county,
+          postcode: user.patientDetails.address.postcode,
+          country: user.patientDetails.address.country,
+        },
+      },
     };
     setAnimate(true);
     if (password == "") {
@@ -92,7 +120,6 @@ export default function AccountSettings({ navigation }) {
       } else {
         setPassword2Error(false);
         setPasswordConfirmText("Password successfully updated");
-        console.log(user.username, body);
         let unRes = await UserService.update(user.username, body);
         setUser(unRes);
       }
