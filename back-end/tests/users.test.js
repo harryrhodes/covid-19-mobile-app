@@ -553,6 +553,7 @@ describe('PUT /', () => {
             url: '/users/robert.kopec',
             headers: testHelper.authHeaders,
             payload: {
+                username: 'test.username',
                 password: 'test password',
                 email: 'test email',
                 firstName: 'test first name',
@@ -564,7 +565,7 @@ describe('PUT /', () => {
         expect(res.statusCode).toBe(200);
         expect(typeof res.result).toBe('object');
         expect(res.result).toHaveProperty('_id');
-        expect(res.result).toHaveProperty('username', 'robert.kopec');
+        expect(res.result).toHaveProperty('username', 'test.username');
         expect(res.result).toHaveProperty('password');
         expect(res.result).toHaveProperty('email', 'test email');
         expect(res.result).toHaveProperty('firstName', 'test first name');
@@ -589,6 +590,7 @@ describe('PUT / Invalid inputs', () => {
             url: '/users/robert.jones',
             headers: testHelper.authHeaders,
             payload: {
+                username: 'test.username',
                 password: 'test password',
                 email: 'test email',
                 firstName: 'test first name',
@@ -600,12 +602,31 @@ describe('PUT / Invalid inputs', () => {
         expect(res.statusCode).toBe(404);
     });
 
+    test('Invalid new username responds with 400', async () => {
+        const res = await server.inject({
+            method: 'put',
+            url: '/users/robert.kopec',
+            headers: testHelper.authHeaders,
+            payload: {
+                username: 123456,
+                password: 'test password',
+                email: 'test email',
+                firstName: 'test first name',
+                lastName: 'test last name',
+                role: {},
+                patientDetails: {},
+            },
+        });
+        expect(res.statusCode).toBe(400);
+    });
+
     test('Invalid password responds with 400', async () => {
         const res = await server.inject({
             method: 'put',
             url: '/users/robert.kopec',
             headers: testHelper.authHeaders,
             payload: {
+                username: 'test.username',
                 password: true,
                 email: 'test email',
                 firstName: 'test first name',
@@ -623,6 +644,7 @@ describe('PUT / Invalid inputs', () => {
             url: '/users/robert.kopec',
             headers: testHelper.authHeaders,
             payload: {
+                username: 'test.username',
                 password: 'test password',
                 email: 123456,
                 firstName: 'test first name',
@@ -640,6 +662,7 @@ describe('PUT / Invalid inputs', () => {
             url: '/users/robert.kopec',
             headers: testHelper.authHeaders,
             payload: {
+                username: 'test.username',
                 password: 'test password',
                 email: 'test email',
                 firstName: false,
@@ -657,6 +680,7 @@ describe('PUT / Invalid inputs', () => {
             url: '/users/robert.kopec',
             headers: testHelper.authHeaders,
             payload: {
+                username: 'test.username',
                 password: 'test password',
                 email: 'test email',
                 firstName: 'test first name',
@@ -674,6 +698,7 @@ describe('PUT / Invalid inputs', () => {
             url: '/users/robert.kopec',
             headers: testHelper.authHeaders,
             payload: {
+                username: 'test.username',
                 password: 'test password',
                 email: 'test email',
                 firstName: 'test first name',
@@ -691,6 +716,7 @@ describe('PUT / Invalid inputs', () => {
             url: '/users/robert.kopec',
             headers: testHelper.authHeaders,
             payload: {
+                username: 'test.username',
                 password: 'test password',
                 email: 'test email',
                 firstName: 'test first name',
@@ -736,7 +762,7 @@ describe('DELETE / Invalid inputs', () => {
     test('Trying to delete an admin responds with 406', async () => {
         const res = await server.inject({
             method: 'delete',
-            url: '/users/robert.kopec',
+            url: '/users/harry.rhodes',
             headers: testHelper.authHeaders,
         });
         expect(res.statusCode).toBe(406);
