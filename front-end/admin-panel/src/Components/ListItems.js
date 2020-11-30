@@ -10,7 +10,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import ApartmentIcon from '@material-ui/icons/Apartment';
 import CallSplitIcon from '@material-ui/icons/CallSplit';
 
-export const mainListItems = (
+export const primaryListItems = (
   <div>
     <ListItem button component="a" href='/'>
       <ListItemIcon>
@@ -18,6 +18,12 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Home" />
     </ListItem>
+  </div>
+);
+
+export const secondryListItems = (
+  <div>
+    <ListSubheader inset>System Data</ListSubheader>
     <ListItem button component="a" href="/users">
       <ListItemIcon>
       <AccountCircleIcon />
@@ -46,7 +52,7 @@ export const mainListItems = (
 );
 
 
-export const secondaryListItems = (
+export const tertiaryListItems = (
   <div>
     <ListSubheader inset>Reports</ListSubheader>
     <ListItem button>

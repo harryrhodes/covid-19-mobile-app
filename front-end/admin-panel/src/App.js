@@ -1,11 +1,10 @@
-import React from "react";
+import React, {useState, useMemo }from "react";
 //Pages
 import Dashboard from "./Pages/Dashboard";
 import SignIn from "./Pages/SignIn";
 import Users from "./Pages/Users";
 import Patients from "./Pages/Patients";
 import Patient from "./Pages/Patient";
-import AccountOverview from "./Pages/AccountOverview";
 import Symptoms from "./Pages/Symptoms";
 import Cases from "./Pages/Cases";
 import clsx from "clsx";
@@ -22,7 +21,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Container from "@material-ui/core/Container";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import { mainListItems, secondaryListItems } from "./Components/ListItems";
+import { primaryListItems, secondryListItems, tertiaryListItems } from "./Components/ListItems";
 import Copyright from "./Components/Copyright";
 import Button from "@material-ui/core/Button";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
@@ -103,6 +102,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function App() {
+  const [user, setUser] = useState(null);
+  const value = useMemo(() => ({ user, setUser }), [user, setUser]);
+
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -171,9 +173,11 @@ function App() {
           </IconButton>
         </div>
         <Divider />
-        <List>{mainListItems}</List>
+        <List>{primaryListItems}</List>
         <Divider />
-        <List>{secondaryListItems}</List>
+        <List>{secondryListItems}</List>
+        <Divider />
+        <List>{tertiaryListItems}</List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
@@ -187,11 +191,6 @@ function App() {
               <Route path="/patient" exact component={Patient} />
               <Route path="/symptoms" exact component={Symptoms}/>
               <Route path="/cases" exact component={Cases}/>
-              <Route
-                path="/accountoverview"
-                exact
-                component={AccountOverview}
-              />
             </Switch>
           </BrowserRouter>
           <Box pt={4}>
