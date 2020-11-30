@@ -5,6 +5,8 @@ import SignIn from "./Pages/SignIn";
 import Users from "./Pages/Users";
 import Patients from "./Pages/Patients";
 import AccountOverview from "./Pages/AccountOverview";
+import Symptoms from "./Pages/Symptoms";
+import Cases from "./Pages/Cases";
 
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
@@ -25,6 +27,7 @@ import { mainListItems, secondaryListItems } from "./Components/ListItems";
 import Copyright from "./Components/Copyright";
 import Button from "@material-ui/core/Button";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+
 
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
@@ -137,7 +140,7 @@ function App() {
             noWrap
             className={classes.title}
           >
-            Home
+            Valhalla Tracker Dashboard
           </Typography>
           {/* <IconButton color="inherit" aria-label="My Account">
             <Badge badgeContent={0} color="secondary">
@@ -182,6 +185,8 @@ function App() {
               <Route path="/signin" exact component={SignIn} />
               <Route path="/users" exact component={Users} />
               <Route path="/patients" exact component={Patients} />
+              <Route path="/symptoms" exact component={Symptoms}/>
+              <Route path="/cases" exact component={Cases}/>
               <Route
                 path="/accountoverview"
                 exact

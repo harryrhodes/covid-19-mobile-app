@@ -7,6 +7,8 @@ import PeopleIcon from '@material-ui/icons/People';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import HomeIcon from '@material-ui/icons/Home';
+import ApartmentIcon from '@material-ui/icons/Apartment';
+import CallSplitIcon from '@material-ui/icons/CallSplit';
 
 export const mainListItems = (
   <div>
@@ -27,6 +29,18 @@ export const mainListItems = (
         <PeopleIcon />
       </ListItemIcon>
       <ListItemText primary="Patients" />
+    </ListItem>
+    <ListItem button component="a" href='/symptoms'>
+      <ListItemIcon>
+        <ApartmentIcon />
+      </ListItemIcon>
+      <ListItemText primary="Symptoms" />
+    </ListItem>
+    <ListItem button component="a" href='/cases'>
+      <ListItemIcon>
+        <CallSplitIcon/>
+      </ListItemIcon>
+      <ListItemText primary="Cases" />
     </ListItem>
   </div>
 );
