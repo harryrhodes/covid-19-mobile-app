@@ -14,19 +14,19 @@ import HomeIcon from '@material-ui/icons/Home';
 
 export const mainListItems = (
   <div>
-    <ListItem button href='/'>
+    <ListItem button component="a" href='/'>
       <ListItemIcon>
         <HomeIcon />
       </ListItemIcon>
       <ListItemText primary="Home" />
     </ListItem>
-    <ListItem button href="/users">
+    <ListItem button component="a" href='/users'>
       <ListItemIcon>
       <AccountCircleIcon />
       </ListItemIcon>
       <ListItemText primary="Users" />
     </ListItem>
-    <ListItem button>
+    <ListItem button component="a" href='/patients'>
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
