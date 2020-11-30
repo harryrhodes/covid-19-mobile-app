@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { View } from "react-native";
 import { ActivityIndicator, Card, RadioButton } from "react-native-paper";
-import { onChange } from "react-native-reanimated";
 import { Styles } from "./style";
 
 export default function SymptomForm(props) {

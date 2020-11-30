@@ -19,7 +19,7 @@ export default function Home({ navigation }) {
       <Welcome firstName={user.firstName}/>
       <SymptomsCard />
       <BookTestCard />
-      <LogSymptomsCard />
+      <LogSymptomsCard logSymptoms={() => navigation.navigate("Symptoms")}/>
       <Button onPress={() => logOut(user)} >Log Out</Button>
     </SafeAreaView>
   );
