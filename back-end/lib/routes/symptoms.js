@@ -188,8 +188,8 @@ module.exports.push(
             tags: ['api'],
             log: { collect: true, },
             auth: 'simple',
-            description: 'Delete a user',
-            notes: 'Delete a user, cant delete an admin',
+            description: 'Delete a symptom',
+            notes: 'Delete a symptom',
             validate: {
                 params: {
                     name: Joi.string().required().description('Symptom Name').example('Cough'),
