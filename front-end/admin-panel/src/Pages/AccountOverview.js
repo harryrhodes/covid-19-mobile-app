@@ -11,12 +11,12 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import PeopleIcon from '@material-ui/icons/People';
+import Title from '../Components/Title';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
-import Title from '../Components/Title';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 //import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from '../Components/ListItems';
@@ -147,7 +147,7 @@ export default function Dashboard() {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Users
+            Account Overview
           </Typography>
           {/* <IconButton color="inherit" aria-label="My Account">
             <Badge badgeContent={0} color="secondary">
@@ -184,24 +184,6 @@ export default function Dashboard() {
         <Divider />
         <List>{secondaryListItems}</List>
       </Drawer>
-      <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
-            {/* Chart */}
-             <Grid item xs={12}>
-              <Paper className={classes.paper}>
-              <Title>List of Users</Title>
-                <Orders />
-              </Paper>
-            </Grid>
-          </Grid>
-          <Box pt={4}>
-            <Copyright />
-          </Box>
-        </Container>
-      </main>
-    </div>
+      </div>
   );
-}
-
+    }
