@@ -214,7 +214,7 @@ module.exports.updateUserDetails = async (request) => {
 
         let updatedUser = await new User({
             _id: user[0]._id,
-            username: user[0].username,
+            username: request.payload.username ? request.payload.username : user[0].username,
             password: request.payload.password ? newPassword : user[0].password,
             email: request.payload.email ? request.payload.email : user[0].email,
             firstName: request.payload.firstName ? request.payload.firstName : user[0].firstName,
