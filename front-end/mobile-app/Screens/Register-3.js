@@ -130,7 +130,7 @@ export default function Register({ navigation, route }) {
             style={styles.input}
             value={city}
             error={cityError}
-            onChangeText={(city) => setCounty(city)}
+            onChangeText={(city) => setCity(city)}
           />
           <HelperText type="error" visible={cityError}>
             {errorText}
@@ -140,7 +140,7 @@ export default function Register({ navigation, route }) {
             mode="outlined"
             style={styles.input}
             value={county}
-            onChangeText={(county) => setCity(county)}
+            onChangeText={(county) => setCounty(county)}
           />
           <TextInput
             label="Postcode (Required)"
