@@ -8,7 +8,7 @@ import {
   Subheading,
   ActivityIndicator,
   Avatar,
-  HelperText
+  HelperText,
 } from "react-native-paper";
 import { UserContext } from "../Hooks/UserContext";
 import UserService from "../Services/UserService";
@@ -53,12 +53,12 @@ export default function EditProfile({ navigation }) {
     const emailRe = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const niRe = /^(?!BG|GB|NK|KN|TN|NT|ZZ)[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\s*\d{2}\s*\d{2}\s*\d{2}\s*[A-D]$/;
 
-    let secondEmail = ""
-    let secondFirstName = ""
-    let secondLastName = ""
-    let secondNhsNo = ""
-    let secondNiNo = ""
-    let secondMobileNo = ""
+    let secondEmail = "";
+    let secondFirstName = "";
+    let secondLastName = "";
+    let secondNhsNo = "";
+    let secondNiNo = "";
+    let secondMobileNo = "";
 
     if (!email == "") {
       if (!emailRe.test(email)) {
@@ -121,11 +121,11 @@ export default function EditProfile({ navigation }) {
         setAnimate(false);
       } else {
         setNhsError(false);
-        secondNhsNo = newNhsNo
+        secondNhsNo = newNhsNo;
       }
     } else {
       setNhsError(false);
-      secondNhsNo = user.nhsNo
+      secondNhsNo = user.nhsNo;
     }
 
     if (!niNo == "") {
@@ -176,27 +176,86 @@ export default function EditProfile({ navigation }) {
     setUser(profRes);
   };
 
-  const validateInputs = async (
-    address1,
-    address2,
-    address3,
-    city,
-    county,
-    postcode,
-    country,
-    userObj
+  const validateAddress = async (
+    newAddress1,
+    newAddress2,
+    newAddress3,
+    newCity,
+    newCounty,
+    newPostcode,
+    newCountry
   ) => {
-    // userObj.patientDetails.address = {
-    //   address1: address1,
-    //   address2: address2,
-    //   address3: address3,
-    //   city: city,
-    //   county: county,
-    //   postcode: postcode,
-    //   country: country,
-    // };
-    let res = await UserService.update(userObj);
-    setUser(res);
+    let secondAddress1 = "";
+    let secondAddress2 = "";
+    let secondAddress3 = "";
+    let secondCity = "";
+    let secondCounty = "";
+    let secondPostcode = "";
+    let secondCountry = "";
+
+    if (!address1 == "") {
+      secondAddress1 = newAddress1;
+    } else {
+      secondAddress1 = user.address1;
+    }
+
+    if (!address2 == "") {
+      secondAddress2 = newAddress2;
+    } else {
+      secondAddress2 = user.address2;
+    }
+
+    if (!address3 == "") {
+      secondAddress3 = newAddress3;
+    } else {
+      secondAddress3 = user.address3;
+    }
+
+    if (!city == "") {
+      secondCity = newCity;
+    } else {
+      secondCity = user.city;
+    }
+
+    if (!county == "") {
+      secondCounty = newCounty;
+    } else {
+      secondCounty = user.county;
+    }
+
+    if (!postcode == "") {
+      secondPostcode = newPostcode;
+    } else {
+      secondPostcode = user.postcode;
+    }
+
+    if (!country == "") {
+      secondCountry = newCountry;
+    } else {
+      secondCountry = user.Country;
+    }
+
+    let body = {
+      password: "",
+      email: "",
+      firstName: "",
+      lastName: "",
+      role: {},
+      patientDetails: {
+        address: {
+          address1: secondAddress1,
+          address2: secondAddress2,
+          address3: secondAddress3,
+          city: secondCity,
+          county: secondCounty,
+          postcode: secondPostcode,
+          country: secondCountry
+        },
+      },
+    };
+
+    let addressRes = await UserService.update(user.username, body);
+    setUser(addressRes);
   };
 
   return (
@@ -298,7 +357,7 @@ export default function EditProfile({ navigation }) {
                   lastName,
                   nhsNo,
                   niNo,
-                  mobileNo,
+                  mobileNo
                 )
               }
             >
@@ -367,7 +426,7 @@ export default function EditProfile({ navigation }) {
               style={styles.registerButton}
               mode="contained"
               onPress={() =>
-                validateInputs(
+                validateAddress(
                   address1,
                   address2,
                   address3,
@@ -375,7 +434,6 @@ export default function EditProfile({ navigation }) {
                   county,
                   postcode,
                   country,
-                  route.params.userObj
                 )
               }
             >
