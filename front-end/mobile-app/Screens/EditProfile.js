@@ -29,6 +29,9 @@ export default function EditProfile({ navigation }) {
   const [niError, setNiError] = useState(false);
   const [mobileError, setMobileError] = useState(false);
 
+  const [profileConfirmText, setProfileConfirmText] = useState("");
+  const [addressConfirmText, setAddressConfirmText] = useState("");
+
   const [address1, setAddress1] = useState("");
   const [address2, setAddress2] = useState("");
   const [address3, setAddress3] = useState("");
@@ -172,6 +175,7 @@ export default function EditProfile({ navigation }) {
         mobileNo: secondMobileNo,
       },
     };
+    setProfileConfirmText("Profile successfully updated");
     let profRes = await UserService.update(user.username, body);
     setUser(profRes);
   };
@@ -196,43 +200,43 @@ export default function EditProfile({ navigation }) {
     if (!address1 == "") {
       secondAddress1 = newAddress1;
     } else {
-      secondAddress1 = user.address1;
+      secondAddress1 = user.patientDetails.address.address1;
     }
 
     if (!address2 == "") {
       secondAddress2 = newAddress2;
     } else {
-      secondAddress2 = user.address2;
+      secondAddress2 = user.patientDetails.address.address2;
     }
 
     if (!address3 == "") {
       secondAddress3 = newAddress3;
     } else {
-      secondAddress3 = user.address3;
+      secondAddress3 = user.patientDetails.address.address3;
     }
 
     if (!city == "") {
       secondCity = newCity;
     } else {
-      secondCity = user.city;
+      secondCity = user.patientDetails.address.city;
     }
 
     if (!county == "") {
       secondCounty = newCounty;
     } else {
-      secondCounty = user.county;
+      secondCounty = user.patientDetails.address.county;
     }
 
     if (!postcode == "") {
       secondPostcode = newPostcode;
     } else {
-      secondPostcode = user.postcode;
+      secondPostcode = user.patientDetails.address.postcode;
     }
 
     if (!country == "") {
       secondCountry = newCountry;
     } else {
-      secondCountry = user.Country;
+      secondCountry = user.patientDetails.address.country;
     }
 
     let body = {
@@ -249,11 +253,11 @@ export default function EditProfile({ navigation }) {
           city: secondCity,
           county: secondCounty,
           postcode: secondPostcode,
-          country: secondCountry
+          country: secondCountry,
         },
       },
     };
-
+    setAddressConfirmText("Address successfully updated");
     let addressRes = await UserService.update(user.username, body);
     setUser(addressRes);
   };
@@ -363,6 +367,9 @@ export default function EditProfile({ navigation }) {
             >
               Update Profile
             </Button>
+            <HelperText type="info" visible={true}>
+              {profileConfirmText}
+            </HelperText>
             <ActivityIndicator
               animating={false}
               style={styles.activityIndicator}
@@ -433,16 +440,19 @@ export default function EditProfile({ navigation }) {
                   city,
                   county,
                   postcode,
-                  country,
+                  country
                 )
               }
             >
               Update Address
             </Button>
             <ActivityIndicator
-              animating={false}
+              animating={animate}
               style={styles.activityIndicator}
             />
+            <HelperText type="info" visible={true}>
+              {addressConfirmText}
+            </HelperText>
           </Card.Content>
         </Card>
       </ScrollView>
