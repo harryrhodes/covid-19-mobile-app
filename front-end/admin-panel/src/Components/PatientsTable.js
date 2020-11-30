@@ -1,6 +1,6 @@
-import React from 'react';
-import Link from '@material-ui/core/Link';
-import { makeStyles } from '@material-ui/core/styles';
+import React from "react";
+import Link from "@material-ui/core/Link";
+import { makeStyles } from "@material-ui/core/styles";
 import {
   Table,
   TableBody,
@@ -14,37 +14,191 @@ import {
   Button,
 } from "@material-ui/core";
 // Generate Order Data
-function createData(id, 
-                    date, 
-                    name, 
-                    nhsNumber, 
-                    email, 
-                    role,
-                    diagnosis) {
+function createData(id, date, name, nhsNumber, email, role, diagnosis) {
   return { id, date, name, nhsNumber, email, role, diagnosis };
 }
 
 const rows = [
-  createData(0, '16 Mar, 2020', 'Elvis Presley', '123856334', 'ABC@Gmail.com', 'Patient', 'Awaiting Results'),
-  createData(1, '18 Feb, 2020', 'Paul McCartney', '980235766', 'ABC@Gmail.com', 'Patient', 'Awaiting Results'),
-  createData(2, '21 Apr, 2019', 'Tom Scholz', '235907671', 'ABC@Gmail.com', 'Patient', 'Awaiting Results'),
-  createData(3, '16 Jun, 2019', 'Michael Jackson', '234907282', 'ABC@Gmail.com', 'Patient', 'Positive'),
-  createData(4, '15 Sep, 2019', 'Bruce Springsteen', '135097234', 'ABC@Gmail.com', 'Patient', 'Negative'),
-  createData(5, '16 Aug, 2020', 'Elvis Presley', '135097692', 'ABC@Gmail.com', 'Patient', 'Awaiting Results'),
-  createData(6, '16 Oct, 2020', 'Paul McCartney', '602346728', 'ABC@Gmail.com', 'Practitioner','N/A'),
-  createData(7, '07 Nov, 2020', 'Tom Scholz', '460924672', 'ABC@Gmail.com', 'Admin','Not Tested'),
-  createData(8, '18 Dec, 2020', 'Michael Jackson', '507969234', 'ABC@Gmail.com', 'Patient', 'Not Tested'),
-  createData(9, '21 Sep, 2020', 'Bruce Springsteen', '694031238', 'ABC@Gmail.com','Patient','Positive'),
-  createData(10, '16 Mar, 2020', 'Elvis Presley', '123856334', 'ABC@Gmail.com', 'Patient', 'Awaiting Results'),
-  createData(11, '18 Feb, 2020', 'Paul McCartney', '980235766', 'ABC@Gmail.com', 'Patient', 'Awaiting Results'),
-  createData(12, '21 Apr, 2019', 'Tom Scholz', '235907671', 'ABC@Gmail.com', 'Patient', 'Awaiting Results'),
-  createData(13, '16 Jun, 2019', 'Michael Jackson', '234907282', 'ABC@Gmail.com', 'Patient', 'Positive'),
-  createData(14, '15 Sep, 2019', 'Bruce Springsteen', '135097234', 'ABC@Gmail.com', 'Patient', 'Negative'),
-  createData(15, '16 Aug, 2020', 'Elvis Presley', '135097692', 'ABC@Gmail.com', 'Patient', 'Awaiting Results'),
-  createData(16, '16 Oct, 2020', 'Paul McCartney', '602346728', 'ABC@Gmail.com', 'Practitioner','N/A'),
-  createData(17, '07 Nov, 2020', 'Tom Scholz', '460924672', 'ABC@Gmail.com', 'Admin','Not Tested'),
-  createData(18, '18 Dec, 2020', 'Michael Jackson', '507969234', 'ABC@Gmail.com', 'Patient', 'Not Tested'),
-  createData(19, '21 Sep, 2020', 'Bruce Springsteen', '694031238', 'ABC@Gmail.com','Patient','Positive'),
+  createData(
+    0,
+    "16 Mar, 2020",
+    "Elvis Presley",
+    "123856334",
+    "ABC@Gmail.com",
+    "Patient",
+    "Awaiting Results"
+  ),
+  createData(
+    1,
+    "18 Feb, 2020",
+    "Paul McCartney",
+    "980235766",
+    "ABC@Gmail.com",
+    "Patient",
+    "Awaiting Results"
+  ),
+  createData(
+    2,
+    "21 Apr, 2019",
+    "Tom Scholz",
+    "235907671",
+    "ABC@Gmail.com",
+    "Patient",
+    "Awaiting Results"
+  ),
+  createData(
+    3,
+    "16 Jun, 2019",
+    "Michael Jackson",
+    "234907282",
+    "ABC@Gmail.com",
+    "Patient",
+    "Positive"
+  ),
+  createData(
+    4,
+    "15 Sep, 2019",
+    "Bruce Springsteen",
+    "135097234",
+    "ABC@Gmail.com",
+    "Patient",
+    "Negative"
+  ),
+  createData(
+    5,
+    "16 Aug, 2020",
+    "Elvis Presley",
+    "135097692",
+    "ABC@Gmail.com",
+    "Patient",
+    "Awaiting Results"
+  ),
+  createData(
+    6,
+    "16 Oct, 2020",
+    "Paul McCartney",
+    "602346728",
+    "ABC@Gmail.com",
+    "Practitioner",
+    "N/A"
+  ),
+  createData(
+    7,
+    "07 Nov, 2020",
+    "Tom Scholz",
+    "460924672",
+    "ABC@Gmail.com",
+    "Admin",
+    "Not Tested"
+  ),
+  createData(
+    8,
+    "18 Dec, 2020",
+    "Michael Jackson",
+    "507969234",
+    "ABC@Gmail.com",
+    "Patient",
+    "Not Tested"
+  ),
+  createData(
+    9,
+    "21 Sep, 2020",
+    "Bruce Springsteen",
+    "694031238",
+    "ABC@Gmail.com",
+    "Patient",
+    "Positive"
+  ),
+  createData(
+    10,
+    "16 Mar, 2020",
+    "Elvis Presley",
+    "123856334",
+    "ABC@Gmail.com",
+    "Patient",
+    "Awaiting Results"
+  ),
+  createData(
+    11,
+    "18 Feb, 2020",
+    "Paul McCartney",
+    "980235766",
+    "ABC@Gmail.com",
+    "Patient",
+    "Awaiting Results"
+  ),
+  createData(
+    12,
+    "21 Apr, 2019",
+    "Tom Scholz",
+    "235907671",
+    "ABC@Gmail.com",
+    "Patient",
+    "Awaiting Results"
+  ),
+  createData(
+    13,
+    "16 Jun, 2019",
+    "Michael Jackson",
+    "234907282",
+    "ABC@Gmail.com",
+    "Patient",
+    "Positive"
+  ),
+  createData(
+    14,
+    "15 Sep, 2019",
+    "Bruce Springsteen",
+    "135097234",
+    "ABC@Gmail.com",
+    "Patient",
+    "Negative"
+  ),
+  createData(
+    15,
+    "16 Aug, 2020",
+    "Elvis Presley",
+    "135097692",
+    "ABC@Gmail.com",
+    "Patient",
+    "Awaiting Results"
+  ),
+  createData(
+    16,
+    "16 Oct, 2020",
+    "Paul McCartney",
+    "602346728",
+    "ABC@Gmail.com",
+    "Practitioner",
+    "N/A"
+  ),
+  createData(
+    17,
+    "07 Nov, 2020",
+    "Tom Scholz",
+    "460924672",
+    "ABC@Gmail.com",
+    "Admin",
+    "Not Tested"
+  ),
+  createData(
+    18,
+    "18 Dec, 2020",
+    "Michael Jackson",
+    "507969234",
+    "ABC@Gmail.com",
+    "Patient",
+    "Not Tested"
+  ),
+  createData(
+    19,
+    "21 Sep, 2020",
+    "Bruce Springsteen",
+    "694031238",
+    "ABC@Gmail.com",
+    "Patient",
+    "Positive"
+  ),
 ];
 
 function preventDefault(event) {
@@ -67,12 +221,12 @@ const useStyles = makeStyles((theme) => ({
 export default function PaitentsTable() {
   const classes = useStyles();
   const [state, setState] = React.useState({
-    name: '',
-    age: '',
-    NHS_Number: '',
-    emailAddress: '',
-    role: '', 
-    diagnosis: '',
+    name: "",
+    age: "",
+    NHS_Number: "",
+    emailAddress: "",
+    role: "",
+    diagnosis: "",
   });
 
   const handleChange = (event) => {
@@ -199,8 +353,8 @@ export default function PaitentsTable() {
             Search
           </Button>
         </FormControl>
-    </div>
-      <Table size="small">
+      </div>
+      <Table>
         <TableHead>
           <TableRow>
             <TableCell>Date Account Created</TableCell>
@@ -224,8 +378,7 @@ export default function PaitentsTable() {
           ))}
         </TableBody>
       </Table>
-      <div className={classes.seeMore}>
-      </div>
+      <div className={classes.seeMore}></div>
     </React.Fragment>
   );
 }

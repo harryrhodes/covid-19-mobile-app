@@ -4,11 +4,10 @@ import Dashboard from "./Pages/Dashboard";
 import SignIn from "./Pages/SignIn";
 import Users from "./Pages/Users";
 import Patients from "./Pages/Patients";
+import Patient from "./Pages/Patient";
 import AccountOverview from "./Pages/AccountOverview";
 import Symptoms from "./Pages/Symptoms";
 import Cases from "./Pages/Cases";
-
-import AccountOverview from "./Pages/AccountOverview";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -185,6 +184,7 @@ function App() {
               <Route path="/signin" exact component={SignIn} />
               <Route path="/users" exact component={Users} />
               <Route path="/patients" exact component={Patients} />
+              <Route path="/patient" exact component={Patient} />
               <Route path="/symptoms" exact component={Symptoms}/>
               <Route path="/cases" exact component={Cases}/>
               <Route
