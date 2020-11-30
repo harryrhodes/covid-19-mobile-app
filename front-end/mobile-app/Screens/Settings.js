@@ -7,6 +7,10 @@ import UserService from "../Services/UserService";
 export default function Settings({ navigation }) {
   const { user, setUser } = useContext(UserContext);
   const labelTag = user.firstName.substring(0,1) + user.lastName.substring(0,1)
+  const logOut = async (user) => {
+    setUser(null);
+    navigation.goBack();
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -34,7 +38,7 @@ export default function Settings({ navigation }) {
           </Card.Content>
         </Card>
       </ScrollView>
-      <Button onPress={() => navigation.navigate("Register-1")}>Log Out</Button>
+      <Button onPress={() => logOut(user)}>Log Out</Button>
     </SafeAreaView>
   );
 }
