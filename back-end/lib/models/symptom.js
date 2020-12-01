@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 
 const symptomSchema = mongoose.Schema({
     _id: Number,
-    name: String
+    name: String,
+    severity: Number
 });
 
 /** @type {import('mongoose').Schema} */

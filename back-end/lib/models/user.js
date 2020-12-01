@@ -10,15 +10,8 @@ const userSchema = mongoose.Schema({
     accountType: String,
     role: {},
     patientDetails: {},
-    symptoms: [
-        // {
-        //     date: Date,
-        //     details: [{
-        //         name: String,
-        //         comment: String
-        //     }]
-        // }
-    ]
+    symptoms: [],
+    createdDate: Date
 }, { collection: 'users', minimize: false });
 
 /** @type {import('mongoose').Schema} */

@@ -47,7 +47,8 @@ module.exports.addSymptom = async (request) => {
         if (!request.payload.name) return Boom.badRequest('No name specified');
 
         let newSymptom = await new Symptom({
-            name: request.payload.name
+            name: request.payload.name,
+            severity: request.payload.severity
         });
 
         await Symptom.insertMany(newSymptom);
@@ -79,7 +80,8 @@ module.exports.updateSymptomName = async (request) => {
 
         let updatedSymptom = await new Symptom({
             _id: symptom[0]._id,
-            name: request.payload.name
+            name: request.payload.name,
+            severity: request.payload.severity ? request.payload.severity : symptom[0].severity
         });
 
         await Symptom.updateOne({ name: request.params.name }, updatedSymptom, { upsert: false, setDefaultsOnInsert: true });
@@ -149,6 +151,7 @@ module.exports.push(
             validate: {
                 payload: {
                     name: Joi.string().required().description('Symptom Name').example('Cough'),
+                    severity: Joi.number().required().valid(1, 2, 3, 4, 5).description('Symptom Severity').example(3),
                 },
             },
             response: {
@@ -172,6 +175,7 @@ module.exports.push(
                 },
                 payload: {
                     name: Joi.string().required().description('Symptom Name').example('Cough'),
+                    severity: Joi.number().optional().valid(1, 2, 3, 4, 5).description('Symptom Severity').example(3),
                 },
             },
             cache: {

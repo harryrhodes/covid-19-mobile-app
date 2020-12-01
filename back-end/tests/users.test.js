@@ -237,6 +237,7 @@ describe('POST /', () => {
         expect(res.result).toHaveProperty('firstName', 'test first name');
         expect(res.result).toHaveProperty('lastName', 'test last name');
         expect(res.result).toHaveProperty('accountType', 'patient');
+        expect(res.result).toHaveProperty('createdDate');
         expect(typeof res.result.role).toBe('object');
         expect(typeof res.result.patientDetails).toBe('object');
         expect(Array.isArray(res.result.symptoms)).toBe(true);

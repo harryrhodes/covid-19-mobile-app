@@ -28,6 +28,7 @@ describe('GET /', () => {
         expect(Array.isArray(res.result.data)).toBe(true);
         expect(res.result.data[0]).toHaveProperty('_id', '5fbe53388309cb5f78b99f37');
         expect(res.result.data[0]).toHaveProperty('name', 'Fever');
+        expect(res.result.data[0]).toHaveProperty('severity', 3);
     });
 });
 
@@ -49,12 +50,14 @@ describe('POST /', () => {
             headers: testHelper.authHeaders,
             payload: {
                 name: 'Wet Cough',
+                severity: 3
             },
         });
         expect(res.statusCode).toBe(200);
         expect(typeof res.result).toBe('object');
         expect(res.result).toHaveProperty('_id');
         expect(res.result).toHaveProperty('name', 'Wet Cough');
+        expect(res.result).toHaveProperty('severity', 3);
     });
 });
 
@@ -65,6 +68,7 @@ describe('POST / Invalid inputs', () => {
             url: '/symptoms',
             payload: {
                 name: 'Wet Cough',
+                severity: 3
             },
         });
         expect(res.statusCode).toBe(401);
@@ -77,6 +81,20 @@ describe('POST / Invalid inputs', () => {
             headers: testHelper.authHeaders,
             payload: {
                 name: 1233456,
+                severity: 3
+            },
+        });
+        expect(res.statusCode).toBe(400);
+    });
+
+    test('Invalid symptom severity responds with 400', async () => {
+        const res = await server.inject({
+            method: 'post',
+            url: '/symptoms',
+            headers: testHelper.authHeaders,
+            payload: {
+                name: 'Wet Cough',
+                severity: 6
             },
         });
         expect(res.statusCode).toBe(400);
@@ -91,11 +109,13 @@ describe('PUT /symptoms', () => {
             headers: testHelper.authHeaders,
             payload: {
                 name: 'High Fever',
+                severity: 3
             },
         });
         expect(res.statusCode).toBe(200);
         expect(typeof res.result).toBe('object');
         expect(res.result).toHaveProperty('name', 'High Fever');
+        expect(res.result).toHaveProperty('severity', 3);
     });
 });
 
@@ -130,6 +150,19 @@ describe('PUT /symptoms Invalid inputs', () => {
             headers: testHelper.authHeaders,
             payload: {
                 name: true,
+            },
+        });
+        expect(res.statusCode).toBe(400);
+    });
+
+    test('Invalid updated symptom severity responds with 400', async () => {
+        const res = await server.inject({
+            method: 'put',
+            url: '/symptoms/Fever',
+            headers: testHelper.authHeaders,
+            payload: {
+                name: 'High Fever',
+                severity: 6
             },
         });
         expect(res.statusCode).toBe(400);
