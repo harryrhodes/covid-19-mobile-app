@@ -71,7 +71,7 @@ export default function Register({ navigation }) {
       <ScrollView keyboardShouldPersistTaps="handled">
         <View>
           <Title style={styles.appTitle}>Register</Title>
-          <ProgressBar style={styles.progressBar} progress={0.2} />
+          <ProgressBar style={styles.progressBar} progress={0.25} />
         </View>
         <Card style={styles.card}>
           <Card.Content style={styles.cardContent}>
@@ -125,6 +125,7 @@ export default function Register({ navigation }) {
             <HelperText type="error" visible={password2Error}>
               {errorText}
             </HelperText>
+            <Text style={styles.Text}>You need these to sign in, please remember them.</Text>
             <Button
               mode="contained"
               style={styles.continueButton}
