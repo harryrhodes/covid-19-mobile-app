@@ -20,6 +20,10 @@ export default {
     update: async (username,body) =>{
         let res = await axios.put("http://localhost:4000"+"/users/"+username,body, {auth})
         return res.data || [];
+    },
+    updateSymptoms: async (username,body) =>{
+        let res = await axios.put("http://localhost:4000"+"/users/symptoms/"+username,body, {auth})
+        return res.data || [];
     }               
 }
 
