@@ -4,7 +4,7 @@ import { ActivityIndicator, Card, RadioButton } from "react-native-paper";
 import { Styles } from "./style";
 
 export default function SymptomForm(props) {
-  const [value, setValue] = useState(false);
+  const [value, setValue] = useState("false");
 
   function updateValue(value) {
     props.onChange(props.name, value)
@@ -20,8 +20,8 @@ export default function SymptomForm(props) {
             onValueChange={updateValue}
             value={value}
           >
-            <RadioButton.Item label="Yes" value={true} onPress={updateValue}/>
-            <RadioButton.Item label="No" value={false} />
+            <RadioButton.Item label="Yes" value="true" onPress={updateValue}/>
+            <RadioButton.Item label="No" value="false" />
           </RadioButton.Group>
           <ActivityIndicator
             animating={false}

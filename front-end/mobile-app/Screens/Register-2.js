@@ -8,6 +8,7 @@ import {
   ProgressBar,
   ActivityIndicator,
   HelperText,
+  Text,
 } from "react-native-paper";
 
 export default function Register({ navigation, route }) {
@@ -132,6 +133,7 @@ export default function Register({ navigation, route }) {
       </View>
       <Card style={styles.card}>
         <Card.Content style={styles.cardContent}>
+        <Text style={styles.Text}>All fields marked Required cannot be left blank.</Text>
           <TextInput
             label="Email Address (Required)"
             mode="outlined"
@@ -187,7 +189,6 @@ export default function Register({ navigation, route }) {
             label="NI Number (Required)"
             mode="outlined"
             style={styles.input}
-            keyboardType="numeric"
             value={niNo}
             error={niError}
             onChangeText={(niNo) => setNiNo(niNo)}
@@ -266,5 +267,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginLeft: 20,
     marginRight: 20,
+  },
+  Text: {
+    textAlign: "center",
   },
 });
