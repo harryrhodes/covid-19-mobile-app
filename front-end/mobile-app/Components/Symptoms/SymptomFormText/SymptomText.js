@@ -7,7 +7,7 @@ export default function SymptomFormText(props) {
   const [value, setValue] = useState("");
 
   function updateValue(value) {
-    props.onChange(props.name, value)
+    props.onChangeText(value)
     setValue(value)
   }
 
