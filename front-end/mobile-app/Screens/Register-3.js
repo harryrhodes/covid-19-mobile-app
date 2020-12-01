@@ -13,7 +13,7 @@ import {
 } from "react-native-paper";
 
 export default function Register({ navigation, route }) {
-  const [temperature, setTemperature] = useState("");
+  //const [temperature, setTemperature] = useState("");
   const [nop, setNop] = useState("1");
   const [publicTransport, setPublicTransport] = useState("false");
   const [hospitalisations, setHospitalisations] = useState("0");
@@ -24,7 +24,7 @@ export default function Register({ navigation, route }) {
   const [status] = useState(null);
 
   const [errorText, setErrorText] = useState("");
-  const [temperatureError, setTemperatureError] = useState(false);
+  //const [temperatureError, setTemperatureError] = useState(false);
   const [dobError, setDobError] = useState(false);
 
   const [animate, setAnimate] = useState(false);
@@ -32,7 +32,7 @@ export default function Register({ navigation, route }) {
   const dobReg = /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/i;
 
   const validateInputs = async (
-    temperature,
+    //temperature,
     nop,
     publicTransport,
     hospitalisations,
@@ -44,7 +44,7 @@ export default function Register({ navigation, route }) {
     userObj
   ) => {
     userObj.patientDetails.personalInfo = {
-      temperature: temperature,
+      //temperature: temperature,
       nop: nop,
       publicTransport: publicTransport,
       hospitalisations: hospitalisations,
@@ -55,23 +55,23 @@ export default function Register({ navigation, route }) {
       status: status,
     };
 
-    if (temperature == "") {
-      setErrorText("This is a required field");
-      setTemperatureError(true);
-      setAnimate(false);
-    } else {
-      if (!/^\d+$/.test(temperature)) {
-        setErrorText(
-          "Your Temperature can only contain digits. Please round it to a whole number"
-        );
-        setTemperatureError(true);
-        setAnimate(false);
-      } else if (!/^\d{2}$/.test(temperature)) {
-        setErrorText("Your temperature must be 2 digits exactly");
-        setTemperatureError(true);
-        setAnimate(false);
-      } else {
-        setTemperatureError(false);
+    // if (temperature == "") {
+    //   setErrorText("This is a required field");
+    //   setTemperatureError(true);
+    //   setAnimate(false);
+    // } else {
+    //   if (!/^\d+$/.test(temperature)) {
+    //     setErrorText(
+    //       "Your Temperature can only contain digits. Please round it to a whole number"
+    //     );
+    //     setTemperatureError(true);
+    //     setAnimate(false);
+    //   } else if (!/^\d{2}$/.test(temperature)) {
+    //     setErrorText("Your temperature must be 2 digits exactly");
+    //     setTemperatureError(true);
+    //     setAnimate(false);
+    //   } else {
+    //     setTemperatureError(false);
         if (dob == "") {
           setErrorText("This is a required field");
           setDobError(true);
@@ -88,8 +88,8 @@ export default function Register({ navigation, route }) {
             });
           }
         }
-      }
-    }
+      //}
+    //}
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -103,7 +103,8 @@ export default function Register({ navigation, route }) {
         <Text style={styles.Text}>You cannot change these later!</Text>
         </Card.Content>
       </Card>
-      <Card style={styles.card}>
+
+      {/* <Card style={styles.card}>
         <Card.Content style={styles.cardContent}>
           <TextInput // Temperature Check
             label="Most Recent Temperature (°C)"
@@ -118,7 +119,7 @@ export default function Register({ navigation, route }) {
             {errorText}
           </HelperText>
         </Card.Content>
-      </Card>
+      </Card> */}
 
       <Card style={styles.card}>
         <Card.Content style={styles.cardContent}>
@@ -255,7 +256,7 @@ export default function Register({ navigation, route }) {
             style={styles.continueButton}
             onPress={() =>
               validateInputs(
-                temperature,
+                //temperature,
                 nop,
                 publicTransport,
                 hospitalisations,
@@ -270,9 +271,6 @@ export default function Register({ navigation, route }) {
           >
             Continue
           </Button>
-          <HelperText type="error" visible={temperatureError}>
-            {errorText}
-          </HelperText>
           <ActivityIndicator
             animating={animate}
             style={styles.activityIndicator}
