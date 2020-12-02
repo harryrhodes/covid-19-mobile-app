@@ -72,8 +72,10 @@ export default function App() {
             <Stack.Navigator>
               <Stack.Screen
                 name="Home"
+                
                 component={HomeScreen}
                 options={{
+                  title: "Valhalla Tracker",
                   headerRight: () => (
                     <Button
                       icon="account-circle-outline"

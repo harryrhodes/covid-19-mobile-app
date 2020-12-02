@@ -21,7 +21,8 @@ export default function Register({ navigation, route }) {
   const [hypertension, setHypertension] = useState("false");
   const [dob, setDob] = useState("");
   const [gender, setGender] = useState("Unspecified");
-  const [status] = useState("Negative");
+
+  const [status] = useState("Not Tested");
 
   const [errorText, setErrorText] = useState("");
   //const [temperatureError, setTemperatureError] = useState(false);

@@ -11,7 +11,7 @@ const Styles = StyleSheet.create({
     position: "relative",
     width: "90%",
     marginTop: "1rem",
-    marginBottom: "1rem", 
+    marginBottom: "1rem",
   },
   cardContent: {
     margin: "1rem",
