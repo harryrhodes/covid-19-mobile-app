@@ -6,7 +6,7 @@ import Paper from "@material-ui/core/Paper";
 import Link from "@material-ui/core/Link";
 import Title from "../Components/Title";
 import SymptomsTable from "../Components/SymptomsTable"
-//import PaitentsTable from "../Components/PatientsTable";
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
