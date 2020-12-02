@@ -12,9 +12,6 @@ import SubTitle from "../SubTitle";
 import useForm from "../../Hooks/useForm";
 import {
   Fab,
-  InputLabel,
-  Select,
-  MenuItem,
   FormControl,
   FormLabel,
   RadioGroup,
@@ -110,8 +107,8 @@ export default function CreateDialog() {
       >
         <DialogTitle id="form-dialog-title">Add New Patient</DialogTitle>
         <DialogContent>
-          <SubTitle>Account Information</SubTitle>
           <form className={classes.root}>
+            <SubTitle>Account Information</SubTitle>
             <div>
               <FormControl className={classes.margin} fullWidth>
                 <TextField

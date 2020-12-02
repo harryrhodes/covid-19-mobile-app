@@ -1,4 +1,4 @@
-import React, {useState, useMemo }from "react";
+import React, { useState, useMemo } from "react";
 //Pages
 import Dashboard from "./Pages/Dashboard";
 import SignIn from "./Pages/SignIn";
@@ -21,11 +21,14 @@ import IconButton from "@material-ui/core/IconButton";
 import Container from "@material-ui/core/Container";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import { primaryListItems, secondryListItems, tertiaryListItems } from "./Components/ListItems";
+import {
+  primaryListItems,
+  secondryListItems,
+  tertiaryListItems,
+} from "./Components/ListItems";
 import Copyright from "./Components/Copyright";
 import Button from "@material-ui/core/Button";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-
 
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
@@ -189,8 +192,8 @@ function App() {
               <Route path="/users" exact component={Users} />
               <Route path="/patients" exact component={Patients} />
               <Route path="/patient" exact component={Patient} />
-              <Route path="/symptoms" exact component={Symptoms}/>
-              <Route path="/cases" exact component={Cases}/>
+              <Route path="/symptoms" exact component={Symptoms} />
+              <Route path="/cases" exact component={Cases} />
             </Switch>
           </BrowserRouter>
           <Box pt={4}>
