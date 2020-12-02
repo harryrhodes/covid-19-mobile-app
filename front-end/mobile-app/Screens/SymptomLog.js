@@ -8,31 +8,37 @@ import SymptomService from "../Services/SymptomService";
 import { UserContext } from "../Hooks/UserContext";
 import UserService from "../Services/UserService";
 
-export default function SymptomLog() {
+export default function SymptomLog({ navigation }) {
   const { user, setUser } = useContext(UserContext);
   const [cards, setCards] = useState();
   const [value, setValue] = useState("");
-  const [values, setValues] = useState([]);
+  const [values, setValues] = useState({});
   const [comment, setComment] = useState("");
 
-  const [errorText, setErrorText] = useState("")
-  const [error, setError] = useState(false)
+  const [errorText, setErrorText] = useState("");
+  const [error, setError] = useState(false);
 
   const handleSubmit = async (values, comment) => {
-    values.push({["comment"]: comment})
-    let body = {symptoms: values}
-    let res = await UserService.updateSymptoms(user.username, JSON.stringify(body));
+    let symptoms = [];
+    for (let key in values) {
+      if (values[key] == "true") {
+        symptoms.push({ name: key, comment: "" });
+      }
+    }
+    symptoms.push({ name: "comment", comment: comment });
+    let body = { symptoms: symptoms };
+    let res = await UserService.updateSymptoms(user.username, body);
     console.log(res);
     setUser(res);
-  }
+    navigation.goBack();
+  };
   const handleTextInput = (comment) => {
     setComment(comment);
-  }
+  };
   const handleInput = (symptomName, value) => {
     setValue(value);
-    let newElement = {[symptomName]: value};
-    setValues((values) => ([...values,newElement]));
-  }
+    setValues((values) => ({ ...values, [symptomName]: value }));
+  };
   const renderCards = async () => {
     let res = await SymptomService.getAll();
     let symptoms = res.data;
