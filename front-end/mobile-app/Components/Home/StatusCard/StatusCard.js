@@ -12,7 +12,7 @@ export default function StatusCard() {
         <Card.Title title="Current status" />
         <Card.Content style={Styles.cardContent}>
           <Chip icon="information">
-            {user.patientDetails.personalInfo.status}
+            {user.patientDetails.status}
           </Chip>
         </Card.Content>
       </Card>

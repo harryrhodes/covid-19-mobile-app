@@ -25,7 +25,6 @@ export default function Register({ navigation, route }) {
   const [status] = useState("Not Tested");
 
   const [errorText, setErrorText] = useState("");
-  //const [temperatureError, setTemperatureError] = useState(false);
   const [dobError, setDobError] = useState(false);
 
   const [animate, setAnimate] = useState(false);
@@ -33,7 +32,6 @@ export default function Register({ navigation, route }) {
   const dobReg = /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/i;
 
   const validateInputs = async (
-    //temperature,
     nop,
     publicTransport,
     hospitalisations,
@@ -44,8 +42,8 @@ export default function Register({ navigation, route }) {
     status,
     userObj
   ) => {
-    userObj.patientDetails.personalInfo = {
-      //temperature: temperature,
+    userObj.patientDetails = {
+      ...userObj.patientDetails,
       nop: nop,
       publicTransport: publicTransport,
       hospitalisations: hospitalisations,
@@ -55,42 +53,23 @@ export default function Register({ navigation, route }) {
       gender: gender,
       status: status,
     };
-
-    // if (temperature == "") {
-    //   setErrorText("This is a required field");
-    //   setTemperatureError(true);
-    //   setAnimate(false);
-    // } else {
-    //   if (!/^\d+$/.test(temperature)) {
-    //     setErrorText(
-    //       "Your Temperature can only contain digits. Please round it to a whole number"
-    //     );
-    //     setTemperatureError(true);
-    //     setAnimate(false);
-    //   } else if (!/^\d{2}$/.test(temperature)) {
-    //     setErrorText("Your temperature must be 2 digits exactly");
-    //     setTemperatureError(true);
-    //     setAnimate(false);
-    //   } else {
-    //     setTemperatureError(false);
-        if (dob == "") {
-          setErrorText("This is a required field");
-          setDobError(true);
-          setAnimate(false);
-        } else {
-          if (!dobReg.test(dob)) {
-            setErrorText("This is not a valid DoB, enter DD/MM/YYYY");
-            setDobError(true);
-            setAnimate(false);
-          } else {
-            setDobError(false);
-            navigation.navigate("Register-4", {
-              userObj,
-            });
-          }
-        }
-      //}
-    //}
+    console.log(userObj);
+    if (dob == "") {
+      setErrorText("This is a required field");
+      setDobError(true);
+      setAnimate(false);
+    } else {
+      if (!dobReg.test(dob)) {
+        setErrorText("This is not a valid DoB, enter DD/MM/YYYY");
+        setDobError(true);
+        setAnimate(false);
+      } else {
+        setDobError(false);
+        navigation.navigate("Register-4", {
+          userObj,
+        });
+      }
+    }
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -100,8 +79,10 @@ export default function Register({ navigation, route }) {
       </View>
       <Card style={styles.card}>
         <Card.Content style={styles.cardContent}>
-        <Text style={styles.Text}>PLEASE LOOK OVER THIS SECTION CAREFULLY</Text>
-        <Text style={styles.Text}>You cannot change these later!</Text>
+          <Text style={styles.Text}>
+            PLEASE LOOK OVER THIS SECTION CAREFULLY
+          </Text>
+          <Text style={styles.Text}>You cannot change these later!</Text>
         </Card.Content>
       </Card>
 
@@ -132,11 +113,12 @@ export default function Register({ navigation, route }) {
             onValueChange={(newNop) => setNop(newNop)}
             value={nop}
           >
-            <RadioButton.Item label="I live alone" value="1" />
-            <RadioButton.Item label="2 people" value="2" />
-            <RadioButton.Item label="3 people" value="3" />
-            <RadioButton.Item label="4 people" value="4" />
-            <RadioButton.Item label="More than 4 people" value="4+" />
+            <RadioButton.Item label="I live alone" value="0" />
+            <RadioButton.Item label="1 Person" value="1" />
+            <RadioButton.Item label="2 People" value="1" />
+            <RadioButton.Item label="3 People" value="3" />
+            <RadioButton.Item label="4 People" value="4" />
+            <RadioButton.Item label="More Than 4 People" value="4+" />
           </RadioButton.Group>
         </Card.Content>
       </Card>
@@ -180,24 +162,21 @@ export default function Register({ navigation, route }) {
             <RadioButton.Item label="3 times" value="3" />
             <RadioButton.Item label="4 times" value="4" />
             <RadioButton.Item label="5 times" value="5" />
-            <RadioButton.Item label="More than 5 times" value="5+" />
+            <RadioButton.Item label="More Than 5 Times" value="5+" />
           </RadioButton.Group>
         </Card.Content>
       </Card>
 
       <Card style={styles.card}>
         <Card.Content style={styles.cardContent}>
-          <Card.Title title={"Do you have diabetes?"} titleNumberOfLines={3} />
+          <Card.Title title={"Are You Diabetic?"} titleNumberOfLines={3} />
           <RadioButton.Group // Diabetes
             onValueChange={(newDiabetes) => setDiabetes(newDiabetes)}
             value={diabetes}
           >
-            <RadioButton.Item
-              label="I don't have diabetes"
-              value="no diabetes"
-            />
-            <RadioButton.Item label="I have type 1 diabetes" value="type1" />
-            <RadioButton.Item label="I have type 2 diabetes" value="type2" />
+            <RadioButton.Item label="I don't have diabetes" value="no" />
+            <RadioButton.Item label="I Have Type 1 Diabetes" value="type1" />
+            <RadioButton.Item label="I Have Type 2 Diabetes" value="type2" />
           </RadioButton.Group>
         </Card.Content>
       </Card>
@@ -238,7 +217,7 @@ export default function Register({ navigation, route }) {
 
       <Card style={styles.card}>
         <Card.Content style={styles.cardContent}>
-          <Card.Title title={"What is your gender?"} titleNumberOfLines={3} />
+          <Card.Title title={"What Is Your Gender?"} titleNumberOfLines={3} />
           <RadioButton.Group
             onValueChange={(newGender) => setGender(newGender)}
             value={gender}

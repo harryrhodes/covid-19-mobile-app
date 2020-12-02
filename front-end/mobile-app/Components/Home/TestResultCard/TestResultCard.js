@@ -11,13 +11,13 @@ export default function TestResultCard() {
 
   const handleFeeback = async (positive) => {
     if (positive == true) {
-      user.patientDetails.personalInfo.status = "Positive";
+      user.patientDetails.status = "Positive";
       let res = await UserService.update(user.username, {
         patientDetails: user.patientDetails,
       });
       setUser(res);
     } else {
-      user.patientDetails.personalInfo.status = "Negative";
+      user.patientDetails.status = "Negative";
       let res = await UserService.update(user.username, {
         patientDetails: user.patientDetails,
       });

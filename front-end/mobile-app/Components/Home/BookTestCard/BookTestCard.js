@@ -23,7 +23,7 @@ export default function BookTestCard() {
   };
   const handleFeeback = async (testBooked) => {
     if (testBooked == true) {
-      user.patientDetails.personalInfo.status = "Awaiting Test Results";
+      user.patientDetails.status = "Awaiting Test Results";
       let res = await UserService.update(user.username, {
         patientDetails: user.patientDetails,
       });

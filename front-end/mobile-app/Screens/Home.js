@@ -21,7 +21,7 @@ export default function Home({ navigation }) {
       <Welcome firstName={user.firstName} />
       <StatusCard />
       <SymptomsCard />
-      {user.patientDetails.personalInfo.status == "Awaiting Test Results" ? (
+      {user.patientDetails.status == "Awaiting Test Results" ? (
         <TestResultCard />
       ) : (
         <BookTestCard />
