@@ -1,8 +1,8 @@
 import React, { useState, useContext } from "react";
-import { StyleSheet, SafeAreaView, ScrollView, Keyboard } from "react-native";
+import { StyleSheet, SafeAreaView, ScrollView } from "react-native";
 import { List, Button, Card, Title, Avatar } from "react-native-paper";
 import { UserContext } from "../Hooks/UserContext";
-import UserService from "../Services/UserService";
+
 
 export default function Settings({ navigation }) {
   const { user, setUser } = useContext(UserContext);
