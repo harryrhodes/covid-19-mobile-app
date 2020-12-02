@@ -4,10 +4,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Chart from "../Components/Chart";
-import CaseCounter from "../Components/Counters/CaseCounter";
-import PaitentCounter from "../Components/Counters/PaitentCounter";
-import SymptomCounter from "../Components/Counters/SymptomCounter";
-import UserCounter from "../Components/Counters/UserCounter";
+import CaseCounter from "../Components/Dashboard/Counters/CaseCounter";
+import PaitentCounter from "../Components/Dashboard/Counters/PaitentCounter";
+import SymptomCounter from "../Components/Dashboard/Counters/SymptomCounter";
+import UserCounter from "../Components/Dashboard/Counters/UserCounter";
 const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
