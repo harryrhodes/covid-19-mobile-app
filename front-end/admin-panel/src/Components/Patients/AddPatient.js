@@ -89,26 +89,22 @@ export default function CreateDialog() {
   const [nopLabel, setNopLabel] = React.useState("");
   const [transportLabel, setTransportLabel] = React.useState("");
   const [statusLabel, setStatusLabel] = React.useState("");
-  const findUser = async (name) => {
-    let res = await UserService.getSingle(name);
-    return res.count;
-  };
   const pwRe = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
   const emailRe = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   const niRe = /^(?!BG|GB|NK|KN|TN|NT|ZZ)[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\s*\d{2}\s*\d{2}\s*\d{2}\s*[A-D]$/;
 
   const createNewPatient = async () => {
-    let res = await UserService.getSingle(values.username);
-    console.log(res);
-    if (res.count != 0) {
-      setUnLabel("Sorry this username is taken");
-      setUnError(true);
-    } else {
-      setUnLabel("Username (Required)");
-      setUnError(false);
-      console.log("you did it!");
-      console.log(body);
-    }
+    // let res = await UserService.getSingle(values.username);
+    // console.log(res);
+    // if (res.count != 0) {
+    //   setUnLabel("Sorry this username is taken");
+    //   setUnError(true);
+    // } else {
+    //   setUnLabel("Username (Required)");
+    //   setUnError(false);
+    //   console.log("you did it!");
+    //   console.log(body);
+    // }
 
     let secondUsername = "";
     let secondPassword = "";
@@ -337,144 +333,157 @@ export default function CreateDialog() {
     } else {
       setUnLabel("Username (Required)");
       setUnError(false);
-      if (secondPassword == "") {
-        setPwLabel("This field is required");
-        setPwError(true);
-      } else if (!pwRe.test(secondPassword)) {
-        setPwLabel("Your password is not strong enough");
-        setPwError(true);
+      let res = await UserService.getSingle(secondUsername);
+      console.log(res.count != 0);
+      if (res.count != 0) {
+        setUnLabel("Sorry this username is taken");
+        setUnError(true);
       } else {
-        setPwLabel("Password (Required");
-        setPwError(false);
-        if (secondPassword2 == "") {
-          setPw2Label("This field is required");
-          setPw2Error(true);
-        } else if (secondPassword != secondPassword2) {
-          setPw2Label("Passwords do not match");
-          setPw2Error(true);
+        setUnLabel("Username (Required)");
+        setUnError(false);
+        console.log("you did it!");
+        console.log(body);
+        if (secondPassword == "") {
+          setPwLabel("This field is required");
+          setPwError(true);
+        } else if (!pwRe.test(secondPassword)) {
+          setPwLabel("Your password is not strong enough");
+          setPwError(true);
         } else {
-          setPw2Label("Confirm Password (Required");
-          setPw2Error(false);
-          if (!emailRe.test(secondEmail)) {
-            setEmailLabel("Please enter a valid email");
-            setEmailError(true);
+          setPwLabel("Password (Required");
+          setPwError(false);
+          if (secondPassword2 == "") {
+            setPw2Label("This field is required");
+            setPw2Error(true);
+          } else if (secondPassword != secondPassword2) {
+            setPw2Label("Passwords do not match");
+            setPw2Error(true);
           } else {
-            setEmailLabel("Email (Required)");
-            setEmailError(false);
-
-            if (secondFirstname.length <= 2) {
-              setFnLabel("Names cannot be shorter than 2 letters");
-              setFnError(true);
-            } else if (!/^[a-zA-Z]+$/.test(secondFirstname)) {
-              setFnLabel("Your first name must only contain letters");
-              setFnError(true);
+            setPw2Label("Confirm Password (Required");
+            setPw2Error(false);
+            if (!emailRe.test(secondEmail)) {
+              setEmailLabel("Please enter a valid email");
+              setEmailError(true);
             } else {
-              setFnLabel("First Name (Required)");
-              setFnError(false);
-              if (secondLastname.length <= 2) {
-                setLnLabel("Names cannot be shorter than 2 letters");
-                setLnError(true);
-              } else if (!/^[a-zA-Z]+$/.test(secondLastname)) {
-                setLnLabel("Your last name must only contain letters");
-                setLnError(true);
+              setEmailLabel("Email (Required)");
+              setEmailError(false);
+
+              if (secondFirstname.length <= 2) {
+                setFnLabel("Names cannot be shorter than 2 letters");
+                setFnError(true);
+              } else if (!/^[a-zA-Z]+$/.test(secondFirstname)) {
+                setFnLabel("Your first name must only contain letters");
+                setFnError(true);
               } else {
-                setLnLabel("Last Name (Required");
-                setLnError(false);
-                if (secondDob == "") {
-                  setDobLabel("This field is required");
-                  setDobError(true);
+                setFnLabel("First Name (Required)");
+                setFnError(false);
+                if (secondLastname.length <= 2) {
+                  setLnLabel("Names cannot be shorter than 2 letters");
+                  setLnError(true);
+                } else if (!/^[a-zA-Z]+$/.test(secondLastname)) {
+                  setLnLabel("Your last name must only contain letters");
+                  setLnError(true);
                 } else {
-                  setDobLabel("Date of Birth (Required)");
-                  setDobError(false);
-                  if (secondGender == "") {
-                    setGenderLabel("This field is required");
+                  setLnLabel("Last Name (Required");
+                  setLnError(false);
+                  if (secondDob == "") {
+                    setDobLabel("This field is required");
+                    setDobError(true);
                   } else {
-                    setGenderLabel("");
-                    validateNhsNumber(secondNhsNo);
-                    if (!niRe.test(secondNiNo)) {
-                      setNiLabel("This is not a valid NI number");
-                      setNiError(true);
+                    setDobLabel("Date of Birth (Required)");
+                    setDobError(false);
+                    if (secondGender == "") {
+                      setGenderLabel("This field is required");
                     } else {
-                      setNiLabel("Ni Number (Required)");
-                      setNiError(false);
-                    }
-                    if (!/^\d+$/.test(secondMobileNo)) {
-                      setMobileLabel(
-                        "Your mobile number can only contain digits"
-                      );
-                      setMobileError(true);
-                    } else if (!/^\d{11}$/.test(secondMobileNo)) {
-                      setMobileLabel(
-                        "Your mobile number must be 11 digits exactly"
-                      );
-                      setMobileError(true);
-                    } else {
-                      setMobileLabel("Mobile Number (Required)");
-                      setMobileError(false);
-                      if (secondHospitalisations == "") {
-                        setHospitalisedLabel("This is a required field");
+                      setGenderLabel("");
+                      validateNhsNumber(secondNhsNo);
+                      if (!niRe.test(secondNiNo)) {
+                        setNiLabel("This is not a valid NI number");
+                        setNiError(true);
                       } else {
-                        setHospitalisedLabel("");
-                        if (secondDiabetes == "") {
-                          setDiabetesLabel("This is a required field");
+                        setNiLabel("Ni Number (Required)");
+                        setNiError(false);
+                      }
+                      if (!/^\d+$/.test(secondMobileNo)) {
+                        setMobileLabel(
+                          "Your mobile number can only contain digits"
+                        );
+                        setMobileError(true);
+                      } else if (!/^\d{11}$/.test(secondMobileNo)) {
+                        setMobileLabel(
+                          "Your mobile number must be 11 digits exactly"
+                        );
+                        setMobileError(true);
+                      } else {
+                        setMobileLabel("Mobile Number (Required)");
+                        setMobileError(false);
+                        if (secondHospitalisations == "") {
+                          setHospitalisedLabel("This is a required field");
                         } else {
-                          setDiabetesLabel("");
-                          if (secondHypertension == "") {
-                            setHypertensionLabel("This is a required field");
+                          setHospitalisedLabel("");
+                          if (secondDiabetes == "") {
+                            setDiabetesLabel("This is a required field");
                           } else {
-                            setHypertensionLabel("");
-                            if (secondAddress1 == "") {
-                              setAddress1Label("This is a required field");
-                              setAddress1Error(true);
+                            setDiabetesLabel("");
+                            if (secondHypertension == "") {
+                              setHypertensionLabel("This is a required field");
                             } else {
-                              setAddress1Label("Address 1 (Required)");
-                              setAddress1Error(false);
-                              if (secondAddress2 == "") {
-                                setAddress2Label("This is a required field");
-                                setAddress2Error(true);
+                              setHypertensionLabel("");
+                              if (secondAddress1 == "") {
+                                setAddress1Label("This is a required field");
+                                setAddress1Error(true);
                               } else {
-                                setAddress2Label("Address 2 (Required)");
-                                setAddress2Error(false);
-                                if (secondCity == "") {
-                                  setCityLabel("This is a required field");
-                                  setCityError(true);
+                                setAddress1Label("Address 1 (Required)");
+                                setAddress1Error(false);
+                                if (secondAddress2 == "") {
+                                  setAddress2Label("This is a required field");
+                                  setAddress2Error(true);
                                 } else {
-                                  setCityLabel("City (Required)");
-                                  setCityError(false);
-                                  if (secondPostcode == "") {
-                                    setPostcodeLabel(
-                                      "This is a required field"
-                                    );
-                                    setPostcodeError(true);
+                                  setAddress2Label("Address 2 (Required)");
+                                  setAddress2Error(false);
+                                  if (secondCity == "") {
+                                    setCityLabel("This is a required field");
+                                    setCityError(true);
                                   } else {
-                                    setPostcodeLabel("Postcode (Required)");
-                                    setPostcodeError(false);
-                                    if (secondCountry == "") {
-                                      setCountryLabel(
+                                    setCityLabel("City (Required)");
+                                    setCityError(false);
+                                    if (secondPostcode == "") {
+                                      setPostcodeLabel(
                                         "This is a required field"
                                       );
-                                      setCountryError(true);
+                                      setPostcodeError(true);
                                     } else {
-                                      setCountryLabel("Country (Required)");
-                                      setCountryError(false);
-                                      if (secondNop == "") {
-                                        setNopLabel("This is a required field");
+                                      setPostcodeLabel("Postcode (Required)");
+                                      setPostcodeError(false);
+                                      if (secondCountry == "") {
+                                        setCountryLabel(
+                                          "This is a required field"
+                                        );
+                                        setCountryError(true);
                                       } else {
-                                        setNopLabel("");
-                                        if (secondTransport == "") {
-                                          setTransportLabel(
+                                        setCountryLabel("Country (Required)");
+                                        setCountryError(false);
+                                        if (secondNop == "") {
+                                          setNopLabel(
                                             "This is a required field"
                                           );
                                         } else {
-                                          setTransportLabel("");
-                                          if (secondStatus == "") {
-                                            setStatusLabel(
+                                          setNopLabel("");
+                                          if (secondTransport == "") {
+                                            setTransportLabel(
                                               "This is a required field"
                                             );
                                           } else {
-                                            setStatusLabel("");
-                                            console.log("YAY IT WORKS");
-                                            console.log(body);
+                                            setTransportLabel("");
+                                            if (secondStatus == "") {
+                                              setStatusLabel(
+                                                "This is a required field"
+                                              );
+                                            } else {
+                                              setStatusLabel("");
+                                              console.log("YAY IT WORKS");
+                                              console.log(body);
+                                            }
                                           }
                                         }
                                       }
