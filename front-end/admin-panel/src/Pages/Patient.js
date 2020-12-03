@@ -69,13 +69,50 @@ const useStyles = makeStyles((theme) => ({
 export default function Patient() {
   const params = useParams();
   const classes = useStyles();
-  const [edit, setEdit] = useState(false);
   const [patient, setPatient] = useState(null);
   const geoUrl =
     "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
 
-  const updateExistingPatient = () => {
-    console.log(values);
+  const updateExistingPatient = async () => {
+    if (values !== null) {
+      // let body = {
+      //   username: {values.username === null ? patient.username},
+      //   password: secondPassword,
+      //   email: secondEmail,
+      //   firstName: secondFirstname,
+      //   lastName: secondLastname,
+      //   accountType: "patient",
+      //   role: {},
+      //   patientDetails: {
+      //     nhsNo: secondNhsNo,
+      //     niNo: secondNiNo,
+      //     mobileNo: secondMobileNo,
+      //     nop: secondNop,
+      //     publicTransport: secondTransport,
+      //     hospitalisations: secondHospitalisations,
+      //     diabetes: secondDiabetes,
+      //     hypertension: secondHypertension,
+      //     dob: secondDob,
+      //     gender: secondGender,
+      //     status: secondStatus,
+      //     address: {
+      //       address1: secondAddress1,
+      //       address2: secondAddress2,
+      //       address3: secondAddress3,
+      //       city: secondCity,
+      //       county: secondCounty,
+      //       postcode: secondPostcode,
+      //       country: secondCountry,
+      //     },
+      //   },
+      // };
+    } else {
+      console.log("No Values Found");
+    }
+  };
+
+  const deletePatient = async (patient) => {
+    let res = await UserService.getSingle(patient.username);
   };
 
   const renderPatient = async () => {
@@ -83,9 +120,6 @@ export default function Patient() {
     setPatient(res.data[0]);
   };
 
-  const testVar = (patient) => {
-    console.log(patient.username);
-  };
   useEffect(() => {
     if (!patient) {
       renderPatient();
@@ -140,12 +174,7 @@ export default function Patient() {
                 <Skeleton variant="rect" width={"100%"} height={236} />
               ) : (
                 <Paper className={classes.paper}>
-                  <SubTitle>
-                    Account Details
-                    <Button onClick={(patient) => testVar(patient)}>
-                      {edit === false ? "Edit" : "Save"}
-                    </Button>
-                  </SubTitle>
+                  <SubTitle>Account Details</SubTitle>
                   <form className={classes.root}>
                     <div>
                       <FormControl className={classes.margin} fullWidth>
@@ -194,10 +223,7 @@ export default function Patient() {
               ) : (
                 <Paper className={classes.paper}>
                   <form className={classes.root}>
-                    <SubTitle>
-                      Personal Information
-                      <Button>{edit === true ? "Edit" : "Save"}</Button>
-                    </SubTitle>
+                    <SubTitle>Personal Information</SubTitle>
                     <div>
                       <FormControl className={clsx(classes.margin)} fullWidth>
                         <TextField
@@ -329,10 +355,7 @@ export default function Patient() {
               ) : (
                 <Paper className={classes.paper}>
                   <form className={classes.root}>
-                    <SubTitle>
-                      Medical Information
-                      <Button>{edit === false ? "Edit" : "Save"}</Button>
-                    </SubTitle>
+                    <SubTitle>Medical Information</SubTitle>
                     <div>
                       <FormControl
                         component="fieldset"
@@ -463,9 +486,7 @@ export default function Patient() {
               ) : (
                 <Paper className={classes.paper}>
                   <form className={classes.root}>
-                    <SubTitle>
-                      Address<Button>{edit === false ? "Edit" : "Save"}</Button>
-                    </SubTitle>
+                    <SubTitle>Address</SubTitle>
                     <div>
                       <FormControl className={clsx(classes.margin)} fullWidth>
                         <TextField
@@ -561,10 +582,7 @@ export default function Patient() {
               ) : (
                 <Paper className={classes.paper}>
                   <form className={classes.root}>
-                    <SubTitle>
-                      Additional Details
-                      <Button>{edit === false ? "Edit" : "Save"}</Button>
-                    </SubTitle>
+                    <SubTitle>Additional Details</SubTitle>
                     <div>
                       <FormControl
                         component="fieldset"
@@ -756,6 +774,28 @@ export default function Patient() {
                 </Paper>
               )}
             </Grid>
+          </Grid>
+          <Grid item xs={12} md={12} lg={12}>
+            {patient === null ? (
+              <Skeleton variant="rect" width={"100%"} height={118} />
+            ) : (
+              <Paper className={classes.paper}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleSubmit}
+                >
+                  Update Patient
+                </Button>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={deletePatient}
+                >
+                  Delete Patient
+                </Button>
+              </Paper>
+            )}
           </Grid>
           <Box pt={4}>
             <Copyright />

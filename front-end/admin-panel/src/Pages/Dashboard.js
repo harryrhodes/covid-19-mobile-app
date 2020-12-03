@@ -52,21 +52,7 @@ export default function Dashboard() {
     (today.getMonth() + 1) +
     "/" +
     today.getFullYear();
-  // const renderCounters = async () => {
-  //   let res = await UserService.getAll();
-  //   let users = res.data;
-  //   console.log(res.data);
-  //   for (let i = 0; i < users.length; i++) {
-  //     setTotalUsers(users + 1);
-  //     if (users[i].accountType === "patient") {
-  //       setPatients(patients + 1);
-  //     }
-  //     if (users[i].patientDetails.status === "Positive") {
-  //       setCases(cases + 1);
-  //     }
-  //   }
-  //   console.log(cases, patients, totalUsers);
-  // };
+
   const renderCases = async () => {};
   const renderPatientCounter = async () => {
     let res = await UserService.getAll();

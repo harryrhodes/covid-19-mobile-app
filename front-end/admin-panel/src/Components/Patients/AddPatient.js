@@ -97,8 +97,18 @@ export default function CreateDialog() {
   const emailRe = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   const niRe = /^(?!BG|GB|NK|KN|TN|NT|ZZ)[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\s*\d{2}\s*\d{2}\s*\d{2}\s*[A-D]$/;
 
-  const createNewPatient = () => {
-    //console.log(values);
+  const createNewPatient = async () => {
+    let res = await UserService.getSingle(values.username);
+    console.log(res);
+    if (res.count != 0) {
+      setUnLabel("Sorry this username is taken");
+      setUnError(true);
+    } else {
+      setUnLabel("Username (Required)");
+      setUnError(false);
+      console.log("you did it!");
+      console.log(body);
+    }
 
     let secondUsername = "";
     let secondPassword = "";
@@ -321,26 +331,10 @@ export default function CreateDialog() {
       }
     };
 
-    // const findUser = async (name) => {
-    //   let res = await UserService.getSingle(name);
-    //   return res.count;
-    // };
-    
     if (secondUsername == "") {
       setUnLabel("This field is required");
       setUnError(true);
     } else {
-
-      // if (findUser(values.username) != 0) {
-      //   setUnLabel("Sorry this username is taken")
-      //   setUnError(true)
-      // } else {
-      //   setUnLabel("Username (Required)")
-      //   setUnError(false)
-      //   console.log("you did it!")
-      //   console.log(body)
-      // }
-
       setUnLabel("Username (Required)");
       setUnError(false);
       if (secondPassword == "") {

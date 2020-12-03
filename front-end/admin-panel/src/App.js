@@ -26,8 +26,9 @@ function App() {
     <div className={classes.root}>
       <BrowserRouter>
         <Switch>
-          <Route path="/" exact component={Dashboard} />
           <Route path="/signin" exact component={SignIn} />
+          <Route path="/" exact component={Dashboard} />
+
           <Route path="/users" exact component={Users} />
           <Route path="/patients" exact component={Patients} />
           <Route path="/patient/:username" exact component={Patient} />

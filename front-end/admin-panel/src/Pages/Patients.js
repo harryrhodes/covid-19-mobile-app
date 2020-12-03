@@ -5,7 +5,7 @@ import Navigation from "../Components/Common/Navigation";
 import Copyright from "../Components/Copyright";
 import Title from "../Components/Title";
 import PatientsTable from "../Components/Patients/PatientsTable";
-import CreateDialog from "../Components/Patients/CreateDialog";
+import AddPatient from "../Components/Patients/AddPatient";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -42,7 +42,7 @@ export default function Patients() {
                 <PatientsTable />
               </Paper>
             </Grid>
-            <CreateDialog />
+            <AddPatient />
           </Grid>
           <Box pt={4}>
             <Copyright />
