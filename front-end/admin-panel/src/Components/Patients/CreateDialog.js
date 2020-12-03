@@ -80,7 +80,9 @@ export default function CreateDialog() {
     console.log(body);
   };
 
-  const { values, handleChange, handleSubmit } = useForm(createNewPatient);
+  const { values, handleChange, handleSubmit, errorCheck } = useForm(
+    createNewPatient
+  );
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -368,6 +370,7 @@ export default function CreateDialog() {
                   placeholder="Address 1"
                   variant="outlined"
                   onChange={handleChange}
+                  error={errorCheck}
                 />
               </FormControl>
               <FormControl className={classes.margin} fullWidth>

@@ -6,7 +6,7 @@ const auth = {
 }
 export default {
     getAll: async () =>{
-        let res = await axios.get("http://localhost:4000"+"/users/",{auth});
+        let res = await axios.get("http://localhost:4000"+"/users",{auth});
         return res.data || [];
     },
     getSingle: async (username) =>{

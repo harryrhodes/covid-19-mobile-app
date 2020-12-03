@@ -1,12 +1,10 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
+import { Grid, Paper, Container, Box } from "@material-ui/core";
+import Navigation from "../Components/Common/Navigation";
+import Copyright from "../Components/Copyright";
 import Title from "../Components/Title";
 import PatientsTable from "../Components/Patients/PatientsTable";
-import { Fab } from "@material-ui/core";
-import AddIcon from "@material-ui/icons/Add";
 import CreateDialog from "../Components/Patients/CreateDialog";
 
 const useStyles = makeStyles((theme) => ({
@@ -16,34 +14,41 @@ const useStyles = makeStyles((theme) => ({
     overflow: "auto",
     flexDirection: "column",
   },
-  fixedHeight: {
+  appBarSpacer: theme.mixins.toolbar,
+  content: {
+    flexGrow: 1,
     height: "100vh",
+    overflow: "auto",
   },
-  fab: {
-    position: "absolute",
-    bottom: theme.spacing(4),
-    right: theme.spacing(4),
+  container: {
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(4),
   },
 }));
 
-export default function Users() {
+export default function Patients() {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-    console.log(open);
-  };
 
   return (
-    <Grid container spacing={3}>
-      <Grid item xs={12}>
-        <Paper className={classes.paper}>
-          <Title>Patients</Title>
-          <PatientsTable />
-        </Paper>
-      </Grid>
-      <CreateDialog />
-    </Grid>
+    <React.Fragment>
+      <Navigation />
+      <main className={classes.content}>
+        <div className={classes.appBarSpacer} />
+        <Container maxWidth="lg" className={classes.container}>
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <Paper className={classes.paper}>
+                <Title>Patients</Title>
+                <PatientsTable />
+              </Paper>
+            </Grid>
+            <CreateDialog />
+          </Grid>
+          <Box pt={4}>
+            <Copyright />
+          </Box>
+        </Container>
+      </main>
+    </React.Fragment>
   );
 }

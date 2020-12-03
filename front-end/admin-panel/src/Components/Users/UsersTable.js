@@ -6,9 +6,7 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  InputLabel,
   FormControl,
-  Select,
   TextField,
   Button,
 } from "@material-ui/core";
@@ -27,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PaitentsTable() {
+export default function UsersTable() {
   const classes = useStyles();
   const [rows, setRows] = useState();
 
@@ -37,16 +35,17 @@ export default function PaitentsTable() {
     let rows = [];
     console.log(res.data);
     for (let i = 0; i < users.length; i++) {
-      if (users[i].accountType === "patient") {
+      if (
+        users[i].accountType === "admin" ||
+        users[i].accountType === "practitioner"
+      ) {
         rows.push(
           <TableRow key={users[i]._id}>
             <TableCell>{users[i].username}</TableCell>
             <TableCell>{users[i].firstName}</TableCell>
             <TableCell>{users[i].lastName}</TableCell>
             <TableCell>{users[i].email}</TableCell>
-            <TableCell align="right">
-              {users[i].patientDetails.status}
-            </TableCell>
+            <TableCell>{users[i].accountType}</TableCell>
           </TableRow>
         );
       } else {
@@ -62,14 +61,29 @@ export default function PaitentsTable() {
 
   return (
     <React.Fragment>
+      <div>
+        <FormControl>
+          <TextField
+            id="search"
+            type="text"
+            variant="outlined"
+            placeholder="Search"
+          />
+        </FormControl>
+        <FormControl>
+          <Button variant="contained" color="primary">
+            Search Users
+          </Button>
+        </FormControl>
+      </div>
       <Table>
         <TableHead>
           <TableRow>
             <TableCell>Username</TableCell>
             <TableCell>First Name</TableCell>
             <TableCell>Last Name</TableCell>
-            <TableCell>Email</TableCell>
-            <TableCell align="right">Status</TableCell>
+            <TableCell>Email Address</TableCell>
+            <TableCell>Account Type</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>{rows}</TableBody>
