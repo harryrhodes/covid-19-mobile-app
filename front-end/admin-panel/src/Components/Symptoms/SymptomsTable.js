@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Table,
@@ -13,6 +14,21 @@ import {
 import SymptomService from "../../Services/SymptomService";
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+    flexWrap: "wrap",
+  },
+  filter: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  margin: {
+    margin: theme.spacing(1),
+  },
+  textField: {
+    width: "31ch",
+  },
   seeMore: {
     marginTop: theme.spacing(3),
   },
@@ -51,21 +67,24 @@ export default function SymptomsTable() {
 
   return (
     <React.Fragment>
-      <div>
-        <FormControl>
-          <TextField
-            id="search"
-            type="text"
-            variant="outlined"
-            placeholder="Search"
-          />
-        </FormControl>
-        <FormControl>
-          <Button variant="contained" color="primary">
-            Search Symptoms
-          </Button>
-        </FormControl>
-      </div>
+      <form className={classes.root}>
+        <div className={classes.filter}>
+          <FormControl className={clsx(classes.margin, classes.textField)}>
+            <TextField
+              id="search"
+              type="text"
+              variant="outlined"
+              placeholder="Search"
+            />
+          </FormControl>
+          <FormControl className={classes.margin}>
+            <Button variant="contained" color="primary" size="large">
+              Search Symptoms
+            </Button>
+          </FormControl>
+        </div>
+      </form>
+
       <Table>
         <TableHead>
           <TableRow>

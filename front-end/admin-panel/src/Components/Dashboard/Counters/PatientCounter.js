@@ -1,14 +1,15 @@
 import React from "react";
 import Link from "@material-ui/core/Link";
+import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Title from "../../Title";
 import useStyles from "./style";
 
-export default function SymptomCounter({ count, currentDate }) {
+export default function PatientCounter({ count, currentDate }) {
   const classes = useStyles();
   return (
     <React.Fragment>
-      <Title>Total Symptoms</Title>
+      <Title>Total Paitents</Title>
       <Typography component="p" variant="h4">
         {count}
       </Typography>
@@ -16,8 +17,8 @@ export default function SymptomCounter({ count, currentDate }) {
         {currentDate}
       </Typography>
       <div>
-        <Link color="primary" href="/symptoms">
-          View Symptoms
+        <Link color="primary" href="/patients">
+          View Patients
         </Link>
       </div>
     </React.Fragment>

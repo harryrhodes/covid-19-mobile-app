@@ -5,6 +5,7 @@ import Navigation from "../Components/Common/Navigation";
 import Copyright from "../Components/Copyright";
 import Title from "../Components/Title";
 import SymptomsTable from "../Components/Symptoms/SymptomsTable";
+import AddSymptom from "../Components/Symptoms/AddSymptom";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -42,6 +43,7 @@ export default function Symptoms() {
               </Paper>
             </Grid>
           </Grid>
+          <AddSymptom />
           <Box pt={4}>
             <Copyright />
           </Box>

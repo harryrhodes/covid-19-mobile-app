@@ -3,31 +3,22 @@ import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Title from '../../Title';
+import useStyles from "./style";
 
-function preventDefault(event) {
-  event.preventDefault();
-}
-
-const useStyles = makeStyles({
-  depositContext: {
-    flex: 1,
-  },
-});
-
-export default function Deposits() {
+export default function UserCounter({count, currentDate}) {
   const classes = useStyles();
   return (
     <React.Fragment>
       <Title>Total Users</Title>
       <Typography component="p" variant="h4">
-        2
+        {count}
       </Typography>
-      <Typography color="textSecondary" className={classes.depositContext}>
-        on 30 November, 2020
+      <Typography color="textSecondary" className={classes.dateContext}>
+        {currentDate}
       </Typography>
       <div>
-        <Link color="primary" href="#" onClick={preventDefault}>
-          View users
+        <Link color="primary" href="/users">
+          View Users
         </Link>
       </div>
     </React.Fragment>

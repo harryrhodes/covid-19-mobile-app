@@ -59,7 +59,25 @@ export const tertiaryListItems = (
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
+      <ListItemText primary="User Trends" />
+    </ListItem>
+    <ListItem button>
+      <ListItemIcon>
+        <AssignmentIcon />
+      </ListItemIcon>
+      <ListItemText primary="Patient Trends" />
+    </ListItem>
+    <ListItem button>
+      <ListItemIcon>
+        <AssignmentIcon />
+      </ListItemIcon>
       <ListItemText primary="Symptom Trends" />
+    </ListItem>
+    <ListItem button>
+      <ListItemIcon>
+        <AssignmentIcon />
+      </ListItemIcon>
+      <ListItemText primary="Case Trends" />
     </ListItem>
   </div>
 );
