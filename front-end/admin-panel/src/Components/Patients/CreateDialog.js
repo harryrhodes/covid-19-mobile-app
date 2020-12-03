@@ -321,10 +321,16 @@ export default function CreateDialog() {
       }
     };
 
+    // const findUser = async (name) => {
+    //   let res = await UserService.getSingle(name);
+    //   return res.count;
+    // };
+    
     if (secondUsername == "") {
       setUnLabel("This field is required");
       setUnError(true);
     } else {
+
       // if (findUser(values.username) != 0) {
       //   setUnLabel("Sorry this username is taken")
       //   setUnError(true)
@@ -334,6 +340,7 @@ export default function CreateDialog() {
       //   console.log("you did it!")
       //   console.log(body)
       // }
+
       setUnLabel("Username (Required)");
       setUnError(false);
       if (secondPassword == "") {
@@ -472,8 +479,8 @@ export default function CreateDialog() {
                                             );
                                           } else {
                                             setStatusLabel("");
-                                            console.log("YAY IT WORKS")
-                                            console.log(body)
+                                            console.log("YAY IT WORKS");
+                                            console.log(body);
                                           }
                                         }
                                       }
@@ -495,11 +502,6 @@ export default function CreateDialog() {
       }
     }
   };
-
-  // const findUser = async (name) => {
-  //   let res = await UserService.getSingle(name)
-  //   return res.count
-  //  }
 
   const { values, handleChange, handleSubmit, errorCheck } = useForm(
     createNewPatient
@@ -618,7 +620,7 @@ export default function CreateDialog() {
                 />
               </FormControl>
               <FormControl component="fieldset" className={classes.margin}>
-              <FormLabel component="legend">Gender (Required)</FormLabel>
+                <FormLabel component="legend">Gender (Required)</FormLabel>
                 <FormLabel component="legend">{genderLabel}</FormLabel>
                 <RadioGroup
                   row
