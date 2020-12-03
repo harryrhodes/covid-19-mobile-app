@@ -140,6 +140,7 @@ module.exports.createNewUser = async (request) => {
             role: request.payload.role ? request.payload.role : {},
             patientDetails: request.payload.patientDetails ? request.payload.patientDetails : {},
             symptoms: request.payload.symptoms ? request.payload.symptoms : [],
+            createdDate: moment.utc().toISOString()
         })
 
         await User.insertMany(newUser);

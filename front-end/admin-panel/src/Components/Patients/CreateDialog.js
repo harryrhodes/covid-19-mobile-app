@@ -1,29 +1,24 @@
 import React, { useState } from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import SubTitle from "../SubTitle";
+import useForm from "../../Hooks/useForm";
 import {
-  Grid,
-  Paper,
-  Avatar,
-  TextField,
-  Button,
-  Chip,
+  Fab,
   FormControl,
   FormLabel,
   RadioGroup,
   Radio,
   FormControlLabel,
 } from "@material-ui/core";
-import Title from "../Components/Title";
-import SubTitle from "../Components/SubTitle";
-import {
-  ZoomableGroup,
-  ComposableMap,
-  Geographies,
-  Geography,
-} from "react-simple-maps";
-import useForm from "../Hooks/useForm";
-
+import AddIcon from "@material-ui/icons/Add";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -38,60 +33,82 @@ const useStyles = makeStyles((theme) => ({
   textField: {
     width: "31ch",
   },
-  paper: {
-    padding: theme.spacing(2),
-    display: "flex",
-    overflow: "auto",
-    flexDirection: "column",
-  },
-  fixedHeight: {
-    height: "100vh",
+  fab: {
+    position: "absolute",
+    bottom: theme.spacing(4),
+    right: theme.spacing(4),
   },
 }));
 
-export default function Patient({ username }) {
+export default function CreateDialog() {
   const classes = useStyles();
-  const [edit, setEdit] = useState(false);
-  const [patient, setPatient] = useState(null);
-  const geoUrl =
-    "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
+  const [open, setOpen] = React.useState(false);
 
-  const updateExistingPatient = () => {
+  const createNewPatient = () => {
     console.log(values);
+    let body = {
+      username: values.username,
+      password: values.password,
+      email: values.email,
+      firstName: values.firstName,
+      lastName: values.lastName,
+      accountType: "patient",
+      role: {},
+      patientDetails: {
+        nhsNo: values.nhsNo,
+        niNo: values.niNo,
+        mobileNo: values.mobileNo,
+        nop: values.nop,
+        publicTransport: values.publicTransport,
+        hospitalisations: values.hospitalisations,
+        diabetes: values.diabetes,
+        hypertension: values.hypertension,
+        dob: values.dob,
+        gender: values.gender,
+        status: values.status,
+        address: {
+          address1: values.address1,
+          address2: values.address2,
+          address3: values.address3,
+          city: values.city,
+          county: values.county,
+          postcode: values.postcode,
+          country: values.country,
+        },
+      },
+    };
+    console.log(body);
   };
-  const updateAccountDetails = () => {};
-  const updatePersonalInfo = () => {};
-  const updateMedicalInfo = () => {};
-  const updateAddress = () => {};
-  const updateAdditionalDetails = () => {};
 
-  const { values, handleChange, handleSubmit } = useForm(updateExistingPatient);
+  const { values, handleChange, handleSubmit } = useForm(createNewPatient);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClickClose = () => {
+    setOpen(false);
+  };
+
   return (
-    <Grid container spacing={3}>
-      <Grid item xs={12} md={12} lg={12}>
-        <Paper className={classes.paper}>
-          <Title>Patient Details</Title>
-        </Paper>
-      </Grid>
-      <Grid item xs={12} md={6} lg={6}>
-        <Paper className={classes.paper}>
-          <Title>Harry Rhodes</Title>
-          <Avatar>HR</Avatar>
-        </Paper>
-      </Grid>
-      <Grid item xs={12} md={6} lg={6}>
-        <Paper className={classes.paper}>
-          <SubTitle>Patient Status</SubTitle>
-          <Chip label="COVID Positive" color="Secondry" />
-        </Paper>
-      </Grid>
-      <Grid item xs={12} md={12} lg={12}>
-        <Paper className={classes.paper}>
-          <SubTitle>
-            Account Details
-            <Button>{edit == false ? "Edit" : "Save"}</Button>
-          </SubTitle>
+    <React.Fragment>
+      <Fab
+        color="primary"
+        aria-label="add"
+        className={classes.fab}
+        onClick={handleClickOpen}
+      >
+        <AddIcon />
+      </Fab>
+      <Dialog
+        open={open}
+        onClose={handleClickClose}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle id="form-dialog-title">Add New Patient</DialogTitle>
+        <DialogContent>
           <form className={classes.root}>
+            <SubTitle>Account Information</SubTitle>
             <div>
               <FormControl className={classes.margin} fullWidth>
                 <TextField
@@ -101,9 +118,6 @@ export default function Patient({ username }) {
                   placeholder="Username"
                   variant="outlined"
                   onChange={handleChange}
-                  InputProps={{
-                    readOnly: { edit },
-                  }}
                 />
               </FormControl>
               <FormControl className={clsx(classes.margin, classes.textField)}>
@@ -114,9 +128,6 @@ export default function Patient({ username }) {
                   placeholder="Password"
                   variant="outlined"
                   onChange={handleChange}
-                  InputProps={{
-                    readOnly: { edit },
-                  }}
                 />
               </FormControl>
               <FormControl className={clsx(classes.margin, classes.textField)}>
@@ -127,22 +138,12 @@ export default function Patient({ username }) {
                   placeholder="Confirm Password"
                   variant="outlined"
                   onChange={handleChange}
-                  InputProps={{
-                    readOnly: { edit },
-                  }}
                 />
               </FormControl>
             </div>
-          </form>
-        </Paper>
-      </Grid>
-      <Grid item xs={12} md={6} lg={6}>
-        <Paper className={classes.paper}>
-          <form className={classes.root}>
-            <SubTitle>
-              Personal Information
-              <Button>{edit == true ? "Edit" : "Save"}</Button>
-            </SubTitle>
+
+            <SubTitle>Personal Information</SubTitle>
+
             <div>
               <FormControl className={clsx(classes.margin)} fullWidth>
                 <TextField
@@ -152,9 +153,6 @@ export default function Patient({ username }) {
                   placeholder="Email"
                   variant="outlined"
                   onChange={handleChange}
-                  InputProps={{
-                    readOnly: { edit },
-                  }}
                 />
               </FormControl>
               <FormControl className={clsx(classes.margin, classes.textField)}>
@@ -165,9 +163,6 @@ export default function Patient({ username }) {
                   placeholder="First Name"
                   variant="outlined"
                   onChange={handleChange}
-                  InputProps={{
-                    readOnly: { edit },
-                  }}
                 />
               </FormControl>
               <FormControl className={clsx(classes.margin, classes.textField)}>
@@ -178,9 +173,6 @@ export default function Patient({ username }) {
                   placeholder="Last Name"
                   variant="outlined"
                   onChange={handleChange}
-                  InputProps={{
-                    readOnly: { edit },
-                  }}
                 />
               </FormControl>
               <FormControl className={clsx(classes.margin, classes.textField)}>
@@ -191,9 +183,6 @@ export default function Patient({ username }) {
                   placeholder="Date Of Birth"
                   variant="outlined"
                   onChange={handleChange}
-                  InputProps={{
-                    readOnly: { edit },
-                  }}
                 />
               </FormControl>
               <FormControl component="fieldset" className={classes.margin}>
@@ -203,9 +192,6 @@ export default function Patient({ username }) {
                   name="gender"
                   defaultValue="top"
                   onChange={handleChange}
-                  InputProps={{
-                    readOnly: { edit },
-                  }}
                 >
                   <FormControlLabel
                     value="male"
@@ -234,9 +220,6 @@ export default function Patient({ username }) {
                   placeholder="NHS Number (Optional)"
                   variant="outlined"
                   onChange={handleChange}
-                  InputProps={{
-                    readOnly: { edit },
-                  }}
                 />
               </FormControl>
               <FormControl className={clsx(classes.margin, classes.textField)}>
@@ -247,9 +230,6 @@ export default function Patient({ username }) {
                   placeholder="NI Number"
                   variant="outlined"
                   onChange={handleChange}
-                  InputProps={{
-                    readOnly: { edit },
-                  }}
                 />
               </FormControl>
               <FormControl className={clsx(classes.margin, classes.textField)}>
@@ -260,22 +240,10 @@ export default function Patient({ username }) {
                   placeholder="Mobile Number"
                   variant="outlined"
                   onChange={handleChange}
-                  InputProps={{
-                    readOnly: { edit },
-                  }}
                 />
               </FormControl>
             </div>
-          </form>
-        </Paper>
-      </Grid>
-      <Grid item xs={12} md={6} lg={6}>
-        <Paper className={classes.paper}>
-          <form className={classes.root}>
-            <SubTitle>
-              Medical Information
-              <Button>{edit == false ? "Edit" : "Save"}</Button>
-            </SubTitle>
+            <SubTitle>Medical Information</SubTitle>
             <div>
               <FormControl
                 component="fieldset"
@@ -390,15 +358,7 @@ export default function Patient({ username }) {
                 </RadioGroup>
               </FormControl>
             </div>
-          </form>
-        </Paper>
-      </Grid>
-      <Grid item xs={12} md={6} lg={6}>
-        <Paper className={classes.paper}>
-          <form className={classes.root}>
-            <SubTitle>
-              Address<Button>{edit == false ? "Edit" : "Save"}</Button>
-            </SubTitle>
+            <SubTitle>Address</SubTitle>
             <div>
               <FormControl className={clsx(classes.margin)} fullWidth>
                 <TextField
@@ -471,16 +431,7 @@ export default function Patient({ username }) {
                 />
               </FormControl>
             </div>
-          </form>
-        </Paper>
-      </Grid>
-      <Grid item xs={12} md={6} lg={6}>
-        <Paper className={classes.paper}>
-          <form className={classes.root}>
-            <SubTitle>
-              Additional Details
-              <Button>{edit == false ? "Edit" : "Save"}</Button>
-            </SubTitle>
+            <SubTitle>Additional Details</SubTitle>
             <div>
               <FormControl
                 component="fieldset"
@@ -602,67 +553,16 @@ export default function Patient({ username }) {
               </FormControl>
             </div>
           </form>
-        </Paper>
-      </Grid>
-      <Grid item xs={12} md={12} lg={12}>
-        <Paper className={classes.paper}>
-          <Title>Case Details</Title>
-        </Paper>
-      </Grid>
-      <Grid item xs={12} md={12} lg={12}>
-        <Paper className={classes.paper}>
-          <Title>Patient Location</Title>
-        </Paper>
-      </Grid>
-      <Grid item xs={12} md={12} lg={12}>
-        <Paper className={classes.paper}>
-          <ComposableMap data-tip="" projectionConfig={{ scale: 200 }}>
-            <ZoomableGroup>
-              <Geographies geography={geoUrl}>
-                {({ geographies }) =>
-                  geographies.map((geo) => (
-                    <Geography
-                      key={geo.rsmKey}
-                      geography={geo}
-                      style={
-                        geo.properties.NAME == "United Kingdom"
-                          ? {
-                              default: {
-                                fill: "#1976d2",
-                                outline: "none",
-                              },
-                              hover: {
-                                fill: "#D6D6DA",
-                                outline: "none",
-                              },
-                              pressed: {
-                                fill: "#D6D6DA",
-                                outline: "none",
-                              },
-                            }
-                          : {
-                              default: {
-                                fill: "#D6D6DA",
-                                outline: "none",
-                              },
-                              hover: {
-                                fill: "#D6D6DA",
-                                outline: "none",
-                              },
-                              pressed: {
-                                fill: "#D6D6DA",
-                                outline: "none",
-                              },
-                            }
-                      }
-                    />
-                  ))
-                }
-              </Geographies>
-            </ZoomableGroup>
-          </ComposableMap>
-        </Paper>
-      </Grid>
-    </Grid>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClickClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleSubmit} color="primary">
+            Add
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </React.Fragment>
   );
 }

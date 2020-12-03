@@ -16,12 +16,13 @@ import LoginScreen from "./Screens/Login";
 import RegisterScreen1 from "./Screens/Register-1";
 import RegisterScreen2 from "./Screens/Register-2";
 import RegisterScreen3 from "./Screens/Register-3";
+import RegisterScreen4 from "./Screens/Register-4";
 import { UserContext as UserContext } from "./Hooks/UserContext";
 
 const Stack = createStackNavigator();
 
 export default function App() {
-  const navigationRef = createRef()
+  const navigationRef = createRef();
   const [user, setUser] = useState(null);
 
   const value = useMemo(() => ({ user, setUser }), [user, setUser]);
@@ -59,15 +60,29 @@ export default function App() {
                   headerShown: false,
                 }}
               />
+              <Stack.Screen
+                name="Register-4"
+                component={RegisterScreen4}
+                options={{
+                  headerShown: false,
+                }}
+              />
             </Stack.Navigator>
           ) : (
             <Stack.Navigator>
               <Stack.Screen
                 name="Home"
+                
                 component={HomeScreen}
                 options={{
+                  title: "Valhalla Tracker",
                   headerRight: () => (
-                    <Button icon="account-circle-outline" onPress={() => navigationRef.current?.navigate("Settings")}></Button>
+                    <Button
+                      icon="account-circle-outline"
+                      onPress={() =>
+                        navigationRef.current?.navigate("Settings")
+                      }
+                    ></Button>
                   ),
                 }}
               />

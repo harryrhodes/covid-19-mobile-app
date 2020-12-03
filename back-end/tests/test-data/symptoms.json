@@ -1,70 +1,87 @@
 [
     {
         "_id": "5fbe53388309cb5f78b99f37",
-        "name": "Fever"
+        "name": "Fever",
+        "severity": 3
     },
     {
         "_id": "5fbe53388309cb5f78b99f38",
-        "name": "Cough"
+        "name": "Cough",
+        "severity": 3
     },
     {
         "_id": "5fbe53388309cb5f78b99f39",
-        "name": "Tiredness"
+        "name": "Tiredness",
+        "severity": 3
     },
     {
         "_id": "5fbe53388309cb5f78b99f3a",
-        "name": "Aches"
+        "name": "Aches",
+        "severity": 3
     },
     {
         "_id": "5fbe53388309cb5f78b99f3b",
-        "name": "Sore Throat"
+        "name": "Sore Throat",
+        "severity": 3
     },
     {
         "_id": "5fbe53388309cb5f78b99f3c",
-        "name": "Diarrhoea"
+        "name": "Diarrhoea",
+        "severity": 3
     },
     {
         "_id": "5fbe53388309cb5f78b99f3d",
-        "name": "Conjunctivitis"
+        "name": "Conjunctivitis",
+        "severity": 3
     },
     {
         "_id": "5fbe53388309cb5f78b99f3e",
-        "name": "Headache"
+        "name": "Headache",
+        "severity": 3
     },
     {
         "_id": "5fbe53388309cb5f78b99f3f",
-        "name": "Loss of Taste"
+        "name": "Loss of Taste",
+        "severity": 3
     },
     {
         "_id": "5fbe53388309cb5f78b99f40",
-        "name": "Loss of Smell"
+        "name": "Loss of Smell",
+        "severity": 3
     },
     {
         "_id": "5fbe53388309cb5f78b99f41",
-        "name": "Skin Rash"
+        "name": "Skin Rash",
+        "severity": 3
     },
     {
         "_id": "5fbe53388309cb5f78b99f42",
-        "name": "Discolouration of Fingers or Toes"
+        "name": "Discolouration of Fingers or Toes",
+        "severity": 3
     },
     {
         "_id": "5fbe53388309cb5f78b99f43",
-        "name": "Difficulty Breathing"
+        "name": "Difficulty Breathing",
+        "severity": 3
     },
     {
         "_id": "5fbe53388309cb5f78b99f44",
-        "name": "Shortness of Breath"
+        "name": "Shortness of Breath",
+        "severity": 3
     },
     {
         "_id": "5fbe53388309cb5f78b99f45",
-        "name": "Chest Pain/Pressure"
+        "name": "Chest Pain/Pressure",
+        "severity": 3
     },
     {
         "_id": "5fbe53388309cb5f78b99f46",
-        "name": "Loss of Speach"
+        "name": "Loss of Speach",
+        "severity": 3
     },
     {
         "_id": "5fbe53388309cb5f78b99f47",
-        "name": "Loss of Movement"
+        "name": "Loss of Movement",
+        "severity": 3
     }
 ]

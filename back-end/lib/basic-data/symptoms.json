@@ -1,53 +1,70 @@
 [
     {
-        "name": "Fever"
+        "name": "Fever",
+        "severity": 4
     },
     {
-        "name": "Cough"
+        "name": "Cough",
+        "severity": 3
     },
     {
-        "name": "Tiredness"
+        "name": "Tiredness",
+        "severity": 1
     },
     {
-        "name": "Aches"
+        "name": "Aches",
+        "severity": 2
     },
     {
-        "name": "Sore Throat"
+        "name": "Sore Throat",
+        "severity": 2
     },
     {
-        "name": "Diarrhoea"
+        "name": "Diarrhoea",
+        "severity": 4
     },
     {
-        "name": "Conjunctivitis"
+        "name": "Conjunctivitis",
+        "severity": 3
     },
     {
-        "name": "Headache"
+        "name": "Headache",
+        "severity": 2
     },
     {
-        "name": "Loss of Taste"
+        "name": "Loss of Taste",
+        "severity": 2
     },
     {
-        "name": "Loss of Smell"
+        "name": "Loss of Smell",
+        "severity": 2
     },
     {
-        "name": "Skin Rash"
+        "name": "Skin Rash",
+        "severity": 4
     },
     {
-        "name": "Discolouration of Fingers or Toes"
+        "name": "Discolouration of Fingers or Toes",
+        "severity": 3
     },
     {
-        "name": "Difficulty Breathing"
+        "name": "Difficulty Breathing",
+        "severity": 5
     },
     {
-        "name": "Shortness of Breath"
+        "name": "Shortness of Breath",
+        "severity": 4
     },
     {
-        "name": "Chest Pain/Pressure"
+        "name": "Chest Pain/Pressure",
+        "severity": 5
     },
     {
-        "name": "Loss of Speach"
+        "name": "Loss of Speach",
+        "severity": 4
     },
     {
-        "name": "Loss of Movement"
+        "name": "Loss of Movement",
+        "severity": 5
     }
 ]

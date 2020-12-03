@@ -1,55 +1,46 @@
 import React, { useState, useContext } from "react";
 import { View } from "react-native";
-import { Subheading, Card, Button } from "react-native-paper";
-import * as WebBrowser from "expo-web-browser";
+import { Card, Button } from "react-native-paper";
 import { Styles } from "./style";
 import { UserContext } from "../../../Hooks/UserContext";
 import UserService from "../../../Services/UserService";
 
-export default function BookTestCard() {
-  const [open, setOpen] = useState(false);
+export default function TestResultCard() {
   const [opened, setOpened] = useState(false);
   const { user, setUser } = useContext(UserContext);
 
-  const _handlePressButtonAsync = async () => {
-    let result = await WebBrowser.openBrowserAsync(
-      "https://www.gov.uk/get-coronavirus-test"
-    );
-    if (result.type == "opened") {
-      setOpened(true);
-    } else {
-      setOpened(false);
-    }
-  };
-  const handleFeeback = async (testBooked) => {
-    if (testBooked == true) {
-      user.patientDetails.status = "Awaiting Test Results";
+  const handleFeeback = async (positive) => {
+    if (positive == true) {
+      user.patientDetails.status = "Positive";
       let res = await UserService.update(user.username, {
         patientDetails: user.patientDetails,
       });
       setUser(res);
     } else {
-      setOpened(false);
+      user.patientDetails.status = "Negative";
+      let res = await UserService.update(user.username, {
+        patientDetails: user.patientDetails,
+      });
+      setUser(res);
     }
   };
   return (
     <View style={Styles.fullWidthView}>
       <Card style={Styles.card}>
-        <Card.Title title="Book A Test" />
+        <Card.Title title="Have you Received Your Test Result?" />
         {opened == false ? (
           <Card.Content style={Styles.cardContent}>
-            <Button mode="contained" onPress={_handlePressButtonAsync}>
-              Book a test now
+            <Button mode="contained" onPress={setOpened(true)}>
+              Confirm Test Result
             </Button>
           </Card.Content>
         ) : (
           <Card.Content style={Styles.cardContent}>
-            <Subheading>Did you book a test?</Subheading>
             <Button mode="contained" onPress={() => handleFeeback(true)}>
-              Yes
+              Positive
             </Button>
             <Button mode="outlined" onPress={() => handleFeeback(false)}>
-              No
+              Negative
             </Button>
           </Card.Content>
         )}

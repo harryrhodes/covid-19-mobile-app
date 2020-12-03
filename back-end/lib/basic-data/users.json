@@ -8,7 +8,8 @@
         "accountType": "admin",
         "role": {},
         "patientDetails": {},
-        "symptoms": []
+        "symptoms": [],
+        "createdDate": "2020-11-11T12:00:00.000+0000"
     },
     {
         "username": "harry.rhodes",
@@ -19,7 +20,8 @@
         "accountType": "admin",
         "role": {},
         "patientDetails": {},
-        "symptoms": []
+        "symptoms": [],
+        "createdDate": "2020-11-11T12:00:00.000+0000"
     },
     {
         "username": "philip.hughes",
@@ -30,7 +32,8 @@
         "accountType": "admin",
         "role": {},
         "patientDetails": {},
-        "symptoms": []
+        "symptoms": [],
+        "createdDate": "2020-11-11T12:00:00.000+0000"
     },
     {
         "username": "jade.jellicoe",
@@ -41,7 +44,8 @@
         "accountType": "admin",
         "role": {},
         "patientDetails": {},
-        "symptoms": []
+        "symptoms": [],
+        "createdDate": "2020-11-11T12:00:00.000+0000"
     },
     {
         "username": "jenny.jones",
@@ -52,7 +56,8 @@
         "accountType": "practitioner",
         "role": {},
         "patientDetails": {},
-        "symptoms": []
+        "symptoms": [],
+        "createdDate": "2020-11-11T12:00:00.000+0000"
     },
     {
         "username": "adam.jones",
@@ -63,6 +68,7 @@
         "accountType": "patient",
         "role": {},
         "patientDetails": {},
-        "symptoms": []
+        "symptoms": [],
+        "createdDate": "2020-11-11T12:00:00.000+0000"
     }
 ]
