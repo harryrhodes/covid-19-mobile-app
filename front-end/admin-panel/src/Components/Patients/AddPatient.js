@@ -94,17 +94,6 @@ export default function CreateDialog() {
   const niRe = /^(?!BG|GB|NK|KN|TN|NT|ZZ)[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\s*\d{2}\s*\d{2}\s*\d{2}\s*[A-D]$/;
 
   const createNewPatient = async () => {
-    // let res = await UserService.getSingle(values.username);
-    // console.log(res);
-    // if (res.count != 0) {
-    //   setUnLabel("Sorry this username is taken");
-    //   setUnError(true);
-    // } else {
-    //   setUnLabel("Username (Required)");
-    //   setUnError(false);
-    //   console.log("you did it!");
-    //   console.log(body);
-    // }
 
     let secondUsername = "";
     let secondPassword = "";

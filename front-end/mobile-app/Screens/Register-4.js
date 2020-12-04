@@ -120,7 +120,7 @@ export default function Register({ navigation, route }) {
             {errorText}
           </HelperText>
           <TextInput
-            label="Address 3"
+            label="Address 3 (Optional)"
             mode="outlined"
             style={styles.input}
             value={address3}
@@ -138,7 +138,7 @@ export default function Register({ navigation, route }) {
             {errorText}
           </HelperText>
           <TextInput
-            label="County"
+            label="County (Optional)"
             mode="outlined"
             style={styles.input}
             value={county}

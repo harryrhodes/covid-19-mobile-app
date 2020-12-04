@@ -43,11 +43,11 @@ export default function Register({ navigation, route }) {
     const validateNhsNumber = (nhsNo) => {
       if (!nhsNo == "") {
         if (!/^\d+$/.test(nhsNo)) {
-          setErrorText("Your NHS number can only contain digits");
+          setErrorText("Your NHS Number can only contain digits");
           setNhsError(true);
           setAnimate(false);
         } else if (!/^\d{10}$/.test(nhsNo)) {
-          setErrorText("Your NHS must be 10 digits exactly");
+          setErrorText("Your NHS Number must be 10 digits exactly");
           setNhsError(true);
           setAnimate(false);
         } else {
@@ -93,7 +93,7 @@ export default function Register({ navigation, route }) {
           setLastNameError(true);
           setAnimate(false);
         } else if (!/^[a-zA-Z]+$/.test(lastName)) {
-          setErrorText("Your first name must only contain letters");
+          setErrorText("Your last name must only contain letters");
           setLastNameError(true);
           setAnimate(false);
         } else {
