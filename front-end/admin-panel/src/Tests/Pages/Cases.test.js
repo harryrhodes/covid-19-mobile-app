@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import Cases from '../../Pages/Cases';
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import CasesTable from "../../Components/CasesTable"
+import CasesTable from "../../Components/Cases/CasesTable"
 import Title from "../../Components/Title";
 
 describe('<Cases />', () => {

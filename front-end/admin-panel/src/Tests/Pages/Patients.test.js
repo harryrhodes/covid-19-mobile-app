@@ -7,7 +7,6 @@ import Navigation from "../../Components/Common/Navigation";
 import Copyright from "../../Components/Copyright";
 import Title from "../../Components/Title";
 import PatientsTable from "../../Components/Patients/PatientsTable";
-import CreateDialog from "../../Components/Patients/CreateDialog";
 
 describe('<Patients />', () => {
     test('Renders a Navigation component', () => {
@@ -33,11 +32,6 @@ describe('<Patients />', () => {
     test('Renders a PatientsTable component', () => {
         const wrapper = shallow(<Patients />);
         expect(wrapper.find(PatientsTable).length).toBe(1);
-    });
-
-    test('Renders a CreateDialog component', () => {
-        const wrapper = shallow(<Patients />);
-        expect(wrapper.find(CreateDialog).length).toBe(1);
     });
 
     test('Renders a Box component', () => {

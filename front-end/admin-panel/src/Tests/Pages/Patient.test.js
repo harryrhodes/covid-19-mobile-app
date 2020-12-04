@@ -24,7 +24,7 @@ describe('<Patient />', () => {
 
     test('Renders a Grid component', () => {
         const wrapper = shallow(<Patient />);
-        expect(wrapper.find(Grid).length).toBe(11);
+        expect(wrapper.find(Grid).length).toBe(13);
     });
 
     test('Renders a Box component', () => {
