@@ -6,6 +6,7 @@ import Patients from "./Pages/Patients";
 import Patient from "./Pages/Patient";
 import Symptoms from "./Pages/Symptoms";
 import Cases from "./Pages/Cases";
+import SymptomTrends from "./Pages/Trends/SymptomTrends"
 import { makeStyles } from "@material-ui/core/styles";
 
 import { BrowserRouter, Switch, Route } from "react-router-dom";
@@ -36,6 +37,7 @@ function App() {
 
           <Route path="/symptoms" exact component={Symptoms} />
           <Route path="/cases" exact component={Cases} />
+          <Route path="/symptomtrends" exact component = {SymptomTrends} />
         </Switch>
       </BrowserRouter>
     </div>

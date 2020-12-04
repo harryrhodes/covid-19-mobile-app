@@ -67,7 +67,7 @@ export const tertiaryListItems = (
       </ListItemIcon>
       <ListItemText primary="Patient Trends" />
     </ListItem>
-    <ListItem button>
+    <ListItem button component="a" href='/symptomtrends'>
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
