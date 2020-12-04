@@ -1,0 +1,51 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+
+import Users from '../../Pages/Users';
+import { Grid, Paper, Container, Box } from "@material-ui/core";
+import Navigation from "../../Components/Common/Navigation";
+import Copyright from "../../Components/Copyright";
+import Title from "../../Components/Title";
+import UsersTable from "../../Components/Users/UsersTable"
+
+describe('<Users />', () => {
+    test('Renders a Navigation component', () => {
+        const wrapper = shallow(<Users />);
+        expect(wrapper.find(Navigation).length).toBe(1);
+    });
+
+    test('Renders a Container component', () => {
+        const wrapper = shallow(<Users />);
+        expect(wrapper.find(Container).length).toBe(1);
+    });
+
+    test('Renders a Grid component', () => {
+        const wrapper = shallow(<Users />);
+        expect(wrapper.find(Grid).length).toBe(2);
+    });
+
+    test('Renders a Paper component', () => {
+        const wrapper = shallow(<Users />);
+        expect(wrapper.find(Paper).length).toBe(1);
+    });
+
+    test('Renders a Title component', () => {
+        const wrapper = shallow(<Users />);
+        expect(wrapper.find(Title).length).toBe(1);
+    });
+
+    test('Renders a UsersTable component', () => {
+        const wrapper = shallow(<Users />);
+        expect(wrapper.find(UsersTable).length).toBe(1);
+    });
+
+    test('Renders a Box component', () => {
+        const wrapper = shallow(<Users />);
+        expect(wrapper.find(Box).length).toBe(1);
+    });
+
+    test('Renders a Copyright component', () => {
+        const wrapper = shallow(<Users />);
+        expect(wrapper.find(Copyright).length).toBe(1);
+    });
+});
