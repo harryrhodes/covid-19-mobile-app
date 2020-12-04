@@ -4,7 +4,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import {
   Grid,
   Paper,
-  Avatar,
   TextField,
   Button,
   Chip,
@@ -15,7 +14,6 @@ import {
   FormControlLabel,
   Container,
   Box,
-  Typography,
   List,
   ListItem,
   ListItemText,
@@ -35,6 +33,7 @@ import Copyright from "../Components/Copyright";
 import Navigation from "../Components/Common/Navigation";
 import { useParams } from "react-router-dom";
 import UserService from "../Services/UserService";
+import { useHistory } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -119,8 +118,11 @@ export default function Patient() {
     }
   };
 
+  const history = useHistory();
+  
   const deletePatient = async (patient) => {
-    let res = await UserService.getSingle(patient.username);
+    await UserService.delete(params.username);
+    history.push("/patients");
   };
 
   const renderPatient = async () => {

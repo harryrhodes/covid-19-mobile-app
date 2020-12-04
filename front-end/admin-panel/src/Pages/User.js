@@ -4,10 +4,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import {
   Grid,
   Paper,
-  Avatar,
   TextField,
   Button,
-  Chip,
   FormControl,
   FormLabel,
   RadioGroup,
@@ -15,26 +13,16 @@ import {
   FormControlLabel,
   Container,
   Box,
-  Typography,
-  List,
-  ListItem,
-  ListItemText,
-  ListSubheader,
 } from "@material-ui/core";
 import Title from "../Components/Title";
 import SubTitle from "../Components/SubTitle";
-import {
-  ZoomableGroup,
-  ComposableMap,
-  Geographies,
-  Geography,
-} from "react-simple-maps";
 import Skeleton from "@material-ui/lab/Skeleton";
 import useForm from "../Hooks/useForm";
 import Copyright from "../Components/Copyright";
 import Navigation from "../Components/Common/Navigation";
 import { useParams } from "react-router-dom";
 import UserService from "../Services/UserService";
+import { useHistory } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -74,6 +62,7 @@ export default function User() {
   const params = useParams();
   const classes = useStyles();
   const [user, setUser] = useState(null);
+  const history = useHistory();
 
   const updateExistingUser = async () => {
     if (values !== null) {
@@ -115,9 +104,10 @@ export default function User() {
     }
   };
 
-  //   const deletePatient = async (patient) => {
-  //     let res = await UserService.getSingle(patient.username);
-  //   };
+  const deleteUser = async () => {
+    let res = await UserService.delete(params.username);
+    history.push("/users");
+  };
 
   const renderUser = async () => {
     let res = await UserService.getSingle(params.username);
@@ -322,6 +312,23 @@ export default function User() {
             <Grid item xs={12} md={12} lg={12}>
               {user === null ? (
                 <Skeleton variant="rect" width={"100%"} height={118} />
+              ) : user.accountType != "admin" ? (
+                <Paper className={classes.paper}>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={deleteUser}
+                  >
+                    Delete User
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleSubmit}
+                  >
+                    Update User
+                  </Button>
+                </Paper>
               ) : (
                 <Paper className={classes.paper}>
                   <Button
@@ -330,9 +337,6 @@ export default function User() {
                     onClick={handleSubmit}
                   >
                     Update User
-                  </Button>
-                  <Button variant="contained" color="secondary">
-                    Delete User
                   </Button>
                 </Paper>
               )}
