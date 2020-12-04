@@ -23,8 +23,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --runInBand --transformIgnorePatterns \"node_modules/(?!(office-ui-fabric-react|lodash-es|@uifabric))\"",
-    "testci": "npm run test -- --ci --verbose --reporters=default --reporters=jest-junit",
-    "test:debug": "npm run test -- --inspect-brk --verbose --no-cache",
+    "testci": "yarn run test -- --ci --verbose --reporters=default --reporters=jest-junit",
+    "test:debug": "yarn run test -- --inspect-brk --verbose --no-cache",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
