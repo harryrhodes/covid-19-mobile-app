@@ -13,7 +13,7 @@ import Navigation from "../../Components/Common/Navigation";
 beforeAll(() => {
     jest
         .spyOn(Router, 'useParams')
-        .mockImplementation(() => params);
+        .mockImplementation(() => { });
 });
 
 describe('<Patient />', () => {

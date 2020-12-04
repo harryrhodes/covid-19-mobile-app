@@ -32,7 +32,7 @@ describe('<UsersTable />', () => {
         expect(wrapper.find(TableCell).length).toBe(5);
     });
 
-    test('Renders a TableCell component', () => {
+    test('Renders text inside the TableCell component', () => {
         const wrapper = shallow(<UsersTable />);
         expect(wrapper.find(TableCell).first().text()).toBe('Username');
     });

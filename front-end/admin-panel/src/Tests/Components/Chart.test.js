@@ -36,7 +36,7 @@ describe('<Chart />', () => {
         expect(wrapper.find(Label).length).toBe(1);
     });
 
-    test('Renders a Label component', () => {
+    test('Renders text inside the Label component', () => {
         const wrapper = shallow(<Chart />);
         expect(wrapper.find(Label).text()).toBe('<Label />');
     });
