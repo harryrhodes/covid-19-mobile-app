@@ -5,6 +5,7 @@ import Navigation from "../Components/Common/Navigation";
 import Copyright from "../Components/Copyright";
 import Title from "../Components/Title";
 import UsersTable from "../Components/Users/UsersTable";
+import AddUser from "../Components/Users/AddUser";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -41,6 +42,7 @@ export default function Users() {
                 <UsersTable />
               </Paper>
             </Grid>
+            <AddUser />
           </Grid>
           <Box pt={4}>
             <Copyright />

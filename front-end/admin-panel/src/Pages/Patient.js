@@ -16,6 +16,10 @@ import {
   Container,
   Box,
   Typography,
+  List,
+  ListItem,
+  ListItemText,
+  ListSubheader,
 } from "@material-ui/core";
 import Title from "../Components/Title";
 import SubTitle from "../Components/SubTitle";
@@ -70,42 +74,46 @@ export default function Patient() {
   const params = useParams();
   const classes = useStyles();
   const [patient, setPatient] = useState(null);
+  const [patientComment, setPatientComment] = useState(null);
+  const [listItems, setListItems] = useState(null);
   const geoUrl =
     "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
 
   const updateExistingPatient = async () => {
     if (values !== null) {
-      // let body = {
-      //   username: {values.username === null ? patient.username},
-      //   password: secondPassword,
-      //   email: secondEmail,
-      //   firstName: secondFirstname,
-      //   lastName: secondLastname,
-      //   accountType: "patient",
-      //   role: {},
-      //   patientDetails: {
-      //     nhsNo: secondNhsNo,
-      //     niNo: secondNiNo,
-      //     mobileNo: secondMobileNo,
-      //     nop: secondNop,
-      //     publicTransport: secondTransport,
-      //     hospitalisations: secondHospitalisations,
-      //     diabetes: secondDiabetes,
-      //     hypertension: secondHypertension,
-      //     dob: secondDob,
-      //     gender: secondGender,
-      //     status: secondStatus,
-      //     address: {
-      //       address1: secondAddress1,
-      //       address2: secondAddress2,
-      //       address3: secondAddress3,
-      //       city: secondCity,
-      //       county: secondCounty,
-      //       postcode: secondPostcode,
-      //       country: secondCountry,
-      //     },
-      //   },
-      // };
+      let body = {
+        username: values?.username || patient.username,
+        password: values?.password || patient.password,
+        email: values?.email || patient.email,
+        firstName: values?.firstName || patient.firstName,
+        lastName: values?.lastName || patient.lastName,
+        accountType: "patient",
+        role: {},
+        patientDetails: {
+          nhsNo: values?.nhsNo || patient.patientDetails?.nhsNo || "",
+          niNo: values?.niNo || patient.patientDetails.niNo,
+          mobileNo: values?.mobileNo || patient.patientDetails.mobileNo,
+          nop: values?.nop || patient.patientDetails.nop,
+          publicTransport: values?.publicTransport || patient.publicTransport,
+          hospitalisations:
+            values?.hospitalisations || patient.hospitalisations,
+          diabetes: values?.diabetes || patient.patientDetails.diabetes,
+          hypertension: values?.hypertension || patient.hypertension,
+          dob: values?.dob || patient.patientDetails.dob,
+          gender: values?.gender || patient.patientDetails.gender,
+          status: values?.status || patient.patientDetails.status,
+          address: {
+            address1: values?.address1 || patient.address.address1,
+            address2: values?.address2 || patient.address.address2,
+            address3: values?.address3 || patient.address.address3,
+            city: values?.city || patient.address.city,
+            county: values?.county || patient.address.county,
+            postcode: values?.postcode || patient.address.postcode,
+            country: values?.country || patient.address.country,
+          },
+        },
+      };
+      console.log(body);
     } else {
       console.log("No Values Found");
     }
@@ -117,6 +125,24 @@ export default function Patient() {
 
   const renderPatient = async () => {
     let res = await UserService.getSingle(params.username);
+    let listItems = [];
+    let symptoms = res.data[0].symptoms[0].details;
+    for (let i = 0; i < symptoms.length; i++) {
+      if (symptoms[i].name === "comment") {
+        setPatientComment(
+          <ListItem>
+            <ListItemText primary={symptoms[i].comment} />
+          </ListItem>
+        );
+      } else {
+        listItems.push(
+          <ListItem>
+            <ListItemText primary={symptoms[i].name} />
+          </ListItem>
+        );
+      }
+    }
+    setListItems(listItems);
     setPatient(res.data[0]);
   };
 
@@ -139,36 +165,16 @@ export default function Patient() {
                 <Skeleton variant="rect" width={"100%"} height={118} />
               ) : (
                 <Paper className={classes.paper}>
-                  <Title>Patient Details</Title>
+                  <Title>
+                    {"Patient Details: " +
+                      patient.firstName +
+                      " " +
+                      patient.lastName}
+                  </Title>
                 </Paper>
               )}
             </Grid>
-            <Grid item xs={12} md={6} lg={6}>
-              {patient === null ? (
-                <Skeleton variant="rect" width={"100%"} height={118} />
-              ) : (
-                <Paper className={classes.paper}>
-                  <SubTitle>Patient Summary</SubTitle>
-                  <Typography variant="h6" component="h6">
-                    <Avatar>HR</Avatar>
-                    {patient.firstName} {patient.lastName}
-                  </Typography>
-                </Paper>
-              )}
-            </Grid>
-            <Grid item xs={12} md={6} lg={6}>
-              {patient === null ? (
-                <Skeleton variant="rect" width={"100%"} height={118} />
-              ) : (
-                <Paper className={classes.paper}>
-                  <SubTitle>Patient Status</SubTitle>
-                  <Chip
-                    label={patient.patientDetails.status}
-                    color="secondary"
-                  />
-                </Paper>
-              )}
-            </Grid>
+
             <Grid item xs={12} md={12} lg={12}>
               {patient === null ? (
                 <Skeleton variant="rect" width={"100%"} height={236} />
@@ -222,8 +228,8 @@ export default function Patient() {
                 <Skeleton variant="rect" width={"100%"} height={472} />
               ) : (
                 <Paper className={classes.paper}>
+                  <SubTitle>Personal Information</SubTitle>
                   <form className={classes.root}>
-                    <SubTitle>Personal Information</SubTitle>
                     <div>
                       <FormControl className={clsx(classes.margin)} fullWidth>
                         <TextField
@@ -354,8 +360,8 @@ export default function Patient() {
                 <Skeleton variant="rect" width={"100%"} height={472} />
               ) : (
                 <Paper className={classes.paper}>
+                  <SubTitle>Medical Information</SubTitle>
                   <form className={classes.root}>
-                    <SubTitle>Medical Information</SubTitle>
                     <div>
                       <FormControl
                         component="fieldset"
@@ -485,8 +491,8 @@ export default function Patient() {
                 <Skeleton variant="rect" width={"100%"} height={472} />
               ) : (
                 <Paper className={classes.paper}>
+                  <SubTitle>Address</SubTitle>
                   <form className={classes.root}>
-                    <SubTitle>Address</SubTitle>
                     <div>
                       <FormControl className={clsx(classes.margin)} fullWidth>
                         <TextField
@@ -710,6 +716,72 @@ export default function Patient() {
                 </Paper>
               )}
             </Grid>
+            <Grid item xs={12} md={12} lg={12}>
+              {patient === null ? (
+                <Skeleton variant="rect" width={"100%"} height={118} />
+              ) : (
+                <Paper className={classes.paper}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleSubmit}
+                  >
+                    Update Patient
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={deletePatient}
+                  >
+                    Delete Patient
+                  </Button>
+                </Paper>
+              )}
+            </Grid>
+            <Grid item xs={12} md={12} lg={12}>
+              {patient === null ? (
+                <Skeleton variant="rect" width={"100%"} height={118} />
+              ) : (
+                <Paper className={classes.paper}>
+                  <Title>Case Details</Title>
+                </Paper>
+              )}
+            </Grid>
+            <Grid item xs={12} md={12} lg={12}>
+              {patient === null ? (
+                <Skeleton variant="rect" width={"100%"} height={472} />
+              ) : (
+                <Paper className={classes.paper}>
+                  <SubTitle>Patient Status</SubTitle>
+                  <Chip
+                    label={patient.patientDetails.status}
+                    color="secondary"
+                  />
+                </Paper>
+              )}
+            </Grid>
+            <Grid item xs={12} md={12} lg={12}>
+              {patient === null ? (
+                <Skeleton variant="rect" width={"100%"} height={472} />
+              ) : (
+                <Paper className={classes.paper}>
+                  <SubTitle>Current Symptoms</SubTitle>
+                  <List
+                    subheader={
+                      <ListSubheader>
+                        {"Symptoms Last Logged: " +
+                          Date(patient.symptoms[0].date)}
+                      </ListSubheader>
+                    }
+                    className={classes.root}
+                  >
+                    {listItems}
+                  </List>
+                  <SubTitle>Patient Side Effects</SubTitle>
+                  <List>{patientComment}</List>
+                </Paper>
+              )}
+            </Grid>
 
             <Grid item xs={12} md={12} lg={12}>
               {patient === null ? (
@@ -775,28 +847,7 @@ export default function Patient() {
               )}
             </Grid>
           </Grid>
-          <Grid item xs={12} md={12} lg={12}>
-            {patient === null ? (
-              <Skeleton variant="rect" width={"100%"} height={118} />
-            ) : (
-              <Paper className={classes.paper}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleSubmit}
-                >
-                  Update Patient
-                </Button>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  onClick={deletePatient}
-                >
-                  Delete Patient
-                </Button>
-              </Paper>
-            )}
-          </Grid>
+
           <Box pt={4}>
             <Copyright />
           </Box>

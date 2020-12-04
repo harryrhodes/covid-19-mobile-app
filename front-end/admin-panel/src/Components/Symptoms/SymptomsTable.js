@@ -79,7 +79,7 @@ export default function SymptomsTable() {
           </FormControl>
           <FormControl className={classes.margin}>
             <Button variant="contained" color="primary" size="large">
-              Search Symptoms
+              Edit
             </Button>
           </FormControl>
         </div>

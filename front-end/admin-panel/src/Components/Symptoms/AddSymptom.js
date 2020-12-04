@@ -9,6 +9,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import SubTitle from "../SubTitle";
 import useForm from "../../Hooks/useForm";
+import SymptomService from "../../Services/SymptomService";
 import {
   Fab,
   FormControl,
@@ -43,16 +44,16 @@ export default function CreateDialog() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
-  const createNewPatient = () => {
-    console.log(values);
+  const createNewSymptom = async () => {
     let body = {
-      username: values.username,
-      password: values.password,
+      name: values.symptomName,
+      severity: values.severity,
     };
-    console.log(body);
+    let res = await SymptomService.create(body);
+    setOpen(false);
   };
 
-  const { values, handleChange, handleSubmit } = useForm(createNewPatient);
+  const { values, handleChange, handleSubmit } = useForm(createNewSymptom);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -101,8 +102,7 @@ export default function CreateDialog() {
                 <RadioGroup
                   column
                   aria-label="position"
-                  name="status"
-                  defaultValue="top"
+                  name="severity"
                   onChange={handleChange}
                 >
                   <FormControlLabel

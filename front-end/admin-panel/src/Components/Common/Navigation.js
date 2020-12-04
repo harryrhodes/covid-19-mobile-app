@@ -127,6 +127,8 @@ export default function Navigation() {
             size="small"
             className={classes.button}
             startIcon={<AccountCircleIcon />}
+            component="a"
+            href="/account"
           >
             My Account
           </Button>

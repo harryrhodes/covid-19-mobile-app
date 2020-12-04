@@ -6,7 +6,9 @@ import {
   TableCell,
   TableHead,
   TableRow,
+  InputLabel,
   FormControl,
+  Select,
   TextField,
   Button,
 } from "@material-ui/core";
@@ -26,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function UsersTable() {
+export default function CasesTable() {
   const classes = useStyles();
   const [rows, setRows] = useState();
 
@@ -37,18 +39,22 @@ export default function UsersTable() {
     console.log(res.data);
     for (let i = 0; i < users.length; i++) {
       if (
-        users[i].accountType === "admin" ||
-        users[i].accountType === "practitioner"
+        users[i].accountType === "patient" &&
+        users[i].patientDetails.status === "Positive"
       ) {
         rows.push(
-          <TableRow key={users[i]._id}
-          component={Link}
-          to={"/user/" + users[i].username}>
+          <TableRow
+            key={users[i]._id}
+            component={Link}
+            to={"/patient/" + users[i].username}
+          >
             <TableCell>{users[i].username}</TableCell>
             <TableCell>{users[i].firstName}</TableCell>
             <TableCell>{users[i].lastName}</TableCell>
             <TableCell>{users[i].email}</TableCell>
-            <TableCell>{users[i].accountType}</TableCell>
+            <TableCell align="right">
+              {users[i].patientDetails.status}
+            </TableCell>
           </TableRow>
         );
       } else {
@@ -61,7 +67,6 @@ export default function UsersTable() {
       renderRows();
     }
   });
-
   return (
     <React.Fragment>
       <Table>
@@ -70,8 +75,8 @@ export default function UsersTable() {
             <TableCell>Username</TableCell>
             <TableCell>First Name</TableCell>
             <TableCell>Last Name</TableCell>
-            <TableCell>Email Address</TableCell>
-            <TableCell>Account Type</TableCell>
+            <TableCell>Email</TableCell>
+            <TableCell align="right">Status</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>{rows}</TableBody>

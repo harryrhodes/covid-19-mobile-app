@@ -1,18 +1,18 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Copyright from "../Components/Copyright";
+import UserService from "../Services/UserService";
+import { UserContext } from "../Hooks/UserContext";
+import useForm from "../Hooks/useForm";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -34,8 +34,44 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
+export default function Login() {
   const classes = useStyles();
+  const history = useHistory();
+  const { user, setUser } = useContext(UserContext);
+  const [usernameErrorText, setUsernameErrorText] = useState("");
+  const [passwordErrorText, setPasswordErrorText] = useState("");
+  const [usernameError, setUsernameError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+
+  const login = async () => {
+    if (values == null) {
+      setUsernameError(true);
+      setPasswordError(true);
+      setUsernameErrorText("This field is required");
+      setPasswordErrorText("This field is required");
+    } else if (values.username == null) {
+      setUsernameError(true);
+      setUsernameErrorText("This field is required");
+    } else if (values.password == null) {
+      setPasswordError(true);
+      setPasswordErrorText("This field is required");
+    } else {
+      let res = await UserService.login(values.username, values.password);
+      if (res.status == "Success") {
+        setUser(res.user);
+        history.push("/");
+      } else if (res.status == "Invalid Username/Email") {
+        setUsernameError(true);
+        setUsernameErrorText(res.status);
+      } else if (res.status == "Incorrect Password") {
+        setPasswordError(true);
+        setUsernameError(false);
+        setPasswordErrorText(res.status);
+      }
+    }
+  };
+
+  const { values, handleChange, handleSubmit } = useForm(login);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -57,6 +93,9 @@ export default function SignIn() {
             label="Username"
             name="username"
             autoFocus
+            onChange={handleChange}
+            error={usernameError}
+            helperText={usernameErrorText}
           />
           <TextField
             variant="outlined"
@@ -67,6 +106,9 @@ export default function SignIn() {
             label="Password"
             type="password"
             id="password"
+            onChange={handleChange}
+            error={passwordError}
+            helperText={passwordErrorText}
           />
           <Button
             type="submit"
@@ -74,6 +116,7 @@ export default function SignIn() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={handleSubmit}
           >
             Sign In
           </Button>

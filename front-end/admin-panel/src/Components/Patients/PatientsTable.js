@@ -6,13 +6,9 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  InputLabel,
-  FormControl,
-  Select,
-  TextField,
-  Button,
 } from "@material-ui/core";
 import UserService from "../../Services/UserService";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   seeMore: {
@@ -39,7 +35,7 @@ export default function PaitentsTable() {
     for (let i = 0; i < users.length; i++) {
       if (users[i].accountType === "patient") {
         rows.push(
-          <TableRow key={users[i]._id}>
+          <TableRow key={users[i]._id} component={Link} to={"/patient/"+users[i].username}>
             <TableCell>{users[i].username}</TableCell>
             <TableCell>{users[i].firstName}</TableCell>
             <TableCell>{users[i].lastName}</TableCell>
@@ -47,7 +43,7 @@ export default function PaitentsTable() {
             <TableCell align="right">
               {users[i].patientDetails.status}
             </TableCell>
-          </TableRow>
+          </TableRow>    
         );
       } else {
       }

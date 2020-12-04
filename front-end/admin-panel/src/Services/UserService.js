@@ -24,6 +24,10 @@ export default {
     update: async (username,body) =>{
         let res = await axios.put("http://localhost:4000"+"/users/"+username,body, {auth})
         return res.data || [];
-    }               
+    },
+    delete: async (username) =>{
+        let res = await axios.delete("http://localhost:4000"+"/users/"+username, {auth})
+        return res.data || [];
+    }             
 }
 

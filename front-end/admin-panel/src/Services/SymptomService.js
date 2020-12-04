@@ -5,8 +5,8 @@ const auth = {
     password: "6c5ff9595cb769effc5f5a7e9d2e2305",
 }
 export default {
-    create: async (symptom,body) =>{
-        let res = await axios.post("http://localhost:4000"+"/symptoms/"+symptom,body, {auth})
+    create: async (body) =>{
+        let res = await axios.post("http://localhost:4000"+"/symptoms",body, {auth})
         return res.data || [];
     },
     getAll: async () =>{
