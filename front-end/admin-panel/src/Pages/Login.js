@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Login() {
   const classes = useStyles();
   const history = useHistory();
-  const { user, setUser } = useContext(UserContext);
+  const { setUserData } = useContext(UserContext);
   const [usernameErrorText, setUsernameErrorText] = useState("");
   const [passwordErrorText, setPasswordErrorText] = useState("");
   const [usernameError, setUsernameError] = useState(false);
@@ -58,8 +58,8 @@ export default function Login() {
     } else {
       let res = await UserService.login(values.username, values.password);
       if (res.status == "Success") {
-        setUser(res.user);
-        history.push("/");
+        setUserData(res.user);
+        history.replace("/");
       } else if (res.status == "Invalid Username/Email") {
         setUsernameError(true);
         setUsernameErrorText(res.status);

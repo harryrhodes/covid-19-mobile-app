@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -20,6 +20,7 @@ import {
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import { UserContext } from "../../Hooks/UserContext";
 
 const drawerWidth = 240;
 
@@ -82,6 +83,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Navigation() {
   const classes = useStyles();
+  const { setUserData } = useContext(UserContext);
 
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -90,6 +92,10 @@ export default function Navigation() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const handleLogOut = () => {
+    setUserData(null);
+  }
 
   return (
     <React.Fragment>
@@ -125,12 +131,21 @@ export default function Navigation() {
             variant="contained"
             color="primary"
             size="small"
-            className={classes.button}
             startIcon={<AccountCircleIcon />}
             component="a"
             href="/account"
           >
             My Account
+          </Button>
+
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            component="a"
+            onClick={handleLogOut}
+          >
+            Log Out
           </Button>
         </Toolbar>
       </AppBar>

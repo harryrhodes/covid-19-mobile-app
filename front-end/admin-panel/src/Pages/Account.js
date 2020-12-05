@@ -4,16 +4,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import {
   Grid,
   Paper,
-  Avatar,
   TextField,
   Button,
-  Chip,
   FormControl,
-
   Container,
   Box,
-  useRadioGroup,
-
 } from "@material-ui/core";
 import Title from "../Components/Title";
 import SubTitle from "../Components/SubTitle";
@@ -24,6 +19,7 @@ import Navigation from "../Components/Common/Navigation";
 
 import UserService from "../Services/UserService";
 import { UserContext } from "../Hooks/UserContext";
+import { useHistory } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -61,8 +57,57 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Account() {
   const classes = useStyles();
+  const history = useHistory();
   const [patient, setPatient] = useState(null);
-  const { user, setUser } = useContext(UserContext);
+  const { user, setUserData } = useContext(UserContext);
+
+  const updateExistingUser = async () => {
+    if (values !== null) {
+      //   let body = {
+      //     username: values?.username || patient.username,
+      //     password: values?.password || patient.password,
+      //     email: values?.email || patient.email,
+      //     firstName: values?.firstName || patient.firstName,
+      //     lastName: values?.lastName || patient.lastName,
+      //     accountType: "patient",
+      //     role: {},
+      //     patientDetails: {
+      //       nhsNo: values?.nhsNo || patient.patientDetails?.nhsNo || "",
+      //       niNo: values?.niNo || patient.patientDetails.niNo,
+      //       mobileNo: values?.mobileNo || patient.patientDetails.mobileNo,
+      //       nop: values?.nop || patient.patientDetails.nop,
+      //       publicTransport: values?.publicTransport || patient.publicTransport,
+      //       hospitalisations:
+      //         values?.hospitalisations || patient.hospitalisations,
+      //       diabetes: values?.diabetes || patient.patientDetails.diabetes,
+      //       hypertension: values?.hypertension || patient.hypertension,
+      //       dob: values?.dob || patient.patientDetails.dob,
+      //       gender: values?.gender || patient.patientDetails.gender,
+      //       status: values?.status || patient.patientDetails.status,
+      //       address: {
+      //         address1: values?.address1 || patient.address.address1,
+      //         address2: values?.address2 || patient.address.address2,
+      //         address3: values?.address3 || patient.address.address3,
+      //         city: values?.city || patient.address.city,
+      //         county: values?.county || patient.address.county,
+      //         postcode: values?.postcode || patient.address.postcode,
+      //         country: values?.country || patient.address.country,
+      //       },
+      //     },
+      //   //   };
+      //   console.log(body);
+    } else {
+      console.log("No Values Found");
+    }
+  };
+
+  const deleteUser = async () => {
+    let res = await UserService.delete(user.data.username);
+    setUserData(null);
+    history.replace("/login");
+  };
+
+  const { values, handleChange, handleSubmit } = useForm(updateExistingUser);
 
   return (
     <React.Fragment>
@@ -72,22 +117,22 @@ export default function Account() {
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={12} lg={12}>
-              {patient === null ? (
+              {user === null ? (
                 <Skeleton variant="rect" width={"100%"} height={118} />
               ) : (
                 <Paper className={classes.paper}>
                   <Title>
                     {"Account Details: " +
-                      user.firstName +
+                      user.data.firstName +
                       " " +
-                      user.lastName}
+                      user.data.lastName}
                   </Title>
                 </Paper>
               )}
             </Grid>
 
             <Grid item xs={12} md={12} lg={12}>
-              {patient === null ? (
+              {user === null ? (
                 <Skeleton variant="rect" width={"100%"} height={236} />
               ) : (
                 <Paper className={classes.paper}>
@@ -100,8 +145,9 @@ export default function Account() {
                           name="username"
                           label="Username"
                           placeholder="Username"
-                          defaultValue={patient.username}
+                          defaultValue={user.data.username}
                           variant="outlined"
+                          onChange={handleChange}
                         />
                       </FormControl>
                       <FormControl
@@ -113,6 +159,7 @@ export default function Account() {
                           label="Password"
                           placeholder="Password"
                           variant="outlined"
+                          onChange={handleChange}
                         />
                       </FormControl>
                       <FormControl
@@ -124,6 +171,7 @@ export default function Account() {
                           label="Confirm Password"
                           placeholder="Confirm Password"
                           variant="outlined"
+                          onChange={handleChange}
                         />
                       </FormControl>
                     </div>
@@ -131,8 +179,135 @@ export default function Account() {
                 </Paper>
               )}
             </Grid>
+            <Grid item xs={12} md={6} lg={6}>
+              {user === null ? (
+                <Skeleton variant="rect" width={"100%"} height={472} />
+              ) : (
+                <Paper className={classes.paper}>
+                  <SubTitle>Personal Information</SubTitle>
+                  <form className={classes.root}>
+                    <div>
+                      <FormControl className={clsx(classes.margin)} fullWidth>
+                        <TextField
+                          required
+                          name="email"
+                          label="Email"
+                          placeholder="Email"
+                          defaultValue={user.data.email}
+                          variant="outlined"
+                          onChange={handleChange}
+                        />
+                      </FormControl>
+                      <FormControl
+                        className={clsx(classes.margin, classes.textField)}
+                      >
+                        <TextField
+                          required
+                          name="firstName"
+                          label="First Name"
+                          placeholder="First Name"
+                          defaultValue={user.data.firstName}
+                          variant="outlined"
+                          onChange={handleChange}
+                        />
+                      </FormControl>
+                      <FormControl
+                        className={clsx(classes.margin, classes.textField)}
+                      >
+                        <TextField
+                          required
+                          name="lastName"
+                          label="Last Name"
+                          placeholder="Last Name"
+                          defaultValue={user.data.lastName}
+                          variant="outlined"
+                          onChange={handleChange}
+                        />
+                      </FormControl>
+                    </div>
+                  </form>
+                </Paper>
+              )}
+            </Grid>
+            <Grid item xs={12} md={6} lg={6}>
+              {user === null ? (
+                <Skeleton variant="rect" width={"100%"} height={472} />
+              ) : (
+                <Paper className={classes.paper}>
+                  <SubTitle>Role Information</SubTitle>
+                  <form className={classes.root}>
+                    <div>
+                      <FormControl className={clsx(classes.margin)} fullWidth>
+                        <TextField
+                          required
+                          name="email"
+                          label="Title"
+                          placeholder="Title"
+                          defaultValue={user.data.role.title}
+                          variant="outlined"
+                          onChange={handleChange}
+                        />
+                      </FormControl>
+                      <FormControl className={clsx(classes.margin)} fullwidth>
+                        <TextField
+                          required
+                          name="firstName"
+                          label="Department"
+                          placeholder="First Name"
+                          defaultValue={user.data.role.department}
+                          variant="outlined"
+                          onChange={handleChange}
+                        />
+                      </FormControl>
+                      <FormControl className={clsx(classes.margin)} fullwidth>
+                        <TextField
+                          required
+                          name="lastName"
+                          label="Organisation"
+                          placeholder="Last Name"
+                          defaultValue={user.data.role.organisation}
+                          variant="outlined"
+                          onChange={handleChange}
+                        />
+                      </FormControl>
+                    </div>
+                  </form>
+                </Paper>
+              )}
+            </Grid>
+            <Grid item xs={12} md={12} lg={12}>
+              {user === null ? (
+                <Skeleton variant="rect" width={"100%"} height={118} />
+              ) : user.accountType != "admin" ? (
+                <Paper className={classes.paper}>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={deleteUser}
+                  >
+                    Delete User
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleSubmit}
+                  >
+                    Update Account
+                  </Button>
+                </Paper>
+              ) : (
+                <Paper className={classes.paper}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleSubmit}
+                  >
+                    Update Account
+                  </Button>
+                </Paper>
+              )}
+            </Grid>
           </Grid>
-
           <Box pt={4}>
             <Copyright />
           </Box>

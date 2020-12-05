@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Paper, Container, Box } from "@material-ui/core";
 import Navigation from "../Components/Common/Navigation";
@@ -6,6 +6,7 @@ import Copyright from "../Components/Copyright";
 import Title from "../Components/Title";
 import SymptomsTable from "../Components/Symptoms/SymptomsTable";
 import AddSymptom from "../Components/Symptoms/AddSymptom";
+import { FormControl, Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -38,7 +39,7 @@ export default function Symptoms() {
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                <Title>Symptoms </Title>
+                <Title>Symptoms</Title>
                 <SymptomsTable />
               </Paper>
             </Grid>

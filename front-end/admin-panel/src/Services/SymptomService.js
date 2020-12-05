@@ -13,6 +13,10 @@ export default {
         let res = await axios.get("http://localhost:4000"+"/symptoms",{auth});
         return res.data || [];
     },
+    getSingle: async (_id) =>{
+        let res = await axios.get("http://localhost:4000"+"/symptoms/"+_id,{auth});
+        return res.data || [];
+    },
     update: async (symptom,body) =>{
         let res = await axios.put("http://localhost:4000"+"/symptoms/"+symptom,body, {auth})
         return res.data || [];

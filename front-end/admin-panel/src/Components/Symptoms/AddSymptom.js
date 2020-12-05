@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -40,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CreateDialog() {
+export default function AddSymptom() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -73,6 +72,7 @@ export default function CreateDialog() {
       >
         <AddIcon />
       </Fab>
+
       <Dialog
         open={open}
         onClose={handleClickClose}

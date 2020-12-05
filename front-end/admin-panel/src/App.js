@@ -10,12 +10,12 @@ import Symptoms from "./Pages/Symptoms";
 import Cases from "./Pages/Cases";
 import SymptomTrends from "./Pages/Trends/SymptomTrends";
 import UserTrends from "./Pages/Trends/UserTrends";
-import PatientTrends from "./Pages/Trends/PatientTrends"
+import PatientTrends from "./Pages/Trends/PatientTrends";
 import { makeStyles } from "@material-ui/core/styles";
-import { UserContext as UserContext } from "./Hooks/UserContext";
+import AuthProvider from "./Hooks/UserContext";
 import PrivateRoute from "./Components/Common/PrivateRoute";
 
-import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,32 +24,37 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function App() {
-  const [user, setUser] = useState(null);
-  const value = useMemo(() => ({ user, setUser }), [user, setUser]);
-
   const classes = useStyles();
 
   return (
-    <UserContext.Provider value={value}>
-      <div className={classes.root}>
-        <BrowserRouter>
-          <Switch>
-            <Route path="/" exact component={Dashboard} />
+    <div className={classes.root}>
+      <BrowserRouter>
+        <Switch>
+          <AuthProvider>
             <Route path="/login" exact component={Login} />
-            <Route path="/account" exact component={Account} />
-            <Route path="/users" exact component={Users} />
-            <Route path="/user/:username" exact component={User} />
-            <Route path="/patients" exact component={Patients} />
-            <Route path="/patient/:username" exact component={Patient} />
-            <Route path="/symptoms" exact component={Symptoms} />
-            <Route path="/cases" exact component={Cases} />
-            <Route path="/symptomtrends" exact component={SymptomTrends} />
-            <Route path="/usertrends" exact component={UserTrends}/>
-            <Route path="/patienttrends" exact component={PatientTrends}/>
-          </Switch>
-        </BrowserRouter>
-      </div>
-    </UserContext.Provider>
+            <PrivateRoute path="/" exact component={Dashboard} />
+            <PrivateRoute path="/account" exact component={Account} />
+            <PrivateRoute path="/users" exact component={Users} />
+            <PrivateRoute path="/user/:username" exact component={User} />
+            <PrivateRoute path="/patients" exact component={Patients} />
+            <PrivateRoute path="/patient/:username" exact component={Patient} />
+            <PrivateRoute path="/symptoms" exact component={Symptoms} />
+            <PrivateRoute path="/cases" exact component={Cases} />
+            <PrivateRoute
+              path="/symptomtrends"
+              exact
+              component={SymptomTrends}
+            />
+            <PrivateRoute path="/usertrends" exact component={UserTrends} />
+            <PrivateRoute
+              path="/patienttrends"
+              exact
+              component={PatientTrends}
+            />
+          </AuthProvider>
+        </Switch>
+      </BrowserRouter>
+    </div>
   );
 }
 export default App;
