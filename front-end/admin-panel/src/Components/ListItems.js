@@ -55,7 +55,7 @@ export const secondryListItems = (
 export const tertiaryListItems = (
   <div>
     <ListSubheader inset>Reports</ListSubheader>
-    <ListItem button>
+    <ListItem button component="a" href='/usertrends'>
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
@@ -67,13 +67,13 @@ export const tertiaryListItems = (
       </ListItemIcon>
       <ListItemText primary="Patient Trends" />
     </ListItem>
-    <ListItem button component="a" href='/symptomtrends'>
+    <ListItem button >
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
       <ListItemText primary="Symptom Trends" />
     </ListItem>
-    <ListItem button>
+    <ListItem button component="a" href='/symptomtrends'>
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>

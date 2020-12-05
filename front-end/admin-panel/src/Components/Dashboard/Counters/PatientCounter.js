@@ -9,7 +9,7 @@ export default function PatientCounter({ count, currentDate }) {
   const classes = useStyles();
   return (
     <React.Fragment>
-      <Title>Total Paitents</Title>
+      <Title>Total Patients</Title>
       <Typography component="p" variant="h4">
         {count}
       </Typography>

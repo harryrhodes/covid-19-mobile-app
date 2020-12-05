@@ -5,7 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Chart from "../Components/Chart";
 import CaseCounter from "../Components/Dashboard/Counters/CaseCounter";
-import PaitentCounter from "../Components/Dashboard/Counters/PatientCounter";
+import PatientCounter from "../Components/Dashboard/Counters/PatientCounter";
 import SymptomCounter from "../Components/Dashboard/Counters/SymptomCounter";
 import UserCounter from "../Components/Dashboard/Counters/UserCounter";
 import Navigation from "../Components/Common/Navigation";
@@ -14,6 +14,8 @@ import Box from "@material-ui/core/Box";
 import Copyright from "../Components/Copyright";
 import UserService from "../Services/UserService";
 import SymptomService from "../Services/SymptomService";
+import SymptomGraph from "../Components/Charts/SymptomGraph";
+import UserChart from "../Components/Charts/UserChart"
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -101,7 +103,7 @@ export default function Dashboard() {
             </Grid>
             <Grid item xs={6} md={3} lg={3}>
               <Paper className={fixedHeightPaper}>
-                <PaitentCounter
+                <PatientCounter
                   count={patientCount}
                   currentDate={currentDate}
                 />
@@ -122,17 +124,17 @@ export default function Dashboard() {
             </Grid>
             <Grid item xs={12} md={6} lg={6}>
               <Paper className={fixedHeightPaper}>
-                <Chart />
+                <SymptomGraph />
               </Paper>
             </Grid>
             <Grid item xs={12} md={6} lg={6}>
               <Paper className={fixedHeightPaper}>
-                <Chart />
+                <UserChart />
               </Paper>
             </Grid>
             <Grid item xs={12} md={12} lg={12}>
               <Paper className={fixedHeightPaper}>
-                <Chart />
+                <UserChart />
               </Paper>
             </Grid>
           </Grid>

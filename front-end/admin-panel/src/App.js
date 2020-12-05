@@ -9,6 +9,7 @@ import Patient from "./Pages/Patient";
 import Symptoms from "./Pages/Symptoms";
 import Cases from "./Pages/Cases";
 import SymptomTrends from "./Pages/Trends/SymptomTrends";
+import UserTrends from "./Pages/Trends/UserTrends";
 import { makeStyles } from "@material-ui/core/styles";
 import { UserContext as UserContext } from "./Hooks/UserContext";
 import PrivateRoute from "./Components/Common/PrivateRoute";
@@ -42,6 +43,7 @@ function App() {
             <Route path="/symptoms" exact component={Symptoms} />
             <Route path="/cases" exact component={Cases} />
             <Route path="/symptomtrends" exact component={SymptomTrends} />
+            <Route path="/usertrends" exact component={UserTrends}/>
           </Switch>
         </BrowserRouter>
       </div>
