@@ -9,7 +9,7 @@ import Box from "@material-ui/core/Box";
 import Copyright from "../../Components/Copyright";
 import UserService from "../../Services/UserService"
 import UserCounter from "../../Components/Dashboard/Counters/UserCounter"
-import UserChart from "../../Components/Charts/UserChart"
+import UserChart from "../../Components/Charts/UserChart.js"
 //import SymptomService from "../../Services/SymptomService";
 //import SymptomGraph from "../../Components/Charts/SymptomGraph"
 //import SymptomCounter from "../../Components/Dashboard/Counters/SymptomCounter";

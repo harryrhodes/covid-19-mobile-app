@@ -15,7 +15,7 @@ import Copyright from "../Components/Copyright";
 import UserService from "../Services/UserService";
 import SymptomService from "../Services/SymptomService";
 import SymptomGraph from "../Components/Charts/SymptomGraph";
-import UserChart from "../Components/Charts/UserChart"
+import UserChart from "../Components/Charts/UserChart.js"
 
 const useStyles = makeStyles((theme) => ({
   paper: {

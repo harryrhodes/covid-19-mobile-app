@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useTheme } from '@material-ui/core/styles';
-import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar, ResponsiveContainer } from 'recharts';
+import { PieChart, Pie, ResponsiveContainer, Tooltip, Legend} from 'recharts';
 import Title from '../Title';
 import UserService from "../../Services/UserService"
 
@@ -40,43 +40,33 @@ export default function UserChart() {
         }
     });
 
-    const data = [
+    const data01 = [
         {
-            "name": "Patient",
-            "value": PatientCounter
-          },
-  
-          {
-            "name": "Practitioner",
-            "value": PractitionerCounter
-          },
-  
-          {
-            "name": "Admin",
-            "value": AdminCounter
-          }
-        ];
-    
-        return (
-            <React.Fragment>
-              <Title>Accounts Registered</Title>
-              <ResponsiveContainer>
-              <BarChart
-		width={500}
-		height={300}
-		data={data}
-		margin={{
-			top: 5, right: 30, left: 20, bottom: 5,
-		}}
-	>
-		<CartesianGrid strokeDasharray="3 3" />
-		<XAxis dataKey="name" />
-		<YAxis />
-		<Tooltip />
-		<Legend />
-		<Bar dataKey="value" fill="#8884d8" />
-	</BarChart>
-    </ResponsiveContainer>
+          "name": "Patient",
+          "value": PatientCounter
+        },
+
+        {
+          "name": "Practitioner",
+          "value": PractitionerCounter
+        },
+
+        {
+          "name": "Admin",
+          "value": AdminCounter
+        }
+    ];
+
+    return (
+        <React.Fragment>
+          <Title>Accounts Registered</Title>
+          <ResponsiveContainer>
+<PieChart width={730} height={250}>
+<Tooltip />
+<Legend />
+  <Pie data={data01} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={30} outerRadius={50} fill="#0D4F8B" label />
+  </PieChart>
+ </ResponsiveContainer>
     </React.Fragment>
-        );
-    };
+  );
+};
