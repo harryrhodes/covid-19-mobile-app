@@ -56,8 +56,8 @@ export default function CreateDialog() {
   const [fnLabel, setFnLabel] = React.useState("First Name (Required)");
   const [lnError, setLnError] = React.useState(false);
   const [lnLabel, setLnLabel] = React.useState("Last Name (Required)");
-  const [roleError, setRoleError] = React.useState(false);
-  const [roleLabel, setRoleLabel] = React.useState("Role (Required)");
+  const [titleError, setTitleError] = React.useState(false);
+  const [titleLabel, setTitleLabel] = React.useState("Role (Required)");
   const [departmentError, setDepartmentError] = React.useState(false);
   const [departmentLabel, setSepartmentLabel] = React.useState(
     "Department (Required)"
@@ -81,7 +81,7 @@ export default function CreateDialog() {
     let secondLastname = "";
 
     let secondAccountType = "";
-    let secondRole = "";
+    let secondTitle = "";
     let secondDepartment = "";
     let secondOrganisation = "";
 
@@ -121,10 +121,10 @@ export default function CreateDialog() {
       secondLastname = values.lastName;
     }
 
-    if (values?.role === undefined) {
-      secondRole = "";
+    if (values?.title === undefined) {
+      secondTitle = "";
     } else {
-      secondRole = values.role;
+      secondTitle = values.title;
     }
 
     if (values?.department === undefined) {
@@ -151,18 +151,18 @@ export default function CreateDialog() {
       email: secondEmail,
       firstName: secondFirstname,
       lastName: secondLastname,
-      accountType: "patient",
+      accountType: secondAccountType,
       role: {
-        title: secondRole,
+        title: secondTitle,
         department: secondDepartment,
         organisation: secondOrganisation,
       },
     };
+    let res = await UserService.register(body);
+    setOpen(false);
   };
 
-  const { values, handleChange, handleSubmit, errorCheck } = useForm(
-    createNewUser
-  );
+  const { values, handleChange, handleSubmit } = useForm(createNewUser);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -210,9 +210,9 @@ export default function CreateDialog() {
                     labelPlacement="end"
                   />
                   <FormControlLabel
-                    value="pracitioner"
+                    value="practitioner"
                     control={<Radio color="primary" />}
-                    label="Pracitioner"
+                    label="Practitioner"
                     labelPlacement="end"
                   />
                 </RadioGroup>
@@ -296,10 +296,10 @@ export default function CreateDialog() {
               <FormControl className={clsx(classes.margin, classes.textField)}>
                 <TextField
                   required
-                  name="roleTitle"
-                  label={roleLabel}
+                  name="title"
+                  label={titleLabel}
                   placeholder="Role"
-                  error={roleError}
+                  error={titleError}
                   variant="outlined"
                   onChange={handleChange}
                 />
