@@ -54,12 +54,12 @@ describe('<Navigation />', () => {
 
     test('Renders a button component', () => {
         const wrapper = shallow(<Navigation />);
-        expect(wrapper.find(Button).length).toBe(1);
+        expect(wrapper.find(Button).length).toBe(2);
     });
 
     test('Renders correct text in the button component', () => {
         const wrapper = shallow(<Navigation />);
-        expect(wrapper.find(Button).text()).toBe('My Account');
+        expect(wrapper.find(Button).first().text()).toBe('My Account');
     });
 
     test('Renders a drawer component', () => {
