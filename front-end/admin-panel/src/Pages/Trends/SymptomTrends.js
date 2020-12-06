@@ -3,7 +3,6 @@ import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import Chart from "../../Components/Chart";
 import Navigation from "../../Components/Common/Navigation";
 import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
@@ -20,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
       flexDirection: "column",
     },
     fixedHeight: {
-      height: 300,
+      height: 600,
     },
     appBarSpacer: theme.mixins.toolbar,
     content: {
@@ -64,7 +63,7 @@ const currentDate =
           <Grid container spacing={3}>
             <Grid item xs={12} md={9} lg={9}>
               <Paper className={fixedHeightPaper}>
-                <SymptomGraph />
+                <SymptomGraph count={symptomCount}/>
               </Paper>
             </Grid>
           <Grid item xs={6} md={3} lg={3}>

@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useTheme } from "@material-ui/core/styles";
 import {
-  BarChart,
+  PieChart,
   CartesianGrid,
   XAxis,
   YAxis,
   Tooltip,
   Legend,
-  Bar,
+  Pie,
   ResponsiveContainer,
+  Cell,
 } from "recharts";
 import Title from "../Title";
 import UserService from "../../Services/UserService";
@@ -17,7 +18,6 @@ export default function UserChart() {
   const [PatientCounter, setPatientCount] = useState(null);
   const [PractitionerCounter, setPractitionerCount] = useState(null);
   const [AdminCounter, setAdminCounter] = useState(null);
-  const theme = useTheme();
 
   const renderUserCounters = async () => {
     let res = await UserService.getAll();
@@ -68,28 +68,20 @@ export default function UserChart() {
     },
   ];
 
+  const colors = ["#1976d2", "#dc004e", "#4caf50"];
   return (
     <React.Fragment>
-      <Title>Accounts Registered</Title>
+      <Title>Registered Account Types</Title>
       <ResponsiveContainer>
-        <BarChart
-          width={500}
-          height={300}
-          data={data}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
+        <PieChart width={530} height={150}>
+          <Pie data={data} cx="50%" cy="50%" outerRadius={80} label>
+            {data.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={colors[index]} />
+            ))}
+          </Pie>
           <Tooltip />
           <Legend />
-          <Bar dataKey="value" fill="#8884d8" />
-        </BarChart>
+        </PieChart>
       </ResponsiveContainer>
     </React.Fragment>
   );

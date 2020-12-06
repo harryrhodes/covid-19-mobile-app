@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
+import {FormHelperText,TextField} from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
@@ -40,8 +40,10 @@ export default function Login() {
   const { setUserData } = useContext(UserContext);
   const [usernameErrorText, setUsernameErrorText] = useState("");
   const [passwordErrorText, setPasswordErrorText] = useState("");
+  const [formErrorText, setFormErrorText] = useState("");
   const [usernameError, setUsernameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [formError, setFormError] = useState(false);
 
   const login = async () => {
     if (values == null) {
@@ -58,8 +60,13 @@ export default function Login() {
     } else {
       let res = await UserService.login(values.username, values.password);
       if (res.status == "Success") {
-        setUserData(res.user);
-        history.replace("/");
+        if(res.user.accountType == "patient"){
+          setFormError(true);
+          setFormErrorText("Sorry you do not have the correct account for this service!");
+        }else{
+          setUserData(res.user);
+          history.replace("/");
+        }
       } else if (res.status == "Invalid Username/Email") {
         setUsernameError(true);
         setUsernameErrorText(res.status);
@@ -120,6 +127,9 @@ export default function Login() {
           >
             Sign In
           </Button>
+          <FormHelperText error={formError}>
+                  {formErrorText}
+                </FormHelperText>
         </form>
       </div>
       <Box mt={8}>

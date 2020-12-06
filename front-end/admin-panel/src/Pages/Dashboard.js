@@ -3,7 +3,6 @@ import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import Chart from "../Components/Chart";
 import CaseCounter from "../Components/Dashboard/Counters/CaseCounter";
 import PatientCounter from "../Components/Dashboard/Counters/PatientCounter";
 import SymptomCounter from "../Components/Dashboard/Counters/SymptomCounter";
@@ -27,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
   fixedHeight: {
     height: 240,
   },
+  doubleFixedHeight: {
+    height: 480,
+  },
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
@@ -42,7 +44,8 @@ const useStyles = makeStyles((theme) => ({
 export default function Dashboard() {
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-  const [cases, setCases] = useState(0);
+  const doubleFixedHeightPaper = clsx(classes.paper, classes.doubleFixedHeight);
+  const [caseCount, setCaseCount] = useState(null);
   const [patientCount, setPatientCount] = useState(null);
   const [symptomCount, setSymptomCount] = useState(null);
   const [userCount, setUserCount] = useState(null);
@@ -55,14 +58,25 @@ export default function Dashboard() {
     "/" +
     today.getFullYear();
 
-  const renderCases = async () => {};
+  const renderCaseCounter = async () => {
+    let res = await UserService.getAll();
+    let users = res.data;
+    let count = 0;
+    for (let i = 0; i < users.length; i++) {
+      if (users[i].accountType == "patient" && users[i].patientDetails.status == "Positive") {
+        count++;
+      } else {
+      }
+    }
+    setCaseCount(count);
+  };
   const renderPatientCounter = async () => {
     let res = await UserService.getAll();
     setUserCount(res.count);
     let users = res.data;
     let count = 0;
     for (let i = 0; i < users.length; i++) {
-      if (users[i].accountType == "Patient") {
+      if (users[i].accountType == "patient") {
         count++;
       } else {
       }
@@ -87,6 +101,9 @@ export default function Dashboard() {
     }
     if (!patientCount) {
       renderPatientCounter();
+    }
+    if (!caseCount) {
+      renderCaseCounter();
     }
   });
   return (
@@ -123,17 +140,12 @@ export default function Dashboard() {
               </Paper>
             </Grid>
             <Grid item xs={12} md={6} lg={6}>
-              <Paper className={fixedHeightPaper}>
+              <Paper className={doubleFixedHeightPaper}>
                 <SymptomGraph />
               </Paper>
             </Grid>
             <Grid item xs={12} md={6} lg={6}>
-              <Paper className={fixedHeightPaper}>
-                <UserChart />
-              </Paper>
-            </Grid>
-            <Grid item xs={12} md={12} lg={12}>
-              <Paper className={fixedHeightPaper}>
+              <Paper className={doubleFixedHeightPaper}>
                 <UserChart />
               </Paper>
             </Grid>

@@ -6,7 +6,6 @@ import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import SubTitle from "../SubTitle";
 import useForm from "../../Hooks/useForm";
@@ -18,6 +17,7 @@ import {
   RadioGroup,
   Radio,
   FormControlLabel,
+  FormHelperText,
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 const useStyles = makeStyles((theme) => ({
@@ -43,58 +43,74 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CreateDialog() {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-  const [unError, setUnError] = React.useState(false);
-  const [unLabel, setUnLabel] = React.useState("Username (Required)");
-  const [pwError, setPwError] = React.useState(false);
-  const [pwLabel, setPwLabel] = React.useState("Password (Required)");
-  const [pw2Error, setPw2Error] = React.useState(false);
-  const [pw2Label, setPw2Label] = React.useState("Confirm Password (Required)");
-  const [emailError, setEmailError] = React.useState(false);
-  const [emailLabel, setEmailLabel] = React.useState("Email (Required)");
-  const [fnError, setFnError] = React.useState(false);
-  const [fnLabel, setFnLabel] = React.useState("First Name (Required)");
-  const [lnError, setLnError] = React.useState(false);
-  const [lnLabel, setLnLabel] = React.useState("Last Name (Required)");
-  const [nhsError, setNhsError] = React.useState(false);
-  const [nhsLabel, setNhsLabel] = React.useState("NHS Number (Optional)");
-  const [niError, setNiError] = React.useState(false);
-  const [niLabel, setNiLabel] = React.useState("NI Number (Required)");
-  const [dobError, setDobError] = React.useState(false);
-  const [dobLabel, setDobLabel] = React.useState("Date of Birth (Required)");
-  const [mobileError, setMobileError] = React.useState(false);
-  const [mobileLabel, setMobileLabel] = React.useState(
-    "Mobile Number (Required)"
-  );
-  const [genderLabel, setGenderLabel] = React.useState("");
-  const [hospitalisedLabel, setHospitalisedLabel] = React.useState("");
-  const [diabetesLabel, setDiabetesLabel] = React.useState("");
-  const [hypertensionLabel, setHypertensionLabel] = React.useState("");
-  const [address1Label, setAddress1Label] = React.useState(
-    "Address 1 (Required)"
-  );
+  const [open, setOpen] = useState(false);
+  const [unError, setUnError] = useState(false);
+  const [unLabel, setUnLabel] = useState("Username (Required)");
+  const [pwError, setPwError] = useState(false);
+  const [pwLabel, setPwLabel] = useState("Password (Required)");
+  const [pw2Error, setPw2Error] = useState(false);
+  const [pw2Label, setPw2Label] = useState("Confirm Password (Required)");
+  const [emailError, setEmailError] = useState(false);
+  const [emailLabel, setEmailLabel] = useState("Email (Required)");
+  const [fnError, setFnError] = useState(false);
+  const [fnLabel, setFnLabel] = useState("First Name (Required)");
+  const [lnError, setLnError] = useState(false);
+  const [lnLabel, setLnLabel] = useState("Last Name (Required)");
+  const [nhsError, setNhsError] = useState(false);
+  const [nhsLabel, setNhsLabel] = useState("NHS Number (Optional)");
+  const [niError, setNiError] = useState(false);
+  const [niLabel, setNiLabel] = useState("NI Number (Required)");
+  const [dobError, setDobError] = useState(false);
+  const [dobLabel, setDobLabel] = useState("Date of Birth (Required)");
+  const [mobileError, setMobileError] = useState(false);
+  const [mobileLabel, setMobileLabel] = useState("Mobile Number (Required)");
+  const [genderError, setGenderError] = useState(false);
+  const [genderLabel, setGenderLabel] = useState("");
+  const [hospitalisedError, setHospitalisedError] = useState(false);
+  const [hospitalisedLabel, setHospitalisedLabel] = useState("");
+  const [diabetesError, setDiabetesError] = useState(false);
+  const [diabetesLabel, setDiabetesLabel] = useState("");
+  const [hypertensionError, setHypertensionError] = useState(false);
+  const [hypertensionLabel, setHypertensionLabel] = useState("");
+  const [address1Label, setAddress1Label] = useState("Address 1 (Required)");
   const [address1Error, setAddress1Error] = useState(false);
-  const [address2Label, setAddress2Label] = React.useState(
-    "Address 2 (Required)"
-  );
+  const [address2Label, setAddress2Label] = useState("Address 2 (Required)");
   const [address2Error, setAddress2Error] = useState(false);
-  const [cityLabel, setCityLabel] = React.useState("City (Required)");
+  const [cityLabel, setCityLabel] = useState("City (Required)");
   const [cityError, setCityError] = useState(false);
-  const [postcodeLabel, setPostcodeLabel] = React.useState(
-    "Postcode (Required)"
-  );
+  const [postcodeLabel, setPostcodeLabel] = useState("Postcode (Required)");
   const [postcodeError, setPostcodeError] = useState(false);
-  const [countryLabel, setCountryLabel] = React.useState("Country (Required)");
+  const [countryLabel, setCountryLabel] = useState("Country (Required)");
   const [countryError, setCountryError] = useState(false);
-  const [nopLabel, setNopLabel] = React.useState("");
-  const [transportLabel, setTransportLabel] = React.useState("");
-  const [statusLabel, setStatusLabel] = React.useState("");
+  const [nopError, setNopError] = useState(false);
+  const [nopLabel, setNopLabel] = useState("");
+  const [transportError, setTransportError] = useState(false);
+  const [transportLabel, setTransportLabel] = useState("");
+  const [statusError, setStatusError] = useState(false);
+  const [statusLabel, setStatusLabel] = useState("");
   const pwRe = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
   const emailRe = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   const niRe = /^(?!BG|GB|NK|KN|TN|NT|ZZ)[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\s*\d{2}\s*\d{2}\s*\d{2}\s*[A-D]$/;
 
-  const createNewPatient = async () => {
+  const validateNhsNumber = (secondNhsNo) => {
+    if (!secondNhsNo == "") {
+      if (!/^\d+$/.test(secondNhsNo)) {
+        setNhsLabel("Your NHS Number can only contain digits");
+        setNhsError(true);
+      } else if (!/^\d{10}$/.test(secondNhsNo)) {
+        setNhsLabel("Your NHS Number must be 10 digits exactly");
+        setNhsError(true);
+      } else {
+        setNhsLabel("NHS Number (Optional)");
+        setNhsError(false);
+      }
+    } else {
+      setNhsLabel("NHS Number (Optional)");
+      setNhsError(false);
+    }
+  };
 
+  const createNewPatient = async () => {
     let secondUsername = "";
     let secondPassword = "";
     let secondPassword2 = "";
@@ -209,7 +225,7 @@ export default function CreateDialog() {
     if (values?.dob === undefined) {
       secondDob = "";
     } else {
-      secondDob = values.Dob;
+      secondDob = values.dob;
     }
 
     if (values?.gender === undefined) {
@@ -274,6 +290,7 @@ export default function CreateDialog() {
       lastName: secondLastname,
       accountType: "patient",
       role: {},
+      symptoms: [],
       patientDetails: {
         nhsNo: secondNhsNo,
         niNo: secondNiNo,
@@ -298,24 +315,6 @@ export default function CreateDialog() {
       },
     };
 
-    const validateNhsNumber = (secondNhsNo) => {
-      if (!secondNhsNo == "") {
-        if (!/^\d+$/.test(secondNhsNo)) {
-          setNhsLabel("Your NHS Number can only contain digits");
-          setNhsError(true);
-        } else if (!/^\d{10}$/.test(secondNhsNo)) {
-          setNhsLabel("Your NHS Number must be 10 digits exactly");
-          setNhsError(true);
-        } else {
-          setNhsLabel("NHS Number (Optional)");
-          setNhsError(false);
-        }
-      } else {
-        setNhsLabel("NHS Number (Optional)");
-        setNhsError(false);
-      }
-    };
-
     if (secondUsername == "") {
       setUnLabel("This field is required");
       setUnError(true);
@@ -323,15 +322,12 @@ export default function CreateDialog() {
       setUnLabel("Username (Required)");
       setUnError(false);
       let res = await UserService.getSingle(secondUsername);
-      console.log(res.count != 0);
       if (res.count != 0) {
         setUnLabel("Sorry this username is taken");
         setUnError(true);
       } else {
         setUnLabel("Username (Required)");
         setUnError(false);
-        console.log("you did it!");
-        console.log(body);
         if (secondPassword == "") {
           setPwLabel("This field is required");
           setPwError(true);
@@ -383,8 +379,10 @@ export default function CreateDialog() {
                     setDobError(false);
                     if (secondGender == "") {
                       setGenderLabel("This field is required");
+                      setGenderError(true);
                     } else {
                       setGenderLabel("");
+                      setGenderError(false);
                       validateNhsNumber(secondNhsNo);
                       if (!niRe.test(secondNiNo)) {
                         setNiLabel("This is not a valid NI number");
@@ -456,22 +454,28 @@ export default function CreateDialog() {
                                           setNopLabel(
                                             "This is a required field"
                                           );
+                                          setNopError(true);
                                         } else {
                                           setNopLabel("");
+                                          setNopError(false);
                                           if (secondTransport == "") {
                                             setTransportLabel(
                                               "This is a required field"
                                             );
+                                            setTransportError(true);
                                           } else {
                                             setTransportLabel("");
+                                            setTransportError(false);
                                             if (secondStatus == "") {
                                               setStatusLabel(
                                                 "This is a required field"
                                               );
+                                              setStatusError(true);
                                             } else {
                                               setStatusLabel("");
-                                              console.log("YAY IT WORKS");
-                                              console.log(body);
+                                              setStatusError(false);
+                                              await UserService.register(body);
+                                              setOpen(false);
                                             }
                                           }
                                         }
@@ -613,7 +617,7 @@ export default function CreateDialog() {
               </FormControl>
               <FormControl component="fieldset" className={classes.margin}>
                 <FormLabel component="legend">Gender (Required)</FormLabel>
-                <FormLabel component="legend">{genderLabel}</FormLabel>
+
                 <RadioGroup
                   row
                   name="gender"
@@ -621,13 +625,13 @@ export default function CreateDialog() {
                   onChange={handleChange}
                 >
                   <FormControlLabel
-                    value="male"
+                    value="Male"
                     control={<Radio color="primary" />}
                     label="Male"
                     labelPlacement="end"
                   />
                   <FormControlLabel
-                    value="female"
+                    value="Female"
                     control={<Radio color="primary" />}
                     label="Female"
                     labelPlacement="end"
@@ -639,6 +643,9 @@ export default function CreateDialog() {
                     labelPlacement="end"
                   />
                 </RadioGroup>
+                <FormHelperText error={genderError}>
+                  {genderLabel}
+                </FormHelperText>
               </FormControl>
               <FormControl className={clsx(classes.margin, classes.textField)}>
                 <TextField
@@ -683,7 +690,6 @@ export default function CreateDialog() {
                 <FormLabel component="legend">
                   How Many Times Has The Patient Been Hospitalised?
                 </FormLabel>
-                <FormLabel component="legend">{hospitalisedLabel}</FormLabel>
                 <RadioGroup
                   column
                   name="hospitalisations"
@@ -733,12 +739,14 @@ export default function CreateDialog() {
                     labelPlacement="end"
                   />
                 </RadioGroup>
+                <FormHelperText error={hospitalisedError}>
+                  {hospitalisedLabel}
+                </FormHelperText>
               </FormControl>
               <FormControl component="fieldset" className={classes.margin}>
                 <FormLabel component="legend">
                   Is the Patient Diabetic?
                 </FormLabel>
-                <FormLabel component="legend">{diabetesLabel}</FormLabel>
                 <RadioGroup
                   row
                   name="diabetes"
@@ -764,12 +772,14 @@ export default function CreateDialog() {
                     labelPlacement="end"
                   />
                 </RadioGroup>
+                <FormHelperText error={diabetesError}>
+                  {diabetesLabel}
+                </FormHelperText>
               </FormControl>
               <FormControl component="fieldset" className={classes.margin}>
                 <FormLabel component="legend">
                   Does the Patient suffer from Hypertension?
                 </FormLabel>
-                <FormLabel component="legend">{hypertensionLabel}</FormLabel>
                 <RadioGroup
                   row
                   name="hypertension"
@@ -789,6 +799,9 @@ export default function CreateDialog() {
                     labelPlacement="end"
                   />
                 </RadioGroup>
+                <FormHelperText error={hypertensionError}>
+                  {hypertensionLabel}
+                </FormHelperText>
               </FormControl>
             </div>
             <SubTitle>Address</SubTitle>
@@ -818,7 +831,6 @@ export default function CreateDialog() {
               </FormControl>
               <FormControl className={classes.margin} fullWidth>
                 <TextField
-                  required
                   name="address3"
                   label="Address 3 (Optional)"
                   placeholder="Address 3"
@@ -879,7 +891,6 @@ export default function CreateDialog() {
                 <FormLabel component="legend">
                   Number of people in the Patient's household
                 </FormLabel>
-                <FormLabel component="legend">{nopLabel}</FormLabel>
                 <RadioGroup
                   column
                   name="nop"
@@ -923,12 +934,12 @@ export default function CreateDialog() {
                     labelPlacement="end"
                   />
                 </RadioGroup>
+                <FormHelperText error={nopError}>{nopLabel}</FormHelperText>
               </FormControl>
               <FormControl component="fieldset" className={classes.margin}>
                 <FormLabel component="legend">
                   Is the Patient a regular user of Public Transport?
                 </FormLabel>
-                <FormLabel component="legend">{transportLabel}</FormLabel>
                 <RadioGroup
                   row
                   name="publicTransport"
@@ -948,6 +959,9 @@ export default function CreateDialog() {
                     labelPlacement="end"
                   />
                 </RadioGroup>
+                <FormHelperText error={transportError}>
+                  {transportLabel}
+                </FormHelperText>
               </FormControl>
             </div>
             <SubTitle>COVID-19 Status</SubTitle>
@@ -958,7 +972,6 @@ export default function CreateDialog() {
                 fullWidth
               >
                 <FormLabel component="legend">Patient Status</FormLabel>
-                <FormLabel component="legend">{statusLabel}</FormLabel>
                 <RadioGroup
                   row
                   aria-label="position"
@@ -991,6 +1004,9 @@ export default function CreateDialog() {
                     labelPlacement="end"
                   />
                 </RadioGroup>
+                <FormHelperText error={statusError}>
+                  {statusLabel}
+                </FormHelperText>
               </FormControl>
             </div>
           </form>

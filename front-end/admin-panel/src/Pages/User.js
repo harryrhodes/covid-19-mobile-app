@@ -56,6 +56,9 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
   },
+  deleteButton: {
+    marginTop: theme.spacing(2),
+  },
 }));
 
 export default function User() {
@@ -66,39 +69,20 @@ export default function User() {
 
   const updateExistingUser = async () => {
     if (values !== null) {
-      //   let body = {
-      //     username: values?.username || patient.username,
-      //     password: values?.password || patient.password,
-      //     email: values?.email || patient.email,
-      //     firstName: values?.firstName || patient.firstName,
-      //     lastName: values?.lastName || patient.lastName,
-      //     accountType: "patient",
-      //     role: {},
-      //     patientDetails: {
-      //       nhsNo: values?.nhsNo || patient.patientDetails?.nhsNo || "",
-      //       niNo: values?.niNo || patient.patientDetails.niNo,
-      //       mobileNo: values?.mobileNo || patient.patientDetails.mobileNo,
-      //       nop: values?.nop || patient.patientDetails.nop,
-      //       publicTransport: values?.publicTransport || patient.publicTransport,
-      //       hospitalisations:
-      //         values?.hospitalisations || patient.hospitalisations,
-      //       diabetes: values?.diabetes || patient.patientDetails.diabetes,
-      //       hypertension: values?.hypertension || patient.hypertension,
-      //       dob: values?.dob || patient.patientDetails.dob,
-      //       gender: values?.gender || patient.patientDetails.gender,
-      //       status: values?.status || patient.patientDetails.status,
-      //       address: {
-      //         address1: values?.address1 || patient.address.address1,
-      //         address2: values?.address2 || patient.address.address2,
-      //         address3: values?.address3 || patient.address.address3,
-      //         city: values?.city || patient.address.city,
-      //         county: values?.county || patient.address.county,
-      //         postcode: values?.postcode || patient.address.postcode,
-      //         country: values?.country || patient.address.country,
-      //       },
-      //     },
-      //   //   };
-      //   console.log(body);
+      let body = {
+        username: values?.username || user.username,
+        password: values?.password || "",
+        email: values?.email || user.email,
+        firstName: values?.firstName || user.firstName,
+        lastName: values?.lastName || user.lastName,
+        role: {
+          title: values?.title || user.role.title,
+          department: values?.department || user.role.department,
+          organisation: values?.organisation || user.role.organisation
+        },
+      };
+      UserService.update(params.username, body);
+      history.replace("/users");
     } else {
       console.log("No Values Found");
     }
@@ -251,7 +235,7 @@ export default function User() {
                             labelPlacement="end"
                           />
                           <FormControlLabel
-                            value="pracitioner"
+                            value="practitioner"
                             control={<Radio color="primary" />}
                             label="Practioner"
                             labelPlacement="end"
@@ -274,7 +258,7 @@ export default function User() {
                       <FormControl className={clsx(classes.margin)} fullWidth>
                         <TextField
                           required
-                          name="email"
+                          name="title"
                           label="Title"
                           placeholder="Title"
                           defaultValue={user.role.title}
@@ -285,9 +269,9 @@ export default function User() {
                       <FormControl className={clsx(classes.margin)} fullwidth>
                         <TextField
                           required
-                          name="firstName"
+                          name="department"
                           label="Department"
-                          placeholder="First Name"
+                          placeholder="Department"
                           defaultValue={user.role.department}
                           variant="outlined"
                           onChange={handleChange}
@@ -296,9 +280,9 @@ export default function User() {
                       <FormControl className={clsx(classes.margin)} fullwidth>
                         <TextField
                           required
-                          name="lastName"
+                          name="organisation"
                           label="Organisation"
-                          placeholder="Last Name"
+                          placeholder="Organisation"
                           defaultValue={user.role.organisation}
                           variant="outlined"
                           onChange={handleChange}
@@ -316,18 +300,20 @@ export default function User() {
                 <Paper className={classes.paper}>
                   <Button
                     variant="contained"
-                    color="secondary"
-                    onClick={deleteUser}
-                  >
-                    Delete User
-                  </Button>
-                  <Button
-                    variant="contained"
                     color="primary"
                     onClick={handleSubmit}
                   >
                     Update User
                   </Button>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    className={classes.deleteButton}
+                    onClick={deleteUser}
+                  >
+                    Delete User
+                  </Button>
+                  
                 </Paper>
               ) : (
                 <Paper className={classes.paper}>

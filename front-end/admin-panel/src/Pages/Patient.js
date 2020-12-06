@@ -67,13 +67,18 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
   },
+  deleteButton: {
+    marginTop: theme.spacing(2),
+  },
 }));
 
 export default function Patient() {
   const params = useParams();
+  const history = useHistory();
   const classes = useStyles();
   const [patient, setPatient] = useState(null);
-  const [patientComment, setPatientComment] = useState(null);
+  const [symptoms, setSymptoms] = useState(false);
+  const [patientComment, setPatientComment] = useState("No Side Effects");
   const [listItems, setListItems] = useState(null);
   const geoUrl =
     "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
@@ -82,68 +87,83 @@ export default function Patient() {
     if (values !== null) {
       let body = {
         username: values?.username || patient.username,
-        password: values?.password || patient.password,
+        password: values?.password || "",
         email: values?.email || patient.email,
         firstName: values?.firstName || patient.firstName,
         lastName: values?.lastName || patient.lastName,
-        accountType: "patient",
         role: {},
         patientDetails: {
           nhsNo: values?.nhsNo || patient.patientDetails?.nhsNo || "",
           niNo: values?.niNo || patient.patientDetails.niNo,
           mobileNo: values?.mobileNo || patient.patientDetails.mobileNo,
           nop: values?.nop || patient.patientDetails.nop,
-          publicTransport: values?.publicTransport || patient.publicTransport,
+          publicTransport:
+            values?.publicTransport || patient.patientDetails.publicTransport,
           hospitalisations:
-            values?.hospitalisations || patient.hospitalisations,
+            values?.hospitalisations || patient.patientDetails.hospitalisations,
           diabetes: values?.diabetes || patient.patientDetails.diabetes,
-          hypertension: values?.hypertension || patient.hypertension,
+          hypertension:
+            values?.hypertension || patient.patientDetails.hypertension,
           dob: values?.dob || patient.patientDetails.dob,
           gender: values?.gender || patient.patientDetails.gender,
           status: values?.status || patient.patientDetails.status,
           address: {
-            address1: values?.address1 || patient.address.address1,
-            address2: values?.address2 || patient.address.address2,
-            address3: values?.address3 || patient.address.address3,
-            city: values?.city || patient.address.city,
-            county: values?.county || patient.address.county,
-            postcode: values?.postcode || patient.address.postcode,
-            country: values?.country || patient.address.country,
+            address1:
+              values?.address1 || patient.patientDetails.address.address1,
+            address2:
+              values?.address2 || patient.patientDetails.address.address2,
+            address3:
+              values?.address3 || patient.patientDetails.address.address3,
+            city: values?.city || patient.patientDetails.address.city,
+            county: values?.county || patient.patientDetails.address.county,
+            postcode:
+              values?.postcode || patient.patientDetails.address.postcode,
+            country: values?.country || patient.patientDetails.address.country,
           },
         },
       };
-      console.log(body);
+      UserService.update(params.username, body);
+      history.replace("/patients");
     } else {
       console.log("No Values Found");
     }
   };
 
-  const history = useHistory();
-  
-  const deletePatient = async (patient) => {
+  const deletePatient = async () => {
     await UserService.delete(params.username);
-    history.push("/patients");
+    history.replace("/patients");
   };
 
   const renderPatient = async () => {
     let res = await UserService.getSingle(params.username);
     let listItems = [];
-    let symptoms = res.data[0].symptoms[0].details;
-    for (let i = 0; i < symptoms.length; i++) {
-      if (symptoms[i].name === "comment") {
-        setPatientComment(
-          <ListItem>
-            <ListItemText primary={symptoms[i].comment} />
-          </ListItem>
-        );
-      } else {
-        listItems.push(
-          <ListItem>
-            <ListItemText primary={symptoms[i].name} />
-          </ListItem>
-        );
+    let symptoms = res.data[0].symptoms[0]?.details;
+    if (symptoms == null) {
+      setSymptoms(false);
+      listItems.push(
+        <ListItem>
+          <ListItemText primary="No Symptoms" />
+        </ListItem>
+      );
+    } else {
+      setSymptoms(true);
+      for (let i = 0; i < symptoms.length; i++) {
+        if (symptoms[i].name === "comment") {
+          setPatientComment(
+            <ListItem>
+              <ListItemText primary={symptoms[i].comment} />
+            </ListItem>
+          );
+        } else {
+          listItems.push(
+            <ListItem>
+              <ListItemText primary={symptoms[i].name} />
+            </ListItem>
+          );
+        }
       }
     }
+
     setListItems(listItems);
     setPatient(res.data[0]);
   };
@@ -276,6 +296,7 @@ export default function Patient() {
                         <TextField
                           required
                           name="dob"
+                          type="date"
                           label="Date Of Birth"
                           placeholder="Date Of Birth"
                           defaultValue={patient.patientDetails.dob}
@@ -733,6 +754,7 @@ export default function Patient() {
                   <Button
                     variant="contained"
                     color="secondary"
+                    className={classes.deleteButton}
                     onClick={deletePatient}
                   >
                     Delete Patient
@@ -771,8 +793,10 @@ export default function Patient() {
                   <List
                     subheader={
                       <ListSubheader>
-                        {"Symptoms Last Logged: " +
-                          Date(patient.symptoms[0].date)}
+                        {symptoms
+                          ? "Symptoms Last Logged: " +
+                            Date(patient.symptoms[0].date)
+                          : ""}
                       </ListSubheader>
                     }
                     className={classes.root}

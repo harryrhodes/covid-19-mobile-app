@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
       flexDirection: "column",
     },
     fixedHeight: {
-      height: 300,
+      height: 600,
     },
     appBarSpacer: theme.mixins.toolbar,
     content: {
@@ -39,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
   export default function UserTrends() {
     const classes = useStyles();
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+    const doubleFixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
     const [userCount, setUserCount] = useState(null);
     const renderUserCounter = async () => {
         let res = await UserService.getAll();
@@ -78,11 +79,7 @@ return (
                         />
                     </Paper>
                 </Grid>
-                <Grid item xs={12} md={12} lg={12}>
-                  <Paper className={fixedHeightPaper}>
-                      <UserChart />
-                    </Paper>
-                </Grid>
+            
             </Grid>
           <Box pt={4}>
             <Copyright />

@@ -270,6 +270,12 @@ export default function AccountSettings({ navigation }) {
     }
   };
 
+  const deleteUser = async () => {
+    let res = await UserService.delete(user.username);
+    setUser(null);
+    navigation.navigate("login");
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView keyboardShouldPersistTaps="handled">
@@ -351,7 +357,7 @@ export default function AccountSettings({ navigation }) {
               {passwordConfirmText}
             </HelperText>
             <Subheading>Danger Zone</Subheading>
-            <Button onPress={() => navigation.navigate("Register-1")}>
+            <Button onPress={() => deleteUser()}>
               Remove Account
             </Button>
           </Card.Content>

@@ -6,9 +6,6 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  FormControl,
-  TextField,
-  Button,
 } from "@material-ui/core";
 import UserService from "../../Services/UserService";
 import { Link } from "react-router-dom";
@@ -28,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function UsersTable() {
   const classes = useStyles();
-  const [rows, setRows] = useState();
+  const [rows, setRows] = useState(null);
 
   const renderRows = async () => {
     let res = await UserService.getAll();
@@ -41,9 +38,11 @@ export default function UsersTable() {
         users[i].accountType === "practitioner"
       ) {
         rows.push(
-          <TableRow key={users[i]._id}
-          component={Link}
-          to={"/user/" + users[i].username}>
+          <TableRow
+            key={users[i]._id}
+            component={Link}
+            to={"/user/" + users[i].username}
+          >
             <TableCell>{users[i].username}</TableCell>
             <TableCell>{users[i].firstName}</TableCell>
             <TableCell>{users[i].lastName}</TableCell>

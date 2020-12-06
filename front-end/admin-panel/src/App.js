@@ -11,6 +11,7 @@ import Cases from "./Pages/Cases";
 import SymptomTrends from "./Pages/Trends/SymptomTrends";
 import UserTrends from "./Pages/Trends/UserTrends";
 import PatientTrends from "./Pages/Trends/PatientTrends";
+import CaseTrends from "./Pages/Trends/CaseTrends";
 import { makeStyles } from "@material-ui/core/styles";
 import AuthProvider from "./Hooks/UserContext";
 import PrivateRoute from "./Components/Common/PrivateRoute";
@@ -50,6 +51,11 @@ function App() {
               path="/patienttrends"
               exact
               component={PatientTrends}
+            />
+            <PrivateRoute
+              path="/casetrends"
+              exact
+              component={CaseTrends}
             />
           </AuthProvider>
         </Switch>

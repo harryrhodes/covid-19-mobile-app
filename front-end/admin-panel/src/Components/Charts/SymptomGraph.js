@@ -13,14 +13,14 @@ import {
 import Title from "../Title";
 import SymptomService from "../../Services/SymptomService";
 
-export default function SymptomGraph() {
+export default function SymptomGraph({count}) {
   const [severitycounter1, setSeverityCount1] = useState(null);
   const [severitycounter2, setSeverityCount2] = useState(null);
   const [severitycounter3, setSeverityCount3] = useState(null);
   const [severitycounter4, setSeverityCount4] = useState(null);
   const [severitycounter5, setSeverityCount5] = useState(null);
 
-  const renderSeverityCounter = async () => {
+  const renderSeverityCounters = async () => {
     let res = await SymptomService.getAll();
     let symptoms = res.data;
     let count1 = 0;
@@ -50,46 +50,44 @@ export default function SymptomGraph() {
   };
 
   useEffect(() => {
-    if (!severitycounter1) {
-      renderSeverityCounter();
+    if (!count) {
+      renderSeverityCounters();
     }
   });
 
   const data = [
     {
       name: "1 - Minor",
-      "Symptom Count": severitycounter1,
+      value: severitycounter1,
     },
     {
       name: "2 - Low",
-      "Symptom Count": severitycounter2,
+      value: severitycounter2,
     },
     {
       name: "3 - Moderate",
-      "Symptom Count": severitycounter3,
+      value: severitycounter3,
     },
     {
       name: "4 - High",
-      "Symptom Count": severitycounter4,
+      value: severitycounter4,
     },
     {
       name: "5 - Severe",
-      "Symptom Count": severitycounter5,
+      value: severitycounter5,
     },
   ];
 
   return (
     <React.Fragment>
-      <Title>Symptom Severity</Title>
+      <Title>Symptom Severity Overview</Title>
       <ResponsiveContainer>
         <BarChart width={730} height={250} data={data}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
-          <YAxis />
+          <YAxis allowDecimals={false}/>
           <Tooltip />
-          <Legend />
-          {/* <Bar dataKey="pv" fill="#8884d8" /> */}
-          <Bar dataKey="Number of Symptoms" fill="#00009C" />
+          <Bar dataKey="value" fill="#1976d2" />
         </BarChart>
       </ResponsiveContainer>
     </React.Fragment>

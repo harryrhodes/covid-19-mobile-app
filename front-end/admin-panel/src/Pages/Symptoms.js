@@ -27,8 +27,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+
 export default function Symptoms() {
   const classes = useStyles();
+
+
 
   return (
     <React.Fragment>
@@ -40,7 +44,7 @@ export default function Symptoms() {
             <Grid item xs={12}>
               <Paper className={classes.paper}>
                 <Title>Symptoms</Title>
-                <SymptomsTable />
+                <SymptomsTable/>
               </Paper>
             </Grid>
           </Grid>

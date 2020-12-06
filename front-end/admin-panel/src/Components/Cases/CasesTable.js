@@ -6,11 +6,6 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  InputLabel,
-  FormControl,
-  Select,
-  TextField,
-  Button,
 } from "@material-ui/core";
 import UserService from "../../Services/UserService";
 import { Link } from "react-router-dom";
@@ -30,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CasesTable() {
   const classes = useStyles();
-  const [rows, setRows] = useState();
+  const [rows, setRows] = useState(null);
 
   const renderRows = async () => {
     let res = await UserService.getAll();

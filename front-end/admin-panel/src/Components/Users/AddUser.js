@@ -14,10 +14,10 @@ import UserService from "../../Services/UserService";
 import {
   Fab,
   FormControl,
-  FormLabel,
   RadioGroup,
   Radio,
   FormControlLabel,
+  FormHelperText
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 const useStyles = makeStyles((theme) => ({
@@ -44,6 +44,11 @@ const useStyles = makeStyles((theme) => ({
 export default function CreateDialog() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [accountTypeLabel, setAccountTypeLabel] = React.useState(
+    "Account Type (Required)"
+  );
+  const [accountTypeError, setAccountTypeError] = React.useState(false);
+
   const [unError, setUnError] = React.useState(false);
   const [unLabel, setUnLabel] = React.useState("Username (Required)");
   const [pwError, setPwError] = React.useState(false);
@@ -59,15 +64,13 @@ export default function CreateDialog() {
   const [titleError, setTitleError] = React.useState(false);
   const [titleLabel, setTitleLabel] = React.useState("Role (Required)");
   const [departmentError, setDepartmentError] = React.useState(false);
-  const [departmentLabel, setSepartmentLabel] = React.useState(
+  const [departmentLabel, setDepartmentLabel] = React.useState(
     "Department (Required)"
   );
   const [organisationError, setOrganisationError] = React.useState(false);
   const [organisationLabel, setOrganisationLabel] = React.useState(
     "Organisation (Required)"
   );
-
-  const [accountTypeLabel, setAccountTypeLabel] = React.useState("");
 
   const pwRe = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
   const emailRe = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -84,6 +87,12 @@ export default function CreateDialog() {
     let secondTitle = "";
     let secondDepartment = "";
     let secondOrganisation = "";
+
+    if (values?.accountType === undefined) {
+      secondAccountType = "";
+    } else {
+      secondAccountType = values.accountType;
+    }
 
     if (values?.username === undefined) {
       secondUsername = "";
@@ -158,8 +167,99 @@ export default function CreateDialog() {
         organisation: secondOrganisation,
       },
     };
-    let res = await UserService.register(body);
-    setOpen(false);
+    if (secondAccountType == "") {
+      setAccountTypeLabel("This field is required");
+      setAccountTypeError(true);
+    } else {
+      setAccountTypeLabel("Account Type (Required)");
+      setAccountTypeError(false);
+      if (secondUsername == "") {
+        setUnLabel("This field is required");
+        setUnError(true);
+      } else {
+        setUnLabel("Username (Required)");
+        setUnError(false);
+        let res = await UserService.getSingle(secondUsername);
+        if (res.count != 0) {
+          setUnLabel("Sorry this username is taken");
+          setUnError(true);
+        } else {
+          setUnLabel("Username (Required)");
+          setUnError(false);
+          if (secondPassword == "") {
+            setPwLabel("This field is required");
+            setPwError(true);
+          } else if (!pwRe.test(secondPassword)) {
+            setPwLabel("Your password is not strong enough");
+            setPwError(true);
+          } else {
+            setPwLabel("Password (Required");
+            setPwError(false);
+            if (secondPassword2 == "") {
+              setPw2Label("This field is required");
+              setPw2Error(true);
+            } else if (secondPassword != secondPassword2) {
+              setPw2Label("Passwords do not match");
+              setPw2Error(true);
+            } else {
+              setPw2Label("Confirm Password (Required");
+              setPw2Error(false);
+              if (!emailRe.test(secondEmail)) {
+                setEmailLabel("Please enter a valid email");
+                setEmailError(true);
+              } else {
+                setEmailLabel("Email (Required)");
+                setEmailError(false);
+
+                if (secondFirstname.length <= 2) {
+                  setFnLabel("Names cannot be shorter than 2 letters");
+                  setFnError(true);
+                } else if (!/^[a-zA-Z]+$/.test(secondFirstname)) {
+                  setFnLabel("Your first name must only contain letters");
+                  setFnError(true);
+                } else {
+                  setFnLabel("First Name (Required)");
+                  setFnError(false);
+                  if (secondLastname.length <= 2) {
+                    setLnLabel("Names cannot be shorter than 2 letters");
+                    setLnError(true);
+                  } else if (!/^[a-zA-Z]+$/.test(secondLastname)) {
+                    setLnLabel("Your last name must only contain letters");
+                    setLnError(true);
+                  } else {
+                    setLnLabel("Last Name (Required");
+                    setLnError(false);
+                    if (secondTitle == "") {
+                      setTitleLabel("This field is required");
+                      setTitleError(true);
+                    } else {
+                      setTitleLabel("Title (Required)");
+                      setTitleError(false);
+                      if (secondDepartment == "") {
+                        setDepartmentLabel("This field is required");
+                        setDepartmentError(true);
+                      } else {
+                        setDepartmentLabel("Department (Required)");
+                        setDepartmentError(false);
+                        if (secondOrganisation == "") {
+                          setOrganisationLabel("This field is required");
+                          setOrganisationError(true);
+                        } else {
+                          setOrganisationLabel("Organisation (Required)");
+                          setOrganisationError(false);
+                          await UserService.register(body);
+                          setOpen(false);
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   };
 
   const { values, handleChange, handleSubmit } = useForm(createNewUser);
@@ -182,21 +282,13 @@ export default function CreateDialog() {
       >
         <AddIcon />
       </Fab>
-      <Dialog
-        open={open}
-        onClose={handleClickClose}
-        aria-labelledby="form-dialog-title"
-      >
-        <DialogTitle id="form-dialog-title">Add New User</DialogTitle>
+      <Dialog open={open} onClose={handleClickClose}>
+        <DialogTitle>Add New User</DialogTitle>
         <DialogContent>
           <form className={classes.root}>
             <SubTitle>Account Information</SubTitle>
             <div>
               <FormControl component="fieldset" className={classes.margin}>
-                <FormLabel component="legend">
-                  Account Type (Required)
-                </FormLabel>
-                <FormLabel component="legend">{accountTypeLabel}</FormLabel>
                 <RadioGroup
                   row
                   name="accountType"
@@ -216,6 +308,7 @@ export default function CreateDialog() {
                     labelPlacement="end"
                   />
                 </RadioGroup>
+                <FormHelperText error={accountTypeError}>{accountTypeLabel}</FormHelperText>
               </FormControl>
               <FormControl className={classes.margin} fullWidth>
                 <TextField

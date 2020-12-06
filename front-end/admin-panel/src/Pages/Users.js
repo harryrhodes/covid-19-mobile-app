@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Paper, Container, Box } from "@material-ui/core";
 import Navigation from "../Components/Common/Navigation";
@@ -6,7 +6,7 @@ import Copyright from "../Components/Copyright";
 import Title from "../Components/Title";
 import UsersTable from "../Components/Users/UsersTable";
 import AddUser from "../Components/Users/AddUser";
-
+import { UserContext } from "../Hooks/UserContext";
 const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Users() {
   const classes = useStyles();
-
+  const { user } = useContext(UserContext);
   return (
     <React.Fragment>
       <Navigation />
@@ -39,10 +39,14 @@ export default function Users() {
             <Grid item xs={12}>
               <Paper className={classes.paper}>
                 <Title>Users</Title>
-                <UsersTable />
+                {user.data.accountType != "admin" ? (
+                  "No Permissions"
+                ) : (
+                  <UsersTable />
+                )}
               </Paper>
             </Grid>
-            <AddUser />
+            {user.data.accountType == "admin" && <AddUser />}
           </Grid>
           <Box pt={4}>
             <Copyright />

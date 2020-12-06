@@ -16,6 +16,7 @@ import {
   RadioGroup,
   Radio,
   FormControlLabel,
+  FormHelperText
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 const useStyles = makeStyles((theme) => ({
@@ -41,15 +42,51 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AddSymptom() {
   const classes = useStyles();
+  const [symptomNameError, setSymptomNameError] = React.useState(false);
+  const [symptomNameLabel, setSymptomNameLabel] = React.useState("Symptom Name (Required)");
+  const [severityError, setSeverityError] = React.useState(false);
+  const [severityLabel, setSeverityLabel] = React.useState("Severity (Required)");
   const [open, setOpen] = React.useState(false);
 
   const createNewSymptom = async () => {
+
+    let secondSymptomName = "";
+    let secondSeverity = "";
+
+    if (values?.severity === undefined) {
+      secondSeverity = "";
+    } else {
+      secondSeverity = values.severity;
+    }
+
+    if (values?.symptomName === undefined) {
+      secondSymptomName = "";
+    } else {
+      secondSymptomName = values.symptomName;
+    }
+    
     let body = {
-      name: values.symptomName,
-      severity: values.severity,
+      name: secondSymptomName,
+      severity: secondSeverity,
     };
-    let res = await SymptomService.create(body);
-    setOpen(false);
+
+    if (secondSymptomName == "") {
+      setSymptomNameLabel("This field is required");
+      setSymptomNameError(true);
+    } else {
+      setSymptomNameLabel("Symptom Name (Required)");
+      setSymptomNameError(false);
+      if (secondSeverity == "") {
+        setSeverityLabel("This field is required");
+        setSeverityError(true);
+      } else {
+        setSeverityLabel("Severity (Required)");
+        setSeverityError(false);
+        await SymptomService.create(body);
+        setOpen(false);
+      }
+    }
+
   };
 
   const { values, handleChange, handleSubmit } = useForm(createNewSymptom);
@@ -87,10 +124,11 @@ export default function AddSymptom() {
                 <TextField
                   required
                   name="symptomName"
-                  label="Symptom Name"
+                  label={symptomNameLabel}
                   placeholder="Symptom Name"
                   variant="outlined"
                   onChange={handleChange}
+                  error={symptomNameError}
                 />
               </FormControl>
               <FormControl
@@ -101,9 +139,9 @@ export default function AddSymptom() {
                 <FormLabel component="legend">Severity</FormLabel>
                 <RadioGroup
                   column
-                  aria-label="position"
                   name="severity"
                   onChange={handleChange}
+                  error={severityError}
                 >
                   <FormControlLabel
                     value="1"
@@ -136,6 +174,7 @@ export default function AddSymptom() {
                     labelPlacement="end"
                   />
                 </RadioGroup>
+                <FormHelperText error={severityError}>{severityLabel}</FormHelperText>
               </FormControl>
             </div>
           </form>
