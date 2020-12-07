@@ -4,12 +4,10 @@ import { shallow } from 'enzyme';
 import SymptomTrends from '../../../Pages/Trends/SymptomTrends';
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import Chart from "../../../Components/Chart";
 import Navigation from "../../../Components/Common/Navigation";
 import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
 import Copyright from "../../../Components/Copyright";
-import SymptomService from "../../../Services/SymptomService";
 import SymptomGraph from "../../../Components/Charts/SymptomGraph"
 import SymptomCounter from "../../../Components/Dashboard/Counters/SymptomCounter";
 

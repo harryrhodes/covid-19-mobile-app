@@ -46,7 +46,7 @@ describe('<SymptomTable />', () => {
 
     test('Renders a TableCell component', () => {
         const wrapper = shallow(<SymptomTable />);
-        expect(wrapper.find(TableCell).length).toBe(2);
+        expect(wrapper.find(TableCell).length).toBe(7);
     });
 
     test('Renders a TableBody component', () => {
