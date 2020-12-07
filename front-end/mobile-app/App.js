@@ -18,6 +18,15 @@ import RegisterScreen2 from "./Screens/Register-2";
 import RegisterScreen3 from "./Screens/Register-3";
 import RegisterScreen4 from "./Screens/Register-4";
 import { UserContext as UserContext } from "./Hooks/UserContext";
+import {decode, encode} from 'base-64'
+
+if (!global.btoa) {
+    global.btoa = encode;
+}
+
+if (!global.atob) {
+    global.atob = decode;
+}
 
 const Stack = createStackNavigator();
 
