@@ -10,6 +10,7 @@ import {
   HelperText,
   Text,
 } from "react-native-paper";
+import { StatusBar } from 'expo-status-bar';
 import { UserContext } from "../Hooks/UserContext";
 import UserService from "../Services/UserService";
 
@@ -90,6 +91,7 @@ export default function Register({ navigation, route }) {
   };
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar style="dark" />
       <View>
         <Title style={styles.appTitle}>Register</Title>
         <ProgressBar style={styles.progressBar} progress={1} />

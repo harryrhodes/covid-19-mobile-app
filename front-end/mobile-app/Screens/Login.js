@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
   HelperText,
 } from "react-native-paper";
+import { StatusBar } from 'expo-status-bar';
 import { UserContext } from "../Hooks/UserContext";
 import UserService from "../Services/UserService";
 
@@ -48,6 +49,7 @@ export default function Login({ navigation }) {
   };
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar style="dark" />
       <ScrollView keyboardShouldPersistTaps="handled">
         <Title style={styles.appTitle}>Valhalla Tracker</Title>
         <Card style={styles.card}>

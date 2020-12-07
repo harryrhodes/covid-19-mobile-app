@@ -10,6 +10,7 @@ import {
   HelperText,
   Text,
 } from "react-native-paper";
+import { StatusBar } from 'expo-status-bar';
 import UserService from "../Services/UserService";
 
 export default function Register({ navigation }) {
@@ -68,6 +69,7 @@ export default function Register({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar style="dark" />
       <ScrollView keyboardShouldPersistTaps="handled">
         <View>
           <Title style={styles.appTitle}>Register</Title>

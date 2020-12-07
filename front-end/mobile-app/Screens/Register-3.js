@@ -11,6 +11,7 @@ import {
   RadioButton,
   Text,
 } from "react-native-paper";
+import { StatusBar } from 'expo-status-bar';
 
 export default function Register({ navigation, route }) {
   //const [temperature, setTemperature] = useState("");
@@ -73,6 +74,7 @@ export default function Register({ navigation, route }) {
   };
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar style="dark" />
       <View>
         <Title style={styles.appTitle}>Register</Title>
         <ProgressBar style={styles.progressBar} progress={0.75} />
