@@ -10,10 +10,8 @@ A cross-platform application with a fully functioning back-end and admin panel f
 
 ## File System Structure
 
-.
-├── front-end # Contains code for mobile-app and admin-panel projects
-├── back-end # Contains code for node REST API
-└── README.md
+- front-end # Contains code for mobile-app and admin-panel projects
+- back-end # Contains code for node REST API
 
 ## Prerequisites
 
