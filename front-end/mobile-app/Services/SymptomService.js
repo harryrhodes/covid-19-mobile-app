@@ -6,7 +6,7 @@ const auth = {
 }
 export default {
     getAll: async () =>{
-        let res = await axios.get("http://192.168.0.13:4000"+"/symptoms",{auth});
+        let res = await axios.get("http://192.168.0.31:4000"+"/symptoms",{auth});
         return res.data || [];
     },
 }

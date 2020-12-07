@@ -10,16 +10,13 @@ const Styles = StyleSheet.create({
       card: {
         position: "relative",
         width: "90%",
-        marginTop: "1rem",
-        marginBottom: "1rem",
-        //boxShadow: "5px 5px 20px #888888",
-        //borderRadius: "15px",
+        margin: 20,
         display: "flex",
         flexDirection: "row",
         alignContent: "center",
       },
       cardContent: {
-        margin: "1rem",
+        margin: 15,
         display: "flex",
         flexDirection: "row",
         justifyContent: "center",

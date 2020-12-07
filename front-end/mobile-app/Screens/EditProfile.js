@@ -12,6 +12,7 @@ import {
 } from "react-native-paper";
 import { UserContext } from "../Hooks/UserContext";
 import UserService from "../Services/UserService";
+import { StatusBar } from 'expo-status-bar';
 
 export default function EditProfile({ navigation }) {
   const { user, setUser } = useContext(UserContext);
@@ -342,6 +343,7 @@ export default function EditProfile({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
+                  <StatusBar style="dark" />
       <ScrollView keyboardShouldPersistTaps="handled">
         <Avatar.Text style={styles.avatar} size={72} label={labelTag} />
         <Title style={styles.title}>Edit Profile</Title>

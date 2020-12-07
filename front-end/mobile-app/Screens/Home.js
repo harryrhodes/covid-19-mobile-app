@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, ScrollView } from "react-native";
 import { Button } from "react-native-paper";
 import { Styles } from "../Styles/HomeStyle";
 import StatusCard from "../Components/Home/StatusCard/StatusCard";
@@ -9,15 +9,18 @@ import TestResultCard from "../Components/Home/TestResultCard/TestResultCard";
 import LogSymptomsCard from "../Components/Home/LogSymptomsCard/LogSymptomsCard";
 import Welcome from "../Components/Home/Welcome/Welcome";
 import { UserContext } from "../Hooks/UserContext";
+import { StatusBar } from 'expo-status-bar';
 
 export default function Home({ navigation }) {
   const { user, setUser } = useContext(UserContext);
-  const logOut = async (user) => {
+  const logOut = () => {
     setUser(null);
-    navigation.goBack();
   };
   return (
     <SafeAreaView style={Styles.container}>
+      <StatusBar style="dark" />
+            <ScrollView keyboardShouldPersistTaps="handled">
+            
       <Welcome firstName={user.firstName} />
       <StatusCard />
       <SymptomsCard />
@@ -27,6 +30,8 @@ export default function Home({ navigation }) {
         <BookTestCard />
       )}
       <LogSymptomsCard logSymptoms={() => navigation.navigate("Symptoms")} />
+            </ScrollView>
+     
       <Button onPress={() => logOut(user)}>Log Out</Button>
     </SafeAreaView>
   );

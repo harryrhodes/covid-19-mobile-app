@@ -92,6 +92,7 @@ export default function Register({ navigation, route }) {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="dark" />
+      <ScrollView keyboardShouldPersistTaps="handled">
       <View>
         <Title style={styles.appTitle}>Register</Title>
         <ProgressBar style={styles.progressBar} progress={1} />
@@ -193,6 +194,7 @@ export default function Register({ navigation, route }) {
           />
         </Card.Content>
       </Card>
+      </ScrollView>
       <Button onPress={() => navigation.navigate("Login")}>
         Already Have An Account? Login Here
       </Button>

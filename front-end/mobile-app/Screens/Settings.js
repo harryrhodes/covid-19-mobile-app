@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { StyleSheet, SafeAreaView, ScrollView } from "react-native";
 import { List, Button, Card, Title, Avatar } from "react-native-paper";
 import { UserContext } from "../Hooks/UserContext";
+import { StatusBar } from 'expo-status-bar';
 
 
 export default function Settings({ navigation }) {
@@ -14,6 +15,7 @@ export default function Settings({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
+            <StatusBar style="dark" />
       <ScrollView keyboardShouldPersistTaps="handled">
         <Avatar.Text style={styles.avatar} size={72} label={labelTag} />
         <Title style={styles.title}>

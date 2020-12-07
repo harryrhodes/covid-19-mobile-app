@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, SafeAreaView, View } from "react-native";
+import { StyleSheet, SafeAreaView, ScrollView, View } from "react-native";
 import {
   TextInput,
   Button,
@@ -75,6 +75,7 @@ export default function Register({ navigation, route }) {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="dark" />
+      <ScrollView keyboardShouldPersistTaps="handled">
       <View>
         <Title style={styles.appTitle}>Register</Title>
         <ProgressBar style={styles.progressBar} progress={0.75} />
@@ -87,24 +88,6 @@ export default function Register({ navigation, route }) {
           <Text style={styles.Text}>You cannot change these later!</Text>
         </Card.Content>
       </Card>
-
-      {/* <Card style={styles.card}>
-        <Card.Content style={styles.cardContent}>
-          <TextInput // Temperature Check
-            label="Most Recent Temperature (°C)"
-            mode="outlined"
-            style={styles.input}
-            keyboardType="numeric"
-            value={temperature}
-            error={temperatureError}
-            onChangeText={(temperature) => setTemperature(temperature)}
-          />
-          <HelperText type="error" visible={temperatureError}>
-            {errorText}
-          </HelperText>
-        </Card.Content>
-      </Card> */}
-
       <Card style={styles.card}>
         <Card.Content style={styles.cardContent}>
           <Card.Title
@@ -259,9 +242,11 @@ export default function Register({ navigation, route }) {
           />
         </Card.Content>
       </Card>
+      </ScrollView>
       <Button onPress={() => navigation.navigate("Login")}>
         Already Have An Account? Login Here
       </Button>
+      
     </SafeAreaView>
   );
 }
