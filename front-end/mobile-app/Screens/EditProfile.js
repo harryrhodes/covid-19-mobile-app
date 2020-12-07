@@ -354,7 +354,6 @@ export default function EditProfile({ navigation }) {
               label="Email Address"
               placeholder={user.email}
               mode="outlined"
-              style={styles.input}
               autoCapitalize="none"
               autoCorrect={false}
               value={email}
@@ -368,7 +367,6 @@ export default function EditProfile({ navigation }) {
               label="First Name"
               placeholder={user.firstName}
               mode="outlined"
-              style={styles.input}
               autoCapitalize="characters"
               autoCorrect={false}
               value={firstName}
@@ -382,7 +380,6 @@ export default function EditProfile({ navigation }) {
               label="Last Name"
               placeholder={user.lastName}
               mode="outlined"
-              style={styles.input}
               autoCapitalize="characters"
               autoCorrect={false}
               value={lastName}
@@ -396,7 +393,6 @@ export default function EditProfile({ navigation }) {
               label="NHS Number"
               placeholder={user.nhsNo}
               mode="outlined"
-              style={styles.input}
               keyboardType="numeric"
               value={nhsNo}
               error={nhsError}
@@ -409,7 +405,6 @@ export default function EditProfile({ navigation }) {
               label="NI Number"
               placeholder={user.niNo}
               mode="outlined"
-              style={styles.input}
               keyboardType="numeric"
               value={niNo}
               error={niError}
@@ -422,7 +417,6 @@ export default function EditProfile({ navigation }) {
               label="Mobile Number"
               placeholder={user.mobileNo}
               mode="outlined"
-              style={styles.input}
               keyboardType="numeric"
               value={mobileNo}
               error={mobileError}
@@ -433,7 +427,7 @@ export default function EditProfile({ navigation }) {
             </HelperText>
             <Button
               mode="contained"
-              style={styles.continueButton}
+              style={styles.saveButton}
               onPress={() =>
                 validateProfile(
                   email,
@@ -462,55 +456,48 @@ export default function EditProfile({ navigation }) {
             <TextInput
               label="Address 1"
               mode="outlined"
-              style={styles.input}
               value={address1}
               onChangeText={(address1) => setAddress1(address1)}
             />
             <TextInput
               label="Address 2"
               mode="outlined"
-              style={styles.input}
               value={address2}
               onChangeText={(address2) => setAddress2(address2)}
             />
             <TextInput
               label="Address 3"
               mode="outlined"
-              style={styles.input}
               value={address3}
               onChangeText={(address3) => setAddress3(address3)}
             />
             <TextInput
               label="City"
               mode="outlined"
-              style={styles.input}
               value={county}
               onChangeText={(county) => setCounty(county)}
             />
             <TextInput
               label="County"
               mode="outlined"
-              style={styles.input}
               value={city}
               onChangeText={(city) => setCity(city)}
             />
             <TextInput
               label="Postcode"
               mode="outlined"
-              style={styles.input}
               value={postcode}
               onChangeText={(postcode) => setPostcode(postcode)}
             />
             <TextInput
               label="Country"
               mode="outlined"
-              style={styles.input}
               value={country}
               onChangeText={(country) => setCountry(country)}
             />
 
             <Button
-              style={styles.registerButton}
+              style={styles.saveButton}
               mode="contained"
               onPress={() =>
                 validateAddress(
@@ -566,7 +553,7 @@ const styles = StyleSheet.create({
   activityIndicator: {
     marginTop: 25,
   },
-  loginButton: {
+  saveButton: {
     marginTop: 25,
   },
 });

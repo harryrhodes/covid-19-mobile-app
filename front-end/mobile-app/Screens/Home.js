@@ -29,9 +29,9 @@ export default function Home({ navigation }) {
           <BookTestCard />
         )}
         <LogSymptomsCard logSymptoms={() => navigation.navigate("Symptoms")} />
-      </ScrollView>
 
-      <Button onPress={() => logOut(user)}>Log Out</Button>
+        <Button onPress={() => logOut(user)}>Log Out</Button>
+      </ScrollView>
     </SafeAreaView>
   );
 }

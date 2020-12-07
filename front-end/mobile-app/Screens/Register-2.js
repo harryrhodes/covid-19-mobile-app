@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, SafeAreaView, View } from "react-native";
+import { StyleSheet, SafeAreaView, ScrollView, View } from "react-native";
 import {
   TextInput,
   Button,
@@ -128,110 +128,112 @@ export default function Register({ navigation, route }) {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="dark" />
-      <View>
-        <Title style={styles.appTitle}>Register</Title>
-        <ProgressBar style={styles.progressBar} progress={0.5} />
-      </View>
-      <Card style={styles.card}>
-        <Card.Content style={styles.cardContent}>
-          <Text style={styles.Text}>
-            All fields marked Required cannot be left blank.
-          </Text>
-          <TextInput
-            label="Email Address (Required)"
-            mode="outlined"
-            style={styles.input}
-            autoCapitalize="none"
-            autoCorrect={false}
-            value={email}
-            error={emailError}
-            onChangeText={(email) => setEmail(email)}
-          />
-          <HelperText type="error" visible={emailError}>
-            {errorText}
-          </HelperText>
-          <TextInput
-            label="First Name (Required)"
-            mode="outlined"
-            style={styles.input}
-            autoCorrect={false}
-            value={firstName}
-            error={firstNameError}
-            onChangeText={(firstName) => setFirstName(firstName)}
-          />
-          <HelperText type="error" visible={firstNameError}>
-            {errorText}
-          </HelperText>
-          <TextInput
-            label="Last Name (Required)"
-            mode="outlined"
-            style={styles.input}
-            autoCorrect={false}
-            value={lastName}
-            error={lastNameError}
-            onChangeText={(lastName) => setLastName(lastName)}
-          />
-          <HelperText type="error" visible={lastNameError}>
-            {errorText}
-          </HelperText>
-          <TextInput
-            label="NHS Number (Optional)"
-            mode="outlined"
-            style={styles.input}
-            keyboardType="numeric"
-            value={nhsNo}
-            error={nhsError}
-            onChangeText={(nhsNo) => setNhsNo(nhsNo)}
-          />
-          <HelperText type="error" visible={nhsError}>
-            {errorText}
-          </HelperText>
-          <TextInput
-            label="NI Number (Required)"
-            mode="outlined"
-            style={styles.input}
-            value={niNo}
-            error={niError}
-            onChangeText={(niNo) => setNiNo(niNo)}
-          />
-          <HelperText type="error" visible={niError}>
-            {errorText}
-          </HelperText>
-          <TextInput
-            label="Mobile Number (Required)"
-            mode="outlined"
-            style={styles.input}
-            keyboardType="numeric"
-            value={mobileNo}
-            error={mobileError}
-            onChangeText={(mobileNo) => setMobileNo(mobileNo)}
-          />
-          <HelperText type="error" visible={mobileError}>
-            {errorText}
-          </HelperText>
-          <Button
-            mode="contained"
-            style={styles.continueButton}
-            onPress={() =>
-              validateInputs(
-                email,
-                firstName,
-                lastName,
-                nhsNo,
-                niNo,
-                mobileNo,
-                route.params.userObj
-              )
-            }
-          >
-            Continue
-          </Button>
-          <ActivityIndicator
-            animating={animate}
-            style={styles.activityIndicator}
-          />
-        </Card.Content>
-      </Card>
+      <ScrollView keyboardShouldPersistTaps="handled">
+        <View>
+          <Title style={styles.appTitle}>Register</Title>
+          <ProgressBar style={styles.progressBar} progress={0.5} />
+        </View>
+        <Card style={styles.card}>
+          <Card.Content style={styles.cardContent}>
+            <Text style={styles.Text}>
+              All fields marked Required cannot be left blank.
+            </Text>
+            <TextInput
+              label="Email Address (Required)"
+              mode="outlined"
+              style={styles.input}
+              autoCapitalize="none"
+              autoCorrect={false}
+              value={email}
+              error={emailError}
+              onChangeText={(email) => setEmail(email)}
+            />
+            <HelperText type="error" visible={emailError}>
+              {errorText}
+            </HelperText>
+            <TextInput
+              label="First Name (Required)"
+              mode="outlined"
+              style={styles.input}
+              autoCorrect={false}
+              value={firstName}
+              error={firstNameError}
+              onChangeText={(firstName) => setFirstName(firstName)}
+            />
+            <HelperText type="error" visible={firstNameError}>
+              {errorText}
+            </HelperText>
+            <TextInput
+              label="Last Name (Required)"
+              mode="outlined"
+              style={styles.input}
+              autoCorrect={false}
+              value={lastName}
+              error={lastNameError}
+              onChangeText={(lastName) => setLastName(lastName)}
+            />
+            <HelperText type="error" visible={lastNameError}>
+              {errorText}
+            </HelperText>
+            <TextInput
+              label="NHS Number (Optional)"
+              mode="outlined"
+              style={styles.input}
+              keyboardType="numeric"
+              value={nhsNo}
+              error={nhsError}
+              onChangeText={(nhsNo) => setNhsNo(nhsNo)}
+            />
+            <HelperText type="error" visible={nhsError}>
+              {errorText}
+            </HelperText>
+            <TextInput
+              label="NI Number (Required)"
+              mode="outlined"
+              style={styles.input}
+              value={niNo}
+              error={niError}
+              onChangeText={(niNo) => setNiNo(niNo)}
+            />
+            <HelperText type="error" visible={niError}>
+              {errorText}
+            </HelperText>
+            <TextInput
+              label="Mobile Number (Required)"
+              mode="outlined"
+              style={styles.input}
+              keyboardType="numeric"
+              value={mobileNo}
+              error={mobileError}
+              onChangeText={(mobileNo) => setMobileNo(mobileNo)}
+            />
+            <HelperText type="error" visible={mobileError}>
+              {errorText}
+            </HelperText>
+            <Button
+              mode="contained"
+              style={styles.continueButton}
+              onPress={() =>
+                validateInputs(
+                  email,
+                  firstName,
+                  lastName,
+                  nhsNo,
+                  niNo,
+                  mobileNo,
+                  route.params.userObj
+                )
+              }
+            >
+              Continue
+            </Button>
+            <ActivityIndicator
+              animating={animate}
+              style={styles.activityIndicator}
+            />
+          </Card.Content>
+        </Card>
+      </ScrollView>
       <Button onPress={() => navigation.navigate("Login")}>
         Already Have An Account? Login Here
       </Button>

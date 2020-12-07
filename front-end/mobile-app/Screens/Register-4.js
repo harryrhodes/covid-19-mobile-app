@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { StyleSheet, SafeAreaView, View } from "react-native";
+import { StyleSheet, SafeAreaView, ScrollView, View } from "react-native";
 import {
   TextInput,
   Button,
@@ -105,7 +105,6 @@ export default function Register({ navigation, route }) {
             <TextInput
               label="Address 1 (Required)"
               mode="outlined"
-              style={styles.input}
               value={address1}
               error={address1Error}
               onChangeText={(address1) => setAddress1(address1)}
@@ -116,7 +115,6 @@ export default function Register({ navigation, route }) {
             <TextInput
               label="Address 2 (Required)"
               mode="outlined"
-              style={styles.input}
               value={address2}
               error={address2Error}
               onChangeText={(address2) => setAddress2(address2)}
@@ -127,14 +125,13 @@ export default function Register({ navigation, route }) {
             <TextInput
               label="Address 3 (Optional)"
               mode="outlined"
-              style={styles.input}
               value={address3}
               onChangeText={(address3) => setAddress3(address3)}
             />
+            <HelperText type="error" visible={false}></HelperText>
             <TextInput
               label="City (Required)"
               mode="outlined"
-              style={styles.input}
               value={city}
               error={cityError}
               onChangeText={(city) => setCity(city)}
@@ -145,14 +142,13 @@ export default function Register({ navigation, route }) {
             <TextInput
               label="County (Optional)"
               mode="outlined"
-              style={styles.input}
               value={county}
               onChangeText={(county) => setCounty(county)}
             />
+            <HelperText type="error" visible={false}></HelperText>
             <TextInput
               label="Postcode (Required)"
               mode="outlined"
-              style={styles.input}
               value={postcode}
               error={postcodeError}
               onChangeText={(postcode) => setPostcode(postcode)}
@@ -163,7 +159,6 @@ export default function Register({ navigation, route }) {
             <TextInput
               label="Country (Required)"
               mode="outlined"
-              style={styles.input}
               value={country}
               error={countryError}
               onChangeText={(country) => setCountry(country)}
@@ -196,10 +191,11 @@ export default function Register({ navigation, route }) {
             />
           </Card.Content>
         </Card>
+
+        <Button onPress={() => navigation.navigate("Login")}>
+          Already Have An Account? Login Here
+        </Button>
       </ScrollView>
-      <Button onPress={() => navigation.navigate("Login")}>
-        Already Have An Account? Login Here
-      </Button>
     </SafeAreaView>
   );
 }

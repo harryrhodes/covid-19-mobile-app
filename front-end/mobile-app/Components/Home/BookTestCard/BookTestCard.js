@@ -15,11 +15,7 @@ export default function BookTestCard() {
     let result = await WebBrowser.openBrowserAsync(
       "https://www.gov.uk/get-coronavirus-test"
     );
-    if (result.type == "opened") {
-      setOpened(true);
-    } else {
-      setOpened(false);
-    }
+    setOpened(true);
   };
   const handleFeeback = async (testBooked) => {
     if (testBooked == true) {

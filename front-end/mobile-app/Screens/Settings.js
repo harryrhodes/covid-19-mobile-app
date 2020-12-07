@@ -8,7 +8,7 @@ export default function Settings({ navigation }) {
   const { user, setUser } = useContext(UserContext);
   const labelTag =
     user.firstName.substring(0, 1) + user.lastName.substring(0, 1);
-  const logOut = async (user) => {
+  const logOut = () => {
     setUser(null);
     navigation.goBack();
   };
@@ -39,8 +39,8 @@ export default function Settings({ navigation }) {
             />
           </Card.Content>
         </Card>
+        <Button onPress={() => logOut(user)}>Log Out</Button>
       </ScrollView>
-      <Button onPress={() => logOut(user)}>Log Out</Button>
     </SafeAreaView>
   );
 }

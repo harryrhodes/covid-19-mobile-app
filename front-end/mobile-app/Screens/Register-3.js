@@ -15,13 +15,13 @@ import { StatusBar } from "expo-status-bar";
 
 export default function Register({ navigation, route }) {
   //const [temperature, setTemperature] = useState("");
-  const [nop, setNop] = useState("1");
-  const [publicTransport, setPublicTransport] = useState("false");
-  const [hospitalisations, setHospitalisations] = useState("0");
-  const [diabetes, setDiabetes] = useState("no diabetes");
-  const [hypertension, setHypertension] = useState("false");
-  const [dob, setDob] = useState("");
-  const [gender, setGender] = useState("Unspecified");
+  const [nop, setNop] = useState();
+  const [publicTransport, setPublicTransport] = useState();
+  const [hospitalisations, setHospitalisations] = useState();
+  const [diabetes, setDiabetes] = useState();
+  const [hypertension, setHypertension] = useState();
+  const [dob, setDob] = useState();
+  const [gender, setGender] = useState();
 
   const [status] = useState("Not Tested");
 
@@ -100,7 +100,7 @@ export default function Register({ navigation, route }) {
             >
               <RadioButton.Item label="I live alone" value="0" />
               <RadioButton.Item label="1 Person" value="1" />
-              <RadioButton.Item label="2 People" value="1" />
+              <RadioButton.Item label="2 People" value="2" />
               <RadioButton.Item label="3 People" value="3" />
               <RadioButton.Item label="4 People" value="4" />
               <RadioButton.Item label="More Than 4 People" value="4+" />
@@ -226,7 +226,6 @@ export default function Register({ navigation, route }) {
               style={styles.continueButton}
               onPress={() =>
                 validateInputs(
-                  //temperature,
                   nop,
                   publicTransport,
                   hospitalisations,
@@ -247,10 +246,11 @@ export default function Register({ navigation, route }) {
             />
           </Card.Content>
         </Card>
+
+        <Button onPress={() => navigation.navigate("Login")}>
+          Already Have An Account? Login Here
+        </Button>
       </ScrollView>
-      <Button onPress={() => navigation.navigate("Login")}>
-        Already Have An Account? Login Here
-      </Button>
     </SafeAreaView>
   );
 }
