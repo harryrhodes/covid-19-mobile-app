@@ -9,8 +9,8 @@ export default function Settings({ navigation }) {
   const labelTag =
     user.firstName.substring(0, 1) + user.lastName.substring(0, 1);
   const logOut = () => {
-    setUser(null);
     navigation.goBack();
+    setUser(null);
   };
 
   return (

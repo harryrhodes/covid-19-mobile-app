@@ -14,6 +14,7 @@ import { StatusBar } from "expo-status-bar";
 export default function Home({ navigation }) {
   const { user, setUser } = useContext(UserContext);
   const logOut = () => {
+    navigation.goBack();
     setUser(null);
   };
   return (
