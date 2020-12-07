@@ -41,10 +41,10 @@ describe('<SymptomGraph />', () => {
         expect(wrapper.find(Tooltip).length).toBe(1);
     });
 
-    test('Renders a Legend component', () => {
-        const wrapper = shallow(<SymptomGraph />);
-        expect(wrapper.find(Legend).length).toBe(1);
-    });
+    // test('Renders a Legend component', () => {
+    //     const wrapper = shallow(<SymptomGraph />);
+    //     expect(wrapper.find(Legend).length).toBe(1);
+    // });
 
     test('Renders a Bar component', () => {
         const wrapper = shallow(<SymptomGraph />);

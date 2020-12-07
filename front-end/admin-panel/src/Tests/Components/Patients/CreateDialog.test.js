@@ -66,7 +66,7 @@ describe('<AddPatient />', () => {
 
     test('Renders a FormLabel component', () => {
         const wrapper = shallow(<AddPatient />);
-        expect(wrapper.find(FormLabel).length).toBe(15);
+        expect(wrapper.find(FormLabel).length).toBe(8);
     });
 
     test('Renders a RadioGroup component', () => {
