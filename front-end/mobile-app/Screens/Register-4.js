@@ -10,12 +10,12 @@ import {
   HelperText,
   Text,
 } from "react-native-paper";
-import { StatusBar } from 'expo-status-bar';
+import { StatusBar } from "expo-status-bar";
 import { UserContext } from "../Hooks/UserContext";
 import UserService from "../Services/UserService";
 
 export default function Register({ navigation, route }) {
-  const { user, setUser } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
   const [address1, setAddress1] = useState("");
   const [address2, setAddress2] = useState("");
   const [address3, setAddress3] = useState("");
@@ -93,107 +93,109 @@ export default function Register({ navigation, route }) {
     <SafeAreaView style={styles.container}>
       <StatusBar style="dark" />
       <ScrollView keyboardShouldPersistTaps="handled">
-      <View>
-        <Title style={styles.appTitle}>Register</Title>
-        <ProgressBar style={styles.progressBar} progress={1} />
-      </View>
-      <Card style={styles.card}>
-        <Card.Content style={styles.cardContent}>
-        <Text style={styles.Text}>All fields marked Required cannot be left blank.</Text>
-          <TextInput
-            label="Address 1 (Required)"
-            mode="outlined"
-            style={styles.input}
-            value={address1}
-            error={address1Error}
-            onChangeText={(address1) => setAddress1(address1)}
-          />
-          <HelperText type="error" visible={address1Error}>
-            {errorText}
-          </HelperText>
-          <TextInput
-            label="Address 2 (Required)"
-            mode="outlined"
-            style={styles.input}
-            value={address2}
-            error={address2Error}
-            onChangeText={(address2) => setAddress2(address2)}
-          />
-          <HelperText type="error" visible={address2Error}>
-            {errorText}
-          </HelperText>
-          <TextInput
-            label="Address 3 (Optional)"
-            mode="outlined"
-            style={styles.input}
-            value={address3}
-            onChangeText={(address3) => setAddress3(address3)}
-          />
-          <TextInput
-            label="City (Required)"
-            mode="outlined"
-            style={styles.input}
-            value={city}
-            error={cityError}
-            onChangeText={(city) => setCity(city)}
-          />
-          <HelperText type="error" visible={cityError}>
-            {errorText}
-          </HelperText>
-          <TextInput
-            label="County (Optional)"
-            mode="outlined"
-            style={styles.input}
-            value={county}
-            onChangeText={(county) => setCounty(county)}
-          />
-          <TextInput
-            label="Postcode (Required)"
-            mode="outlined"
-            style={styles.input}
-            value={postcode}
-            error={postcodeError}
-            onChangeText={(postcode) => setPostcode(postcode)}
-          />
-          <HelperText type="error" visible={postcodeError}>
-            {errorText}
-          </HelperText>
-          <TextInput
-            label="Country (Required)"
-            mode="outlined"
-            style={styles.input}
-            value={country}
-            error={countryError}
-            onChangeText={(country) => setCountry(country)}
-          />
-          <HelperText type="error" visible={countryError}>
-            {errorText}
-          </HelperText>
+        <View>
+          <Title style={styles.appTitle}>Register</Title>
+          <ProgressBar style={styles.progressBar} progress={1} />
+        </View>
+        <Card style={styles.card}>
+          <Card.Content style={styles.cardContent}>
+            <Text style={styles.Text}>
+              All fields marked Required cannot be left blank.
+            </Text>
+            <TextInput
+              label="Address 1 (Required)"
+              mode="outlined"
+              style={styles.input}
+              value={address1}
+              error={address1Error}
+              onChangeText={(address1) => setAddress1(address1)}
+            />
+            <HelperText type="error" visible={address1Error}>
+              {errorText}
+            </HelperText>
+            <TextInput
+              label="Address 2 (Required)"
+              mode="outlined"
+              style={styles.input}
+              value={address2}
+              error={address2Error}
+              onChangeText={(address2) => setAddress2(address2)}
+            />
+            <HelperText type="error" visible={address2Error}>
+              {errorText}
+            </HelperText>
+            <TextInput
+              label="Address 3 (Optional)"
+              mode="outlined"
+              style={styles.input}
+              value={address3}
+              onChangeText={(address3) => setAddress3(address3)}
+            />
+            <TextInput
+              label="City (Required)"
+              mode="outlined"
+              style={styles.input}
+              value={city}
+              error={cityError}
+              onChangeText={(city) => setCity(city)}
+            />
+            <HelperText type="error" visible={cityError}>
+              {errorText}
+            </HelperText>
+            <TextInput
+              label="County (Optional)"
+              mode="outlined"
+              style={styles.input}
+              value={county}
+              onChangeText={(county) => setCounty(county)}
+            />
+            <TextInput
+              label="Postcode (Required)"
+              mode="outlined"
+              style={styles.input}
+              value={postcode}
+              error={postcodeError}
+              onChangeText={(postcode) => setPostcode(postcode)}
+            />
+            <HelperText type="error" visible={postcodeError}>
+              {errorText}
+            </HelperText>
+            <TextInput
+              label="Country (Required)"
+              mode="outlined"
+              style={styles.input}
+              value={country}
+              error={countryError}
+              onChangeText={(country) => setCountry(country)}
+            />
+            <HelperText type="error" visible={countryError}>
+              {errorText}
+            </HelperText>
 
-          <Button
-            style={styles.registerButton}
-            mode="contained"
-            onPress={() =>
-              validateInputs(
-                address1,
-                address2,
-                address3,
-                city,
-                county,
-                postcode,
-                country,
-                route.params.userObj
-              )
-            }
-          >
-            Register
-          </Button>
-          <ActivityIndicator
-            animating={animate}
-            style={styles.activityIndicator}
-          />
-        </Card.Content>
-      </Card>
+            <Button
+              style={styles.registerButton}
+              mode="contained"
+              onPress={() =>
+                validateInputs(
+                  address1,
+                  address2,
+                  address3,
+                  city,
+                  county,
+                  postcode,
+                  country,
+                  route.params.userObj
+                )
+              }
+            >
+              Register
+            </Button>
+            <ActivityIndicator
+              animating={animate}
+              style={styles.activityIndicator}
+            />
+          </Card.Content>
+        </Card>
       </ScrollView>
       <Button onPress={() => navigation.navigate("Login")}>
         Already Have An Account? Login Here

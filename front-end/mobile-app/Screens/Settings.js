@@ -2,20 +2,20 @@ import React, { useState, useContext } from "react";
 import { StyleSheet, SafeAreaView, ScrollView } from "react-native";
 import { List, Button, Card, Title, Avatar } from "react-native-paper";
 import { UserContext } from "../Hooks/UserContext";
-import { StatusBar } from 'expo-status-bar';
-
+import { StatusBar } from "expo-status-bar";
 
 export default function Settings({ navigation }) {
   const { user, setUser } = useContext(UserContext);
-  const labelTag = user.firstName.substring(0,1) + user.lastName.substring(0,1)
+  const labelTag =
+    user.firstName.substring(0, 1) + user.lastName.substring(0, 1);
   const logOut = async (user) => {
     setUser(null);
     navigation.goBack();
-  }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
-            <StatusBar style="dark" />
+      <StatusBar style="dark" />
       <ScrollView keyboardShouldPersistTaps="handled">
         <Avatar.Text style={styles.avatar} size={72} label={labelTag} />
         <Title style={styles.title}>

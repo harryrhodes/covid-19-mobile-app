@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
   HelperText,
 } from "react-native-paper";
-import { StatusBar } from 'expo-status-bar';
+import { StatusBar } from "expo-status-bar";
 import { UserContext } from "../Hooks/UserContext";
 import UserService from "../Services/UserService";
 

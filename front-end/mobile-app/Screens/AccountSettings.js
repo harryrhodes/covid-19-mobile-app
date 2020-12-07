@@ -12,7 +12,7 @@ import {
 } from "react-native-paper";
 import { UserContext } from "../Hooks/UserContext";
 import UserService from "../Services/UserService";
-import { StatusBar } from 'expo-status-bar';
+import { StatusBar } from "expo-status-bar";
 
 export default function AccountSettings({ navigation }) {
   const { user, setUser } = useContext(UserContext);
@@ -32,7 +32,6 @@ export default function AccountSettings({ navigation }) {
   const pwRe = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
 
   const validateUsername = async (username) => {
-
     let secondAddress1 = "";
     let secondAddress2 = "";
     let secondAddress3 = "";
@@ -44,62 +43,62 @@ export default function AccountSettings({ navigation }) {
     let secondNiNo = "";
     let secondMobileNo = "";
 
-    if ( user?.patientDetails?.address?.address1 === undefined) {
-      secondAddress1 = ""
+    if (user?.patientDetails?.address?.address1 === undefined) {
+      secondAddress1 = "";
     } else {
       secondAddress1 = user.patientDetails.address.address1;
     }
 
-    if ( user?.patientDetails?.address?.address2 === undefined) {
-      secondAddress2 = ""
+    if (user?.patientDetails?.address?.address2 === undefined) {
+      secondAddress2 = "";
     } else {
       secondAddress2 = user.patientDetails.address.address2;
     }
 
-    if ( user?.patientDetails?.address?.address3 === undefined) {
-      secondAddress3 = ""
+    if (user?.patientDetails?.address?.address3 === undefined) {
+      secondAddress3 = "";
     } else {
       secondAddress3 = user.patientDetails.address.address3;
     }
 
-    if ( user?.patientDetails?.address?.city === undefined) {
-      secondCity = ""
+    if (user?.patientDetails?.address?.city === undefined) {
+      secondCity = "";
     } else {
       secondCity = user.patientDetails.address.city;
     }
 
-    if ( user?.patientDetails?.address?.county === undefined) {
-      secondCounty = ""
+    if (user?.patientDetails?.address?.county === undefined) {
+      secondCounty = "";
     } else {
       secondCounty = user.patientDetails.address.county;
     }
 
-    if ( user?.patientDetails?.address?.postcode === undefined) {
-      secondPostcode = ""
+    if (user?.patientDetails?.address?.postcode === undefined) {
+      secondPostcode = "";
     } else {
       secondPostcode = user.patientDetails.address.postcode;
     }
 
-    if ( user?.patientDetails?.address?.country === undefined) {
-      secondCountry = ""
+    if (user?.patientDetails?.address?.country === undefined) {
+      secondCountry = "";
     } else {
       secondCountry = user.patientDetails.address.country;
     }
 
-    if ( user?.patientDetails?.nhsNo === undefined) {
-      secondNhsNo = ""
+    if (user?.patientDetails?.nhsNo === undefined) {
+      secondNhsNo = "";
     } else {
       secondNhsNo = user.patientDetails.nhsNo;
     }
 
-    if ( user?.patientDetails?.niNo === undefined) {
-      secondNiNo = ""
+    if (user?.patientDetails?.niNo === undefined) {
+      secondNiNo = "";
     } else {
       secondNiNo = user.patientDetails.niNo;
     }
 
-    if ( user?.patientDetails?.mobileNo === undefined) {
-      secondMobileNo = ""
+    if (user?.patientDetails?.mobileNo === undefined) {
+      secondMobileNo = "";
     } else {
       secondMobileNo = user.patientDetails.mobileNo;
     }
@@ -149,7 +148,6 @@ export default function AccountSettings({ navigation }) {
   };
 
   const validatePassword = async (password, confirmPassword) => {
-
     let secondAddress1 = "";
     let secondAddress2 = "";
     let secondAddress3 = "";
@@ -161,62 +159,62 @@ export default function AccountSettings({ navigation }) {
     let secondNiNo = "";
     let secondMobileNo = "";
 
-    if ( user?.patientDetails?.address?.address1 === undefined) {
-      secondAddress1 = ""
+    if (user?.patientDetails?.address?.address1 === undefined) {
+      secondAddress1 = "";
     } else {
       secondAddress1 = user.patientDetails.address.address1;
     }
 
-    if ( user?.patientDetails?.address?.address2 === undefined) {
-      secondAddress2 = ""
+    if (user?.patientDetails?.address?.address2 === undefined) {
+      secondAddress2 = "";
     } else {
       secondAddress2 = user.patientDetails.address.address2;
     }
 
-    if ( user?.patientDetails?.address?.address3 === undefined) {
-      secondAddress3 = ""
+    if (user?.patientDetails?.address?.address3 === undefined) {
+      secondAddress3 = "";
     } else {
       secondAddress3 = user.patientDetails.address.address3;
     }
 
-    if ( user?.patientDetails?.address?.city === undefined) {
-      secondCity = ""
+    if (user?.patientDetails?.address?.city === undefined) {
+      secondCity = "";
     } else {
       secondCity = user.patientDetails.address.city;
     }
 
-    if ( user?.patientDetails?.address?.county === undefined) {
-      secondCounty = ""
+    if (user?.patientDetails?.address?.county === undefined) {
+      secondCounty = "";
     } else {
       secondCounty = user.patientDetails.address.county;
     }
 
-    if ( user?.patientDetails?.address?.postcode === undefined) {
-      secondPostcode = ""
+    if (user?.patientDetails?.address?.postcode === undefined) {
+      secondPostcode = "";
     } else {
       secondPostcode = user.patientDetails.address.postcode;
     }
 
-    if ( user?.patientDetails?.address?.country === undefined) {
-      secondCountry = ""
+    if (user?.patientDetails?.address?.country === undefined) {
+      secondCountry = "";
     } else {
       secondCountry = user.patientDetails.address.country;
     }
 
-    if ( user?.patientDetails?.nhsNo === undefined) {
-      secondNhsNo = ""
+    if (user?.patientDetails?.nhsNo === undefined) {
+      secondNhsNo = "";
     } else {
       secondNhsNo = user.patientDetails.nhsNo;
     }
 
-    if ( user?.patientDetails?.niNo === undefined) {
-      secondNiNo = ""
+    if (user?.patientDetails?.niNo === undefined) {
+      secondNiNo = "";
     } else {
       secondNiNo = user.patientDetails.niNo;
     }
 
-    if ( user?.patientDetails?.mobileNo === undefined) {
-      secondMobileNo = ""
+    if (user?.patientDetails?.mobileNo === undefined) {
+      secondMobileNo = "";
     } else {
       secondMobileNo = user.patientDetails.mobileNo;
     }
@@ -359,9 +357,7 @@ export default function AccountSettings({ navigation }) {
               {passwordConfirmText}
             </HelperText>
             <Subheading>Danger Zone</Subheading>
-            <Button onPress={() => deleteUser()}>
-              Remove Account
-            </Button>
+            <Button onPress={() => deleteUser()}>Remove Account</Button>
           </Card.Content>
         </Card>
       </ScrollView>

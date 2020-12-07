@@ -10,7 +10,7 @@ import {
   HelperText,
   Text,
 } from "react-native-paper";
-import { StatusBar } from 'expo-status-bar';
+import { StatusBar } from "expo-status-bar";
 import UserService from "../Services/UserService";
 
 export default function Register({ navigation }) {
@@ -127,7 +127,9 @@ export default function Register({ navigation }) {
             <HelperText type="error" visible={password2Error}>
               {errorText}
             </HelperText>
-            <Text style={styles.Text}>You need these to sign in, please remember them.</Text>
+            <Text style={styles.Text}>
+              You need these to sign in, please remember them.
+            </Text>
             <Button
               mode="contained"
               style={styles.continueButton}

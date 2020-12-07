@@ -12,7 +12,7 @@ import {
 } from "react-native-paper";
 import { UserContext } from "../Hooks/UserContext";
 import UserService from "../Services/UserService";
-import { StatusBar } from 'expo-status-bar';
+import { StatusBar } from "expo-status-bar";
 
 export default function EditProfile({ navigation }) {
   const { user, setUser } = useContext(UserContext);
@@ -172,44 +172,44 @@ export default function EditProfile({ navigation }) {
     let secondPostcode = "";
     let secondCountry = "";
 
-    if ( user?.patientDetails?.address?.address1 === undefined) {
-      secondAddress1 = ""
+    if (user?.patientDetails?.address?.address1 === undefined) {
+      secondAddress1 = "";
     } else {
       secondAddress1 = user.patientDetails.address.address1;
     }
 
-    if ( user?.patientDetails?.address?.address2 === undefined) {
-      secondAddress2 = ""
+    if (user?.patientDetails?.address?.address2 === undefined) {
+      secondAddress2 = "";
     } else {
       secondAddress2 = user.patientDetails.address.address2;
     }
 
-    if ( user?.patientDetails?.address?.address3 === undefined) {
-      secondAddress3 = ""
+    if (user?.patientDetails?.address?.address3 === undefined) {
+      secondAddress3 = "";
     } else {
       secondAddress3 = user.patientDetails.address.address3;
     }
 
-    if ( user?.patientDetails?.address?.city === undefined) {
-      secondCity = ""
+    if (user?.patientDetails?.address?.city === undefined) {
+      secondCity = "";
     } else {
       secondCity = user.patientDetails.address.city;
     }
 
-    if ( user?.patientDetails?.address?.county === undefined) {
-      secondCounty = ""
+    if (user?.patientDetails?.address?.county === undefined) {
+      secondCounty = "";
     } else {
       secondCounty = user.patientDetails.address.county;
     }
 
-    if ( user?.patientDetails?.address?.postcode === undefined) {
-      secondPostcode = ""
+    if (user?.patientDetails?.address?.postcode === undefined) {
+      secondPostcode = "";
     } else {
       secondPostcode = user.patientDetails.address.postcode;
     }
 
-    if ( user?.patientDetails?.address?.country === undefined) {
-      secondCountry = ""
+    if (user?.patientDetails?.address?.country === undefined) {
+      secondCountry = "";
     } else {
       secondCountry = user.patientDetails.address.country;
     }
@@ -236,9 +236,9 @@ export default function EditProfile({ navigation }) {
         },
       },
     };
-      setProfileConfirmText("Profile successfully updated");
-      let profRes = await UserService.update(user.username, body);
-      setUser(profRes);
+    setProfileConfirmText("Profile successfully updated");
+    let profRes = await UserService.update(user.username, body);
+    setUser(profRes);
   };
 
   const validateAddress = async (
@@ -260,56 +260,56 @@ export default function EditProfile({ navigation }) {
 
     if (!address1 == "") {
       secondAddress1 = newAddress1;
-    } else if ( user?.patientDetails?.address?.address1 === undefined) {
-      secondAddress1 = ""
+    } else if (user?.patientDetails?.address?.address1 === undefined) {
+      secondAddress1 = "";
     } else {
       secondAddress1 = user.patientDetails.address.address1;
     }
 
     if (!address2 == "") {
       secondAddress2 = newAddress2;
-    } else if ( user?.patientDetails?.address?.address2 === undefined) {
-      secondAddress2 = ""
+    } else if (user?.patientDetails?.address?.address2 === undefined) {
+      secondAddress2 = "";
     } else {
       secondAddress2 = user.patientDetails.address.address2;
     }
 
     if (!address3 == "") {
       secondAddress3 = newAddress3;
-    } else if ( user?.patientDetails?.address?.address3 === undefined) {
-      secondAddress3 = ""
+    } else if (user?.patientDetails?.address?.address3 === undefined) {
+      secondAddress3 = "";
     } else {
       secondAddress3 = user.patientDetails.address.address3;
     }
 
     if (!city == "") {
       secondCity = newCity;
-    } else if ( user?.patientDetails?.address?.city === undefined) {
-      secondCity = ""
+    } else if (user?.patientDetails?.address?.city === undefined) {
+      secondCity = "";
     } else {
       secondCity = user.patientDetails.address.city;
     }
 
     if (!county == "") {
       secondCounty = newCounty;
-    } else if ( user?.patientDetails?.address?.county === undefined) {
-      secondCounty = ""
+    } else if (user?.patientDetails?.address?.county === undefined) {
+      secondCounty = "";
     } else {
       secondCounty = user.patientDetails.address.county;
     }
 
     if (!postcode == "") {
       secondPostcode = newPostcode;
-    } else if( user?.patientDetails?.address?.postcode === undefined) {
-      secondPostcode = ""
+    } else if (user?.patientDetails?.address?.postcode === undefined) {
+      secondPostcode = "";
     } else {
       secondPostcode = user.patientDetails.address.postcode;
     }
 
     if (!country == "") {
       secondCountry = newCountry;
-    } else if ( user?.patientDetails?.address?.country === undefined) {
-      secondCountry = ""
+    } else if (user?.patientDetails?.address?.country === undefined) {
+      secondCountry = "";
     } else {
       secondCountry = user.patientDetails.address.country;
     }
@@ -343,7 +343,7 @@ export default function EditProfile({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-                  <StatusBar style="dark" />
+      <StatusBar style="dark" />
       <ScrollView keyboardShouldPersistTaps="handled">
         <Avatar.Text style={styles.avatar} size={72} label={labelTag} />
         <Title style={styles.title}>Edit Profile</Title>

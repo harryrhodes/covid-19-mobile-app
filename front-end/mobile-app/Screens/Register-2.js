@@ -10,7 +10,7 @@ import {
   HelperText,
   Text,
 } from "react-native-paper";
-import { StatusBar } from 'expo-status-bar';
+import { StatusBar } from "expo-status-bar";
 
 export default function Register({ navigation, route }) {
   const [email, setEmail] = useState("");
@@ -55,7 +55,7 @@ export default function Register({ navigation, route }) {
           setNhsError(false);
         }
       } else {
-        setNhsError(false)
+        setNhsError(false);
       }
     };
 
@@ -110,8 +110,7 @@ export default function Register({ navigation, route }) {
               setErrorText("Your mobile number can only contain digits");
               setMobileError(true);
               setAnimate(false);
-            }
-            else if (!/^\d{11}$/.test(mobileNo)) {
+            } else if (!/^\d{11}$/.test(mobileNo)) {
               setErrorText("Your mobile number must be 11 digits exactly");
               setMobileError(true);
               setAnimate(false);
@@ -135,7 +134,9 @@ export default function Register({ navigation, route }) {
       </View>
       <Card style={styles.card}>
         <Card.Content style={styles.cardContent}>
-        <Text style={styles.Text}>All fields marked Required cannot be left blank.</Text>
+          <Text style={styles.Text}>
+            All fields marked Required cannot be left blank.
+          </Text>
           <TextInput
             label="Email Address (Required)"
             mode="outlined"
@@ -153,7 +154,6 @@ export default function Register({ navigation, route }) {
             label="First Name (Required)"
             mode="outlined"
             style={styles.input}
-            autoCapitalize="characters"
             autoCorrect={false}
             value={firstName}
             error={firstNameError}
@@ -166,7 +166,6 @@ export default function Register({ navigation, route }) {
             label="Last Name (Required)"
             mode="outlined"
             style={styles.input}
-            autoCapitalize="characters"
             autoCorrect={false}
             value={lastName}
             error={lastNameError}

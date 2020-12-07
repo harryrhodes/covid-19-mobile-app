@@ -7,7 +7,7 @@ import SymptomFormText from "../Components/Symptoms/SymptomFormText/SymptomText"
 import SymptomService from "../Services/SymptomService";
 import { UserContext } from "../Hooks/UserContext";
 import UserService from "../Services/UserService";
-import { StatusBar } from 'expo-status-bar';
+import { StatusBar } from "expo-status-bar";
 
 export default function SymptomLog({ navigation }) {
   const { user, setUser } = useContext(UserContext);
@@ -67,7 +67,7 @@ export default function SymptomLog({ navigation }) {
 
   return (
     <SafeAreaView style={Styles.container}>
-                  <StatusBar style="dark" />
+      <StatusBar style="dark" />
       <ScrollView keyboardShouldPersistTaps="handled">
         {cards}
         <SymptomFormText
