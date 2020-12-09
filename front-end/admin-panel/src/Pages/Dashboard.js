@@ -115,7 +115,7 @@ export default function Dashboard() {
           <Grid container spacing={3}>
             <Grid item xs={6} md={3} lg={3}>
               <Paper className={fixedHeightPaper}>
-                <CaseCounter count={0} currentDate={currentDate} />
+                <CaseCounter count={caseCount} currentDate={currentDate} />
               </Paper>
             </Grid>
             <Grid item xs={6} md={3} lg={3}>
